@@ -1,0 +1,772 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #102d3d;
+    background: #f5fafc;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+
+button { font: inherit; border: none; }
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 82% 45%, rgba(116, 210, 247, 0.12), transparent 34%),
+        radial-gradient(circle at 15% 90%, rgba(53, 220, 168, 0.08), transparent 28%),
+        #f5fafc;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    width: 100%;
+    height: 92px;
+    padding: 0 5.3%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 30;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #173445;
+    font-size: 25px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+}
+
+.logo-mark {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10c796, #10b8e4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(18, 188, 173, 0.2);
+}
+
+.logo-mark::after {
+    content: "";
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: white;
+}
+
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 45px;
+    margin-left: 80px;
+}
+
+.nav-center a,
+.nav-right a {
+    color: #617887;
+    font-size: 15px;
+    font-weight: 550;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-center a:hover,
+.nav-right .signin:hover {
+    color: #13aeae;
+    transform: translateY(-1px);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 29px;
+}
+
+.nav-right .signin {
+    color: #183547;
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+    color: white;
+    background: linear-gradient(100deg, #0fc78f 0%, #0bb7df 100%);
+    box-shadow: 0 9px 22px rgba(14, 183, 175, 0.19);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 13px 30px rgba(14, 183, 175, 0.27);
+}
+
+.nav-cta {
+    padding: 13px 23px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    width: 100%;
+    min-height: calc(100vh - 92px);
+    display: grid;
+    grid-template-columns: 48% 52%;
+    align-items: center;
+    padding: 25px 5.3% 70px;
+    position: relative;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 700px;
+    padding-bottom: 40px;
+}
+
+.eyebrow {
+    display: inline-block;
+    margin-bottom: 38px;
+    color: #12a993;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    color: #102d3d;
+    font-size: clamp(54px, 5.1vw, 76px);
+    line-height: 1.03;
+    letter-spacing: -3.7px;
+    font-weight: 760;
+    max-width: 680px;
+    margin-bottom: 27px;
+}
+
+.highlight {
+    background: linear-gradient(90deg, #13b992 0%, #08b6d7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    color: #68808e;
+    font-size: 18px;
+    line-height: 1.65;
+    max-width: 670px;
+    margin-bottom: 34px;
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 35px;
+}
+
+.start-btn {
+    padding: 16px 28px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.watch-btn {
+    padding: 15px 26px;
+    background: rgba(255, 255, 255, 0.82);
+    color: #304957;
+    border: 1px solid #d9e5eb;
+    box-shadow: 0 4px 14px rgba(38, 70, 86, 0.05);
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.watch-btn:hover {
+    box-shadow: 0 8px 22px rgba(38, 70, 86, 0.09);
+}
+
+.play-icon {
+    width: 19px;
+    height: 19px;
+    border: 2px solid #405965;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   PRIVACY
+========================================================= */
+
+.privacy-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #657b88;
+    font-size: 13px;
+}
+
+.lock-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    border: 2px solid #718691;
+    border-radius: 3px;
+}
+
+.lock-icon::before {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border: 2px solid #718691;
+    border-bottom: 0;
+    border-radius: 7px 7px 0 0;
+    left: 50%;
+    top: -8px;
+    transform: translateX(-50%);
+}
+
+
+/* =========================================================
+   RIGHT VISUAL
+========================================================= */
+
+.hero-visual {
+    height: 690px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.orbit-system {
+    width: 690px;
+    height: 690px;
+    position: relative;
+    transform: translateX(-10px);
+}
+
+.orbit-system::before {
+    content: "";
+    position: absolute;
+    width: 620px;
+    height: 620px;
+    border-radius: 50%;
+    left: 35px;
+    top: 35px;
+    border: 1px solid rgba(180, 211, 222, 0.25);
+}
+
+
+/* =========================================================
+   ORBITS
+========================================================= */
+
+.orbit {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 1.5px solid;
+}
+
+.orbit-1 {
+    width: 540px; height: 360px;
+    border-color: rgba(70, 201, 238, 0.4);
+    transform: translate(-50%, -50%) rotate(-26deg);
+}
+
+.orbit-2 {
+    width: 570px; height: 390px;
+    border-color: rgba(161, 115, 242, 0.32);
+    transform: translate(-50%, -50%) rotate(-17deg);
+}
+
+.orbit-3 {
+    width: 590px; height: 420px;
+    border-color: rgba(57, 210, 160, 0.23);
+    transform: translate(-50%, -50%) rotate(7deg);
+}
+
+.orbit-4 {
+    width: 610px; height: 430px;
+    border-color: rgba(201, 215, 122, 0.21);
+    transform: translate(-50%, -50%) rotate(19deg);
+}
+
+.orbit-5 {
+    width: 530px; height: 350px;
+    border-color: rgba(107, 196, 238, 0.17);
+    transform: translate(-50%, -50%) rotate(43deg);
+}
+
+
+/* =========================================================
+   ORBIT DOTS
+========================================================= */
+
+.dot {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 12px currentColor;
+}
+
+.dot-green { color: #0fc69a; background: #0fc69a; top: 105px; left: 190px; }
+
+.dot-blue { color: #079fd4; background: #079fd4; top: 215px; right: 104px; }
+
+.dot-small {
+    width: 5px; height: 5px;
+    color: #0db98d; background: #0db98d;
+    right: 148px; bottom: 142px;
+}
+
+.dot-gray {
+    width: 5px; height: 5px;
+    background: #aabdc6;
+    left: 180px; bottom: 230px;
+}
+
+
+/* =========================================================
+   BIRD
+   Transform is driven entirely by script.js (no CSS transition,
+   so the two never fight each other).
+========================================================= */
+
+.bird-character {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    will-change: transform;
+    z-index: 8;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+/* Glow */
+
+.bird-glow {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    left: 10px;
+    top: 10px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(80, 220, 222, 0.30) 0%,
+        rgba(80, 216, 232, 0.15) 38%,
+        transparent 72%
+    );
+    filter: blur(20px);
+    transform: scale(1);
+    opacity: 0.85;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.bird-character:hover .bird-glow {
+    transform: scale(1.22);
+    opacity: 1;
+}
+
+
+/* Main bird image — gentle idle float, always running,
+   so the bird never jumps between states */
+
+.bird-base {
+    position: absolute;
+    width: 300px;
+    height: auto;
+    left: 0;
+    top: 0;
+    display: block;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+    filter: drop-shadow(0 14px 22px rgba(48, 173, 197, 0.17));
+    z-index: 2;
+    animation: birdBounce 2.6s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes birdBounce {
+    from { transform: translateY(0) rotate(-0.6deg); }
+    to   { transform: translateY(-6px) rotate(0.6deg); }
+}
+
+
+/* Wing copy: feathered mask instead of a hard clip, so no visible seams.
+   The mask sits over the wing only, so the crest/ear is never included. */
+
+.bird-wing {
+    position: absolute;
+    width: 300px;
+    height: auto;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation-play-state: paused;
+    will-change: transform, opacity;
+}
+
+.bird-wing-back {
+    -webkit-mask-image: radial-gradient(ellipse 30% 40% at 69% 33%, #000 45%, transparent 100%);
+    mask-image: radial-gradient(ellipse 30% 40% at 69% 33%, #000 45%, transparent 100%);
+    transform-origin: 46% 42%; /* shoulder joint */
+    animation: wingFlap 0.7s ease-in-out infinite alternate;
+}
+
+/* One wing layer is enough; a second one just adds more seams */
+.bird-wing-front {
+    display: none;
+}
+
+.bird-character:hover .bird-wing {
+    opacity: 1;
+    animation-play-state: running;
+}
+
+@keyframes wingFlap {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-9deg); }
+}
+
+
+/* =========================================================
+   FLOATING LABELS
+========================================================= */
+
+.floating-label {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(226, 236, 241, 0.8);
+    box-shadow: 0 12px 28px rgba(61, 94, 108, 0.12);
+    backdrop-filter: blur(10px);
+    color: #354c59;
+    font-size: 14px;
+    font-weight: 650;
+    white-space: nowrap;
+    z-index: 10;
+    animation: floatLabel 5s ease-in-out infinite;
+}
+
+.floating-label svg {
+    width: 18px;
+    height: 18px;
+    stroke: #0db8a5;
+}
+
+.label-signal  { left: 72px;   top: 225px;    animation-delay: -1s; }
+.label-context { right: 30px;  top: 140px;    animation-delay: -2s; }
+.label-again   { left: 115px;  bottom: 140px; animation-delay: -3s; }
+.label-insight { right: 75px;  bottom: 160px; animation-delay: -4s; }
+
+@keyframes floatLabel {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-7px); }
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.mobile-menu {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #dce8ed;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.mobile-menu span,
+.mobile-menu span::before,
+.mobile-menu span::after {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #294655;
+    position: relative;
+}
+
+.mobile-menu span::before { position: absolute; top: -6px; }
+
+.mobile-menu span::after { position: absolute; top: 6px; }
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .navbar { padding: 0 4%; }
+
+    .hero { padding-left: 4%; padding-right: 4%; }
+
+    .hero-title { font-size: 58px; }
+
+    .hero-visual {
+        transform: scale(0.85);
+        transform-origin: center;
+        margin-left: -50px;
+    }
+
+    .nav-center { gap: 28px; margin-left: 20px; }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE / TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .navbar { height: 78px; }
+
+    .nav-center,
+    .nav-right .signin { display: none; }
+
+    .nav-right { margin-left: auto; }
+
+    .mobile-menu { display: flex; }
+
+    .hero { grid-template-columns: 1fr; padding-top: 60px; }
+
+    .hero-content {
+        max-width: 760px;
+        margin: 0 auto;
+        padding-bottom: 0;
+        text-align: center;
+    }
+
+    .hero-title {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(48px, 8vw, 68px);
+    }
+
+    .hero-description { margin-left: auto; margin-right: auto; }
+
+    .hero-actions { justify-content: center; }
+
+    .privacy-note { justify-content: center; }
+
+    .hero-visual {
+        height: 550px;
+        margin-top: -10px;
+        margin-left: 0;
+        transform: scale(0.82);
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — PHONE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .navbar { padding: 0 22px; }
+
+    .logo { font-size: 21px; }
+
+    .logo-mark { width: 31px; height: 31px; }
+
+    .nav-cta { padding: 11px 17px; font-size: 13px; }
+
+    .hero { padding: 45px 22px 50px; }
+
+    .eyebrow { margin-bottom: 25px; font-size: 11px; }
+
+    .hero-title { font-size: 45px; letter-spacing: -2.3px; }
+
+    .hero-description { font-size: 16px; }
+
+    .hero-actions { flex-direction: column; }
+
+    .start-btn,
+    .watch-btn { width: 100%; max-width: 310px; }
+
+    .privacy-note { font-size: 12px; }
+
+    .hero-visual {
+        height: 430px;
+        transform: scale(0.57);
+        margin-top: -20px;
+        margin-bottom: -50px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .bird-base,
+    .bird-wing,
+    .floating-label {
+        animation: none !important;
+    }
+}
+
+
+/* =========================================================
+   BIRD EYE
+   A soft patch covers the painted pupil; a live pupil sits on
+   top and is moved by script.js. The layer copies the bird's
+   idle float so the eye stays glued to the head.
+========================================================= */
+
+.bird-eye-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 4;
+    transform-origin: 50% 50%;
+    animation: birdBounce 2.6s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.bird-eye {
+    position: absolute;
+    /* Tune these two if the eye is slightly off the painted eye */
+    left: var(--eye-left, 25%);
+    top: var(--eye-top, 29%);
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        #eefbfc 0%,
+        #e2f6f8 55%,
+        rgba(226, 246, 248, 0) 100%
+    );
+}
+
+.bird-pupil {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #1d4f74, #0a2740 70%);
+    transform: translate(var(--eye-x, 0px), var(--eye-y, 0px));
+}
+
+.bird-pupil::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bird-eye-layer { animation: none !important; }
+}
+
+/* =========================================================
+   LOGO IMAGE
+   logo.png has some transparent padding, so the negative margin
+   lines the icon up with the page edge.
+========================================================= */
+
+.site-logo {
+    display: block;
+    height: 56px;
+    width: auto;
+    margin-left: -19px;
+}
+
+@media (max-width: 600px) {
+    .site-logo { height: 46px; margin-left: -16px; }
+}
