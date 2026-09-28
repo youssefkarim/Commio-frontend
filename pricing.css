@@ -1,0 +1,244 @@
+/* =========================================================
+   COMMIO — PRICING PAGE
+========================================================= */
+
+:root {
+    --navy: #0c1f3f;
+    --ink: #102d3d;
+    --muted: #6b8090;
+    --line: #dfe9ef;
+    --blue: #1a7fa8;
+    --cyan: #36c5cc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #f7fafd;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 30px 32px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #173445;
+    font-size: 25px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+}
+
+.brand-mark {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10c796, #10b8e4);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 6px 18px rgba(18, 188, 173, 0.2);
+}
+
+.brand-mark::after {
+    content: "";
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.topbar-links { display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 600; }
+.topbar-links a { color: #617887; transition: color 0.2s ease; }
+.topbar-links a:hover { color: #13aeae; }
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.pricing {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 64px 32px 100px;
+}
+
+.eyebrow {
+    color: var(--blue);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    padding-bottom: 44px;
+    border-bottom: 1px solid var(--line);
+}
+
+.head h1 {
+    margin-top: 22px;
+    max-width: 720px;
+    color: var(--navy);
+    font-size: clamp(44px, 6vw, 82px);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+}
+
+.head p {
+    max-width: 380px;
+    padding-bottom: 8px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PLANS
+========================================================= */
+
+.plans {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 44px;
+    align-items: stretch;
+}
+
+.intro { padding: 32px 30px 0 32px; }
+
+.intro p {
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 330px;
+}
+
+.plan {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+}
+
+.plan-name { font-size: 20px; font-weight: 500; }
+
+.price {
+    margin-top: 32px;
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+.price small {
+    margin-left: 4px;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.desc {
+    margin-top: 12px;
+    margin-bottom: 26px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.plan-btn {
+    margin-top: auto;
+    display: grid;
+    place-items: center;
+    height: 72px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    font-size: 21px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plan-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(12, 31, 63, 0.1); }
+
+.plan.personal .plan-btn { background: #f5fbfc; border-color: #bfe4e8; }
+
+/* Featured plan */
+.plan.featured { background: var(--navy); border-color: var(--navy); color: #fff; }
+.plan.featured .desc { color: #b5c4d6; }
+.plan.featured .plan-btn { background: var(--cyan); border-color: var(--cyan); color: #06222e; }
+.plan.featured .plan-btn:hover { box-shadow: 0 12px 30px rgba(54, 197, 204, 0.4); }
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+    .plans { grid-template-columns: 1fr 1fr 1fr; }
+    .intro { grid-column: 1 / -1; padding: 0; }
+    .intro p { max-width: 520px; }
+}
+
+@media (max-width: 800px) {
+    .head { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .plans { grid-template-columns: 1fr; }
+    .plan-btn { height: 60px; font-size: 18px; }
+}
+
+@media (max-width: 600px) {
+    .topbar, .pricing { padding-left: 20px; padding-right: 20px; }
+    .pricing { padding-top: 44px; }
+    .brand { font-size: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
+
+/* =========================================================
+   LOGO IMAGE
+   logo.png has some transparent padding, so the negative margin
+   lines the icon up with the page edge.
+========================================================= */
+
+.site-logo {
+    display: block;
+    height: 56px;
+    width: auto;
+    margin-left: -19px;
+}
+
+@media (max-width: 600px) {
+    .site-logo { height: 46px; margin-left: -16px; }
+}

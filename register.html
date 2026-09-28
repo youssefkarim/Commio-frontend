@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register organization — Commio</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+    <header class="auth-header">
+        <a href="index.html" class="auth-logo" aria-label="Commio home">
+            <img src="logo.png" alt="Commio" class="site-logo">
+        </a>
+    </header>
+
+    <main class="auth-wrap">
+        <section class="card" style="--w: 520px">
+
+            <h1>Register Organization</h1>
+            <p class="sub">Configure multi-tenant communication rubrics and manage workforce development at scale.</p>
+
+            <form id="registerForm" novalidate>
+                <div class="grid">
+
+                    <div class="field" data-rule="required">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-wrap"><input type="text" id="fullName" autocomplete="name"></div>
+                        <p class="error">Please enter your full name</p>
+                    </div>
+
+                    <div class="field" data-rule="email">
+                        <label for="workEmail">Work Email Address</label>
+                        <div class="input-wrap"><input type="email" id="workEmail" autocomplete="email"></div>
+                        <p class="error">Please enter a valid work email address</p>
+                    </div>
+
+                    <div class="field" data-rule="password">
+                        <label for="pw">Password</label>
+                        <div class="input-wrap"><input type="password" id="pw" autocomplete="new-password"></div>
+                        <p class="error">Use at least 8 characters</p>
+                    </div>
+
+                    <div class="field" data-rule="match">
+                        <label for="pw2">Confirm Password</label>
+                        <div class="input-wrap"><input type="password" id="pw2" autocomplete="new-password"></div>
+                        <p class="error">Passwords don't match</p>
+                    </div>
+
+                    <div class="field full" data-rule="required">
+                        <label for="orgName">Organization Name</label>
+                        <div class="input-wrap"><input type="text" id="orgName" autocomplete="organization"></div>
+                        <p class="error">Please enter your organization name</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="orgType">Organization Type</label>
+                        <select id="orgType">
+                            <option>Technology &amp; IT</option>
+                            <option>Financial Services</option>
+                            <option>Healthcare</option>
+                            <option>Education</option>
+                            <option>Retail &amp; Consumer</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="orgSize">Organization Size</label>
+                        <select id="orgSize">
+                            <option>1 - 50 Employees</option>
+                            <option>51 - 200 Employees</option>
+                            <option>201 - 500 Employees</option>
+                            <option>500 - 1,000 Employees</option>
+                            <option>1,000+ Employees</option>
+                        </select>
+                    </div>
+
+                    <div class="field full">
+                        <label for="useCase">Primary Use Case</label>
+                        <select id="useCase">
+                            <option>Evaluate and develop client-facing communication channels</option>
+                            <option>Coach internal team communication</option>
+                            <option>Prepare leaders for presentations</option>
+                            <option>Onboard and train new hires</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="field check" id="consentField">
+                    <input type="checkbox" id="consent">
+                    <label for="consent">I confirm that I have administrative rights to create this corporate telemetry profile.</label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span class="spinner"></span>
+                    <span id="submitText">Create Organization Portal</span>
+                </button>
+            </form>
+
+            <div class="divider">OR</div>
+
+            <button type="button" class="btn-ghost" id="ssoBtn">Register with Enterprise Google SSO</button>
+
+            <p class="foot" style="margin-top: 22px">
+                Already registered?
+                <a href="signin.html#organization">Sign In</a>
+            </p>
+
+            <p class="notice" id="notice" role="status"></p>
+
+        </section>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>
