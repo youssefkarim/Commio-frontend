@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Speech - commio</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<script src="https://unpkg.com/lucide@latest"></script>
+	<style>
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+		:root {
+			--bg: #f4f9fc; --navy: #102d3d; --navy-soft: #294653;
+			--muted: #718894; --muted-light: #91a4ad;
+			--border: #dce9ee; --border-soft: #e7f0f3;
+			--teal: #0fc78f; --teal-dark: #08a979; --cyan: #0bb7df;
+			--cream-border: #f3e5ad; --shadow: 0 12px 35px rgba(37,76,91,.07);
+			--shadow-hover: 0 16px 40px rgba(37,76,91,.11);
+		}
+		html { scroll-behavior: smooth; }
+		body {
+			min-height: 100vh; overflow-x: hidden; color: var(--navy);
+			font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			background: radial-gradient(circle at 90% 5%,rgba(11,183,223,.10),transparent 25%),radial-gradient(circle at 25% 100%,rgba(15,199,143,.08),transparent 30%),var(--bg);
+		}
+		button { font: inherit; border: 0; cursor: pointer; }
+		.app { min-height: 100vh; display: flex; position: relative; isolation: isolate; overflow: hidden; }
+		.sidebar { width: 255px; flex: 0 0 255px; min-height: 100vh; padding: 28px 16px 20px; position: relative; z-index: 20; overflow: visible; background: rgba(255,255,255,.76); border-right: 1px solid var(--border); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: width .3s ease,flex-basis .3s ease,padding .3s ease,box-shadow .3s ease; }
+		.sidebar-inner { height: calc(100vh - 48px); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; transition: opacity .2s ease,visibility .2s ease; }
+		.logo { display: flex; align-items: center; gap: 10px; padding: 4px 10px 30px; }
+		.logo-mark { width: 34px; height: 34px; display: grid; place-items: center; flex: 0 0 auto; color: white; border-radius: 12px; background: linear-gradient(135deg,var(--teal),var(--cyan)); box-shadow: 0 8px 18px rgba(11,183,223,.20); }
+		.logo-mark svg { width: 19px; }
+		.logo-text { color: var(--navy); font-size: 21px; font-weight: 800; }
+		.nav-menu { display: flex; flex-direction: column; gap: 6px; }
+		.nav-link { height: 46px; padding: 0 13px; display: flex; align-items: center; gap: 12px; color: var(--muted); border-radius: 14px; text-decoration: none; font-size: 13px; font-weight: 600; transition: background .2s ease,color .2s ease,transform .2s ease; }
+		.nav-link svg { width: 18px; height: 18px; flex: 0 0 auto; }
+		.nav-link:hover { color: var(--navy); background: rgba(15,199,143,.07); transform: translateX(2px); }
+		.nav-link.active { color: var(--teal-dark); background: linear-gradient(100deg,rgba(15,199,143,.12),rgba(11,183,223,.09)); }
+		.sidebar-footer { padding-top: 10px; }
+		.org-card { padding: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(255,255,255,.74); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 6px 18px rgba(43,79,93,.04); }
+		.org-info { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+		.org-title { color: var(--navy); font-size: 11px; font-weight: 700; }
+		.org-sub { color: var(--muted); font-size: 10px; }
+		.more-icon { width: 17px; color: var(--muted); }
+		.sidebar-toggle { position: absolute; top: 28px; left: 239px; z-index: 100; width: 32px; height: 32px; display: grid; place-items: center; color: #56727f; background: rgba(255,255,255,.96); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 5px 16px rgba(32,72,88,.10); transition: left .3s ease,background .2s ease,color .2s ease,transform .2s ease; }
+		.sidebar-toggle:hover { color: var(--teal-dark); background: white; transform: translateY(-1px); }
+		.sidebar-toggle svg { width: 17px; height: 17px; }
+		.sidebar-toggle:focus-visible { outline: 2px solid var(--teal-dark); outline-offset: 2px; }
+		.app.sidebar-collapsed .sidebar { width: 0; flex-basis: 0; padding-left: 0; padding-right: 0; border-right-color: transparent; }
+		.app.sidebar-collapsed .sidebar-inner { opacity: 0; visibility: hidden; pointer-events: none; }
+		.app.sidebar-collapsed .sidebar-toggle { position: fixed; top: 18px; left: 12px; }
+
+		.main { flex: 1; min-width: 0; padding: 42px 48px 70px; position: relative; z-index: 1; }
+		.content { max-width: 1180px; margin: 0 auto; }
+		.header { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+		.back { margin-bottom: 13px; display: inline-flex; align-items: center; gap: 7px; color: #6d8793; font-size: 12px; font-weight: 600; text-decoration: none; transition: color .2s ease; }
+		.back:hover { color: var(--teal-dark); }
+		.back svg { width: 15px; height: 15px; }
+		.title { margin-bottom: 9px; color: var(--navy); font-size: clamp(26px,3vw,34px); font-weight: 800; }
+		.desc { max-width: 570px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+		.picker { position: relative; flex: 0 0 auto; }
+		.picker-btn { min-height: 46px; max-width: 100%; padding: 0 14px; display: flex; align-items: center; gap: 10px; color: var(--navy); background: rgba(255,255,255,.82); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 6px 20px rgba(43,79,93,.05); font-size: 12px; font-weight: 700; transition: border-color .18s ease,box-shadow .18s ease,background .18s ease; }
+		.picker-btn:hover,.picker-btn[aria-expanded="true"] { background: white; border-color: rgba(15,167,121,.38); box-shadow: 0 9px 24px rgba(43,119,104,.12); }
+		.picker-btn:focus-visible { outline: 2px solid var(--teal-dark); outline-offset: 2px; }
+		.picker-btn svg:first-child { width: 17px; flex: 0 0 auto; color: var(--teal-dark); }
+		.picker-btn svg:last-child { width: 15px; color: var(--muted); transition: transform .18s ease; }
+		.picker-btn[aria-expanded="true"] svg:last-child { transform: rotate(180deg); }
+		.selected-label { max-width: min(220px,42vw); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+		.duration { padding-left: 6px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+		.picker-menu { position: fixed; top: 0; left: 0; right: auto; z-index: 80; width: min(320px,calc(100vw - 24px)); max-height: min(380px,calc(100vh - 24px)); overflow-y: auto; overscroll-behavior: contain; padding: 8px; background: rgba(255,255,255,.97); border: 1px solid rgba(220,233,238,.95); border-radius: 16px; box-shadow: 0 18px 45px rgba(23,63,78,.16),0 3px 10px rgba(23,63,78,.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+		.picker-menu[hidden] { display: none; }
+		.picker-group + .picker-group { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border-soft); }
+		.picker-group-label { padding: 7px 10px 5px; color: var(--muted-light); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+		.picker-option { width: 100%; min-height: 43px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--navy-soft); background: transparent; border: 0; border-radius: 10px; text-align: left; cursor: pointer; transition: background .16s ease,color .16s ease; }
+		.picker-option:hover,.picker-option:focus-visible,.picker-option[aria-checked="true"] { color: var(--teal-dark); background: linear-gradient(100deg,rgba(15,199,143,.10),rgba(11,183,223,.07)); outline: 0; }
+		.picker-option-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 700; }
+		.picker-option-meta { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; color: var(--muted); font-size: 10px; font-weight: 600; }
+		.picker-option-meta svg { width: 14px; height: 14px; color: var(--teal-dark); opacity: 0; }
+		.picker-option[aria-checked="true"] .picker-option-meta svg { opacity: 1; }
+
+		.metrics { display: grid; grid-template-columns: 1.5fr repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
+		.metric { min-height: 145px; padding: 20px; background: rgba(255,255,255,.86); border: 1px solid var(--border); border-radius: 21px; box-shadow: var(--shadow); transition: transform .2s ease,box-shadow .2s ease; }
+		.metric:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+		.overall { display: flex; align-items: center; gap: 20px; background: linear-gradient(135deg,rgba(255,255,255,.95),rgba(239,251,249,.90)); }
+		.donut { width: 92px; height: 92px; position: relative; flex: 0 0 auto; }
+		.donut svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+		.ring { fill: none; stroke: #e8f0f2; stroke-width: 3.2; }
+		.donut-fill { fill: none; stroke: #11bda0; stroke-width: 3.2; stroke-linecap: round; }
+		.donut-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+		.donut-num b { color: var(--navy); font-size: 25px; }
+		.donut-num span { margin-top: 4px; color: var(--muted); font-size: 9px; }
+		.overall h2 { margin-bottom: 10px; color: var(--navy); font-size: 15px; }
+		.status { display: inline-flex; align-items: center; gap: 7px; padding: 7px 9px; color: #159b78; background: rgba(15,199,143,.09); border-radius: 999px; font-size: 10px; font-weight: 700; }
+		.status-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+		.metric-head { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; font-weight: 700; }
+		.metric-head svg { width: 18px; height: 18px; color: var(--teal-dark); }
+		.metric-value { margin-top: 23px; }
+		.metric-value b { color: var(--navy); font-size: 31px; }
+		.metric-value span { margin-left: 3px; color: var(--muted); font-size: 11px; }
+
+		.card { margin-bottom: 20px; padding: 25px; background: rgba(255,255,255,.87); border: 1px solid var(--border); border-radius: 23px; box-shadow: var(--shadow); }
+		.split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+		.card-head { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+		.head-title { display: flex; align-items: flex-start; gap: 12px; }
+		.head-title > svg { width: 19px; flex: 0 0 auto; margin-top: 2px; color: var(--teal-dark); }
+		.head-title h2,.head-title h3 { color: var(--navy); font-size: 16px; font-weight: 800; }
+		.sub { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+		.tag { height: max-content; display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; color: #159b78; background: rgba(15,199,143,.08); border: 1px solid rgba(15,199,143,.15); border-radius: 999px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+		.tag-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+		.timeline { height: 170px; display: flex; align-items: flex-end; gap: 5px; padding: 10px 4px 22px; border-bottom: 1px solid var(--border-soft); }
+		.bar { flex: 1; border-radius: 7px 7px 2px 2px; background: linear-gradient(180deg,var(--cyan),rgba(11,183,223,.18)); }
+		.bar.teal { background: linear-gradient(180deg,var(--teal),rgba(15,199,143,.18)); }
+		.labels { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; color: #9aabb2; font-size: 9px; }
+		.feedback { display: flex; align-items: center; gap: 10px; padding: 10px 13px; color: #7f6d38; background: linear-gradient(100deg,rgba(255,248,221,.90),rgba(255,251,237,.80)); border: 1px solid var(--cream-border); border-radius: 13px; font-size: 10px; font-weight: 600; line-height: 1.5; }
+		.feedback svg { width: 16px; height: 16px; flex: 0 0 auto; color: #d7a72d; }
+		.progress { margin: 15px 0; }
+		.progress-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 7px; color: var(--muted); font-size: 10px; font-weight: 700; }
+		.progress-head strong { color: var(--navy); }
+		.track { height: 9px; overflow: hidden; background: #edf4f6; border-radius: 99px; }
+		.track span { height: 100%; display: block; background: linear-gradient(90deg,var(--teal),var(--cyan)); border-radius: inherit; }
+		.stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; margin: 22px 0; }
+		.stat { min-width: 0; padding: 12px 8px; background: #f7fbfc; border: 1px solid #e6f0f3; border-radius: 12px; text-align: center; }
+		.stat b { display: block; color: var(--navy); font-size: 15px; }
+		.stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 8px; }
+		.quote-list { display: flex; flex-direction: column; gap: 9px; }
+		.quote { padding: 11px 12px; color: #617984; background: #f7fbfc; border: 1px solid #e5eff2; border-radius: 12px; font-size: 10px; line-height: 1.5; }
+		.quote strong { display: block; margin-bottom: 3px; color: var(--navy); font-size: 9px; }
+		.toast { position: fixed; right: 24px; bottom: 24px; z-index: 200; display: flex; align-items: center; gap: 9px; padding: 12px 16px; color: white; background: rgba(16,45,61,.95); border-radius: 13px; box-shadow: 0 12px 35px rgba(16,45,61,.20); font-size: 11px; font-weight: 600; transform: translateY(100px); opacity: 0; pointer-events: none; transition: transform .3s ease,opacity .3s ease; }
+		.toast.show { transform: translateY(0); opacity: 1; }
+		.toast svg { width: 16px; color: var(--teal); }
+
+		@media (max-width: 950px) { .metrics { grid-template-columns: 1fr 1fr; } .overall { grid-column: span 2; } .main { padding: 30px 25px; } .split { grid-template-columns: 1fr; } .header { flex-direction: column; } }
+		@media (max-width: 650px) { .main { padding: 28px 18px 55px; } .metrics { grid-template-columns: 1fr; } .overall { grid-column: auto; } .picker { width: 100%; } .picker-btn { width: 100%; justify-content: space-between; } .stats { grid-template-columns: repeat(2,minmax(0,1fr)); } .card { padding: 19px; } .card-head { flex-direction: column; } .tag { width: fit-content; } }
+		@media (max-width: 470px) { .sidebar { position: fixed; inset: 0 auto 0 0; width: 0; flex-basis: 0; height: 100vh; min-height: 100vh; padding: 28px 0 20px; box-shadow: none; transition: width .3s ease,flex-basis .3s ease,padding .3s ease,box-shadow .3s ease; } .sidebar-inner { height: calc(100vh - 48px); min-width: 225px; } .app.sidebar-open .sidebar { width: 225px; flex-basis: 225px; padding-left: 16px; padding-right: 16px; box-shadow: 12px 0 35px rgba(32,72,88,.12); } .app:not(.sidebar-open) .sidebar-inner { opacity: 0; visibility: hidden; } .sidebar-toggle { position: fixed; top: 18px; left: 12px; } .app.sidebar-open .sidebar-toggle { left: 189px; } .main { width: 100%; padding: 72px 16px 55px; } .header { gap: 22px; } .picker-menu { max-height: calc(100vh - 24px); } }
+		@media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+	</style>
+</head>
+<body>
+	<div class="app" id="app">
+		<aside class="sidebar" id="sidebar">
+			<div class="sidebar-inner">
+				<div>
+					<div class="logo"><div class="logo-mark"><i data-lucide="waves"></i></div><span class="logo-text">commio</span></div>
+					<nav class="nav-menu" aria-label="Main navigation">
+						<a href="dashboard.html" class="nav-link active"><i data-lucide="home"></i><span>Home</span></a>
+						<a href="plan.html" class="nav-link"><i data-lucide="check-square"></i><span>Training Plan</span></a>
+						<a href="#" class="nav-link" data-nav-message="Progress page isn't available yet."><i data-lucide="trending-up"></i><span>Progress</span></a>
+						<a href="#" class="nav-link" data-nav-message="Coaching page isn't available yet."><i data-lucide="message-square"></i><span>Coaching</span></a>
+						<a href="#" class="nav-link" data-nav-message="Settings page isn't available yet."><i data-lucide="settings"></i><span>Settings</span></a>
+					</nav>
+				</div>
+				<div class="sidebar-footer"><div class="org-card"><div class="org-info"><span class="org-title">Communication</span><span class="org-sub">Group Operations</span></div><i data-lucide="more-horizontal" class="more-icon"></i></div></div>
+			</div>
+			<button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-expanded="true"><i data-lucide="panel-left-close"></i></button>
+		</aside>
+
+		<main class="main"><div class="content">
+			<header class="header">
+				<div><a class="back" href="dashboard.html"><i data-lucide="arrow-left"></i>Back to Analytics</a><h1 class="title">Speech</h1><p class="desc">Analyze fluency, pronunciation, clarity and filler words in your speech.</p></div>
+				<div class="picker" id="picker">
+					<button class="picker-btn" id="pickerBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="pickerMenu" aria-label="Choose a presentation or video"><i data-lucide="play-circle"></i><span class="selected-label" id="selected">Presentation 01</span><span class="duration" id="duration" aria-live="polite">1.7 min</span><i data-lucide="chevron-down"></i></button>
+					<div class="picker-menu" id="pickerMenu" role="menu" aria-label="Presentations and videos" hidden>
+						<div class="picker-group" role="group" aria-labelledby="presentationsLabel"><div class="picker-group-label" id="presentationsLabel">Presentations</div>
+							<button class="picker-option" type="button" role="menuitemradio" data-title="Presentation 01" data-time="1.7 min" aria-checked="true"><span class="picker-option-name">Presentation 01</span><span class="picker-option-meta">1.7 min<i data-lucide="check"></i></span></button>
+							<button class="picker-option" type="button" role="menuitemradio" data-title="Presentation 02" data-time="4.3 min" aria-checked="false"><span class="picker-option-name">Presentation 02</span><span class="picker-option-meta">4.3 min<i data-lucide="check"></i></span></button>
+							<button class="picker-option" type="button" role="menuitemradio" data-title="Presentation 03" data-time="6.6 min" aria-checked="false"><span class="picker-option-name">Presentation 03</span><span class="picker-option-meta">6.6 min<i data-lucide="check"></i></span></button>
+						</div>
+						<div class="picker-group" role="group" aria-labelledby="videosLabel"><div class="picker-group-label" id="videosLabel">Videos</div>
+							<button class="picker-option" type="button" role="menuitemradio" data-title="Product Demo" data-time="6.2 min" aria-checked="false"><span class="picker-option-name">Product Demo</span><span class="picker-option-meta">6.2 min<i data-lucide="check"></i></span></button>
+							<button class="picker-option" type="button" role="menuitemradio" data-title="Interview Practice" data-time="9.1 min" aria-checked="false"><span class="picker-option-name">Interview Practice</span><span class="picker-option-meta">9.1 min<i data-lucide="check"></i></span></button>
+							<button class="picker-option" type="button" role="menuitemradio" data-title="Team Update" data-time="12.1 min" aria-checked="false"><span class="picker-option-name">Team Update</span><span class="picker-option-meta">12.1 min<i data-lucide="check"></i></span></button>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<section class="metrics" aria-label="Speech summary">
+				<article class="metric overall"><div class="donut"><svg viewBox="0 0 42 42" aria-hidden="true"><circle class="ring" cx="21" cy="21" r="15.9155"></circle><circle class="donut-fill" cx="21" cy="21" r="15.9155" stroke-dasharray="82 18"></circle></svg><div class="donut-num"><b>82</b><span>/ 100</span></div></div><div><h2>Speech Score</h2><span class="status"><i class="status-dot"></i>Clear and mostly fluent</span></div></article>
+				<article class="metric"><div class="metric-head"><i data-lucide="messages-square"></i><span>Fluency</span></div><div class="metric-value"><b>88</b><span>/ 100</span></div></article>
+				<article class="metric"><div class="metric-head"><i data-lucide="mic-2"></i><span>Pronunciation</span></div><div class="metric-value"><b>84</b><span>/ 100</span></div></article>
+				<article class="metric"><div class="metric-head"><i data-lucide="message-square-warning"></i><span>Filler Words</span></div><div class="metric-value"><b>17</b><span>words</span></div></article>
+			</section>
+
+			<section class="card">
+				<div class="card-head"><div class="head-title"><i data-lucide="messages-square"></i><div><h2>Speech Clarity</h2><p class="sub">A view of fluency and pronunciation consistency across your recording.</p></div></div><span class="tag"><i class="tag-dot"></i>Easy to follow</span></div>
+				<div class="big-stat"><b>88</b><span>fluency score</span></div>
+				<div class="timeline" role="img" aria-label="Speech clarity over the recording"><div class="bar teal" style="height:88%"></div><div class="bar teal" style="height:92%"></div><div class="bar" style="height:74%"></div><div class="bar teal" style="height:90%"></div><div class="bar teal" style="height:84%"></div><div class="bar" style="height:70%"></div><div class="bar teal" style="height:93%"></div><div class="bar teal" style="height:89%"></div><div class="bar" style="height:79%"></div><div class="bar teal" style="height:95%"></div></div>
+				<div class="labels"><span>0:00</span><span>0:30</span><span>1:00</span><span>1:30</span></div>
+				<div class="feedback" style="margin-top:18px"><i data-lucide="lightbulb"></i><span>Your speech was generally smooth and clear, with a few moments where filler words increased during transitions.</span></div>
+			</section>
+
+			<div class="split">
+				<section class="card">
+					<div class="card-head"><div class="head-title"><i data-lucide="mic-2"></i><div><h3>Pronunciation</h3><p class="sub">How consistently words were pronounced clearly.</p></div></div></div>
+					<div class="big-stat"><b>84%</b><span>clarity</span></div>
+					<div class="progress"><div class="progress-head"><span>Word clarity</span><strong>91%</strong></div><div class="track"><span style="width:91%"></span></div></div>
+					<div class="progress"><div class="progress-head"><span>Consistency</span><strong>84%</strong></div><div class="track"><span style="width:84%"></span></div></div>
+					<div class="stats"><div class="stat"><b>93%</b><span>Recognized</span></div><div class="stat"><b>6</b><span>Difficult words</span></div><div class="stat"><b>2</b><span>Corrections</span></div><div class="stat"><b>84</b><span>Score</span></div></div>
+				</section>
+				<section class="card">
+					<div class="card-head"><div class="head-title"><i data-lucide="message-square-warning"></i><div><h3>Filler Words</h3><p class="sub">Words used while thinking or transitioning between ideas.</p></div></div></div>
+					<div class="big-stat"><b>17</b><span>filler words</span></div>
+					<div class="progress"><div class="progress-head"><span>um</span><strong>8</strong></div><div class="track"><span style="width:85%"></span></div></div>
+					<div class="progress"><div class="progress-head"><span>you know</span><strong>4</strong></div><div class="track"><span style="width:60%"></span></div></div>
+					<div class="progress"><div class="progress-head"><span>like</span><strong>3</strong></div><div class="track"><span style="width:40%"></span></div></div>
+					<div class="progress"><div class="progress-head"><span>so</span><strong>2</strong></div><div class="track"><span style="width:25%"></span></div></div>
+					<div class="feedback"><i data-lucide="lightbulb"></i><span>Most filler words appeared while moving between topics.</span></div>
+				</section>
+			</div>
+
+			<section class="card">
+				<div class="card-head"><div class="head-title"><i data-lucide="file-text"></i><div><h2>Speech Highlights</h2><p class="sub">Moments that may be useful when reviewing the transcript.</p></div></div></div>
+				<div class="quote-list"><div class="quote"><strong>Clear explanation</strong>Your explanation was easy to follow and stayed focused on the main point.</div><div class="quote"><strong>Transition</strong>A few filler words appeared before introducing the next idea.</div><div class="quote"><strong>Strong delivery</strong>Your final statement was delivered with clear pronunciation and confidence.</div></div>
+			</section>
+		</div></main>
+	</div>
+
+	<div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="check-circle"></i><span id="toastMessage">Done</span></div>
+	<script>
+		lucide.createIcons();
+		const app = document.getElementById("app");
+		const sidebarToggle = document.getElementById("sidebarToggle");
+		const toast = document.getElementById("toast");
+		const toastMessage = document.getElementById("toastMessage");
+		let toastTimer;
+
+		function showToast(message) {
+			toastMessage.textContent = message;
+			toast.classList.add("show");
+			clearTimeout(toastTimer);
+			toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+		}
+		function isMobile() { return window.innerWidth <= 470; }
+		function updateSidebarToggle() {
+			const expanded = isMobile() ? app.classList.contains("sidebar-open") : !app.classList.contains("sidebar-collapsed");
+			sidebarToggle.setAttribute("aria-expanded", String(expanded));
+			sidebarToggle.setAttribute("aria-label", expanded ? "Collapse sidebar" : "Expand sidebar");
+			sidebarToggle.title = expanded ? "Collapse sidebar" : "Expand sidebar";
+			sidebarToggle.innerHTML = expanded ? '<i data-lucide="panel-left-close"></i>' : '<i data-lucide="panel-left-open"></i>';
+			lucide.createIcons();
+		}
+		sidebarToggle.addEventListener("click", () => {
+			if (isMobile()) { app.classList.toggle("sidebar-open"); app.classList.remove("sidebar-collapsed"); }
+			else { app.classList.toggle("sidebar-collapsed"); app.classList.remove("sidebar-open"); }
+			updateSidebarToggle();
+		});
+		window.addEventListener("resize", () => {
+			if (isMobile()) app.classList.remove("sidebar-collapsed");
+			else app.classList.remove("sidebar-open");
+			updateSidebarToggle();
+		});
+		updateSidebarToggle();
+		document.querySelectorAll(".nav-link[data-nav-message]").forEach(link => link.addEventListener("click", event => { event.preventDefault(); showToast(link.dataset.navMessage); }));
+
+		const picker = document.getElementById("picker");
+		const pickerButton = document.getElementById("pickerBtn");
+		const pickerMenu = document.getElementById("pickerMenu");
+		const options = [...pickerMenu.querySelectorAll(".picker-option")];
+		function positionMenu() {
+			const trigger = pickerButton.getBoundingClientRect();
+			const edge = 12;
+			const width = Math.min(320, window.innerWidth - edge * 2);
+			const height = pickerMenu.getBoundingClientRect().height;
+			const left = Math.min(Math.max(trigger.left, edge), window.innerWidth - width - edge);
+			let top = trigger.bottom + 8;
+			if (top + height > window.innerHeight - edge) top = Math.max(edge, trigger.top - height - 8);
+			pickerMenu.style.width = `${width}px`;
+			pickerMenu.style.left = `${left}px`;
+			pickerMenu.style.top = `${top}px`;
+		}
+		function setMenuOpen(open) {
+			pickerMenu.hidden = !open;
+			pickerButton.setAttribute("aria-expanded", String(open));
+			if (open) { positionMenu(); options.find(option => option.getAttribute("aria-checked") === "true").focus(); }
+		}
+		pickerButton.addEventListener("click", () => setMenuOpen(pickerMenu.hidden));
+		pickerMenu.addEventListener("click", event => {
+			const selected = event.target.closest(".picker-option");
+			if (!selected) return;
+			options.forEach(option => option.setAttribute("aria-checked", String(option === selected)));
+			document.getElementById("selected").textContent = selected.dataset.title;
+			document.getElementById("duration").textContent = selected.dataset.time;
+			setMenuOpen(false);
+			pickerButton.focus();
+		});
+		pickerMenu.addEventListener("keydown", event => {
+			const index = options.indexOf(document.activeElement);
+			if (event.key === "Escape") { event.preventDefault(); setMenuOpen(false); pickerButton.focus(); }
+			else if (event.key === "ArrowDown" || event.key === "ArrowUp") { event.preventDefault(); const step = event.key === "ArrowDown" ? 1 : -1; options[(index + step + options.length) % options.length].focus(); }
+			else if (event.key === "Home" || event.key === "End") { event.preventDefault(); options[event.key === "Home" ? 0 : options.length - 1].focus(); }
+		});
+		document.addEventListener("click", event => { if (!picker.contains(event.target)) setMenuOpen(false); });
+		window.addEventListener("resize", () => { if (!pickerMenu.hidden) positionMenu(); });
+		window.addEventListener("scroll", () => { if (!pickerMenu.hidden) positionMenu(); }, { passive: true });
+	</script>
+</body>
+</html>

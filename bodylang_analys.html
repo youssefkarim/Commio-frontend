@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Language - commio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f4f9fc;--navy:#102d3d;--muted:#718894;--border:#dce9ee;--teal:#0fc78f;--cyan:#0bb7df;--cream:#fff7dc;--cream-border:#f3e5ad;--shadow:0 12px 35px rgba(37,76,91,.07)}
+body{font-family:Inter,Arial,sans-serif;color:var(--navy);background:radial-gradient(circle at 90% 5%,rgba(11,183,223,.1),transparent 25%),radial-gradient(circle at 25% 100%,rgba(15,199,143,.08),transparent 30%),var(--bg);min-height:100vh}
+button{font:inherit;border:0;cursor:pointer}.app{min-height:100vh;display:flex}
+.sidebar{width:255px;flex:0 0 255px;min-height:100vh;padding:28px 16px 20px;background:rgba(255,255,255,.78);backdrop-filter:blur(14px);border-right:1px solid var(--border);position:relative;z-index:20;transition:.3s}
+.sidebar-inner{height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.sidebar.collapsed{width:0;flex-basis:0;padding:0;border-right-color:transparent}.sidebar.collapsed .sidebar-inner{opacity:0;visibility:hidden}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 10px 30px}.logo-mark{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--teal),var(--cyan));color:white}.logo-mark svg{width:19px}.logo-text{font-size:21px;font-weight:800}
+.nav-menu{display:flex;flex-direction:column;gap:6px}.nav-link{height:46px;padding:0 13px;display:flex;align-items:center;gap:12px;border-radius:14px;color:var(--muted);text-decoration:none!important;font-size:13px;font-weight:600;transition:.2s}.nav-link:hover{background:rgba(15,199,143,.07);color:var(--navy);transform:translateX(2px)}.nav-link.active{color:#08a979;background:linear-gradient(100deg,rgba(15,199,143,.12),rgba(11,183,223,.09))}
+.nav-link svg{width:18px}.sidebar-footer{padding:10px 0 0}.org-card{border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.74);padding:12px;display:flex;justify-content:space-between}.org-title{font-size:11px;font-weight:700}.org-sub{font-size:10px;color:var(--muted)}
+.sidebar-toggle{position:absolute;top:28px;left:239px;width:32px;height:32px;border:1px solid var(--border);border-radius:10px;background:white;color:#56727f;display:grid;place-items:center;box-shadow:0 5px 16px rgba(32,72,88,.1);z-index:100}.sidebar-toggle.collapsed{position:fixed;left:12px}
+.main{flex:1;min-width:0;padding:42px 48px 70px}.content{max-width:1180px;margin:auto}.header{display:flex;align-items:flex-start;justify-content:space-between;gap:30px;margin-bottom:30px}.back{display:inline-flex;align-items:center;gap:7px;color:#6d8793;text-decoration:none;font-size:12px;font-weight:600;margin-bottom:13px}.back:hover{color:#08a979}.back svg{width:15px}.title{font-size:clamp(26px,3vw,34px);font-weight:800;letter-spacing:-1.1px;margin-bottom:9px}.desc{font-size:13px;line-height:1.6;color:var(--muted);max-width:570px}
+.picker{position:relative}.picker-btn{min-height:46px;display:flex;align-items:center;gap:10px;padding:0 14px;background:rgba(255,255,255,.82);border:1px solid var(--border);border-radius:14px;box-shadow:0 6px 20px rgba(43,79,93,.05);font-size:12px;font-weight:700;color:var(--navy)}.picker-btn svg:first-child{color:#08a979;width:17px}.picker-menu{position:absolute;right:0;top:54px;width:310px;z-index:80;padding:8px;background:rgba(255,255,255,.98);border:1px solid var(--border);border-radius:16px;box-shadow:0 18px 45px rgba(23,63,78,.16)}.picker-menu[hidden]{display:none}.group+.group{border-top:1px solid #e7f0f3;margin-top:6px;padding-top:6px}.group-label{padding:7px 10px 5px;color:#91a4ad;font-size:9px;font-weight:800;text-transform:uppercase}.option{width:100%;display:flex;justify-content:space-between;padding:9px 10px;background:transparent;border-radius:10px;text-align:left;color:#294653;font-size:11px}.option:hover,.option[aria-checked=true]{background:rgba(15,199,143,.08);color:#08a979}
+.metrics{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:16px;margin-bottom:20px}.metric{min-height:145px;padding:20px;border-radius:21px;background:rgba(255,255,255,.86);border:1px solid var(--border);box-shadow:var(--shadow)}.overall{display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(239,251,249,.9))}.donut{width:92px;height:92px;position:relative;flex-shrink:0}.donut svg{width:100%;height:100%;transform:rotate(-90deg)}.ring{fill:none;stroke:#e8f0f2;stroke-width:3.2}.fill{fill:none;stroke:#11bda0;stroke-width:3.2;stroke-linecap:round}.donut-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}.donut-num b{font-size:25px}.donut-num span{font-size:9px;color:var(--muted)}.metric-head{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:11px;font-weight:700}.metric-head svg{width:18px;color:#08a979}.metric-value{margin-top:23px}.metric-value b{font-size:31px}.metric-value span{font-size:11px;color:var(--muted);margin-left:3px}.status{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-size:10px;font-weight:700;color:#159b78;background:rgba(15,199,143,.09);padding:7px 9px;border-radius:999px}.status i{width:6px;height:6px;background:var(--teal);border-radius:50%}
+.card{background:rgba(255,255,255,.87);border:1px solid var(--border);border-radius:23px;padding:25px;box-shadow:var(--shadow);margin-bottom:20px}.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card-head{display:flex;justify-content:space-between;gap:20px;margin-bottom:22px}.head-title{display:flex;gap:12px}.head-title>svg{width:19px;color:#08a979;margin-top:2px}.head-title h2,.head-title h3{font-size:16px;font-weight:800}.sub{color:var(--muted);font-size:11px;line-height:1.55;margin-top:5px}.tag{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;background:rgba(15,199,143,.08);border:1px solid rgba(15,199,143,.15);color:#159b78;font-size:10px;font-weight:700;height:max-content;white-space:nowrap}.tag i{width:6px;height:6px;background:var(--teal);border-radius:50%}
+.big{display:flex;align-items:baseline;gap:8px;margin-bottom:20px}.big b{font-size:34px}.big span{color:var(--muted);font-size:11px;font-weight:600}.progress{margin:15px 0}.phead{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;font-weight:700;margin-bottom:7px}.phead strong{color:var(--navy)}.track{height:9px;border-radius:99px;background:#edf4f6;overflow:hidden}.track div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--cyan))}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:22px 0}.stat{padding:12px 8px;background:#f7fbfc;border:1px solid #e6f0f3;border-radius:12px;text-align:center}.stat b{display:block;font-size:15px}.stat span{display:block;color:var(--muted);font-size:8px;margin-top:5px}.feedback{display:flex;align-items:center;gap:10px;padding:10px 13px;background:linear-gradient(100deg,rgba(255,248,221,.9),rgba(255,251,237,.8));border:1px solid var(--cream-border);border-radius:13px;color:#7f6d38;font-size:10px;font-weight:600;line-height:1.5}.feedback svg{width:16px;color:#d7a72d;flex-shrink:0}
+.timeline{height:170px;display:flex;align-items:flex-end;gap:5px;padding:10px 4px 22px;border-bottom:1px solid #e7f0f3}.bar{flex:1;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,var(--cyan),rgba(11,183,223,.18))}.bar.t{background:linear-gradient(180deg,var(--teal),rgba(15,199,143,.18))}.labels{display:flex;justify-content:space-between;color:#9aabb2;font-size:9px;margin-top:8px}
+.dist{display:flex;height:24px;border-radius:99px;overflow:hidden;background:#edf4f6;margin:18px 0 12px}.dist span{height:100%}.legend{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px}.legend div{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:10px}.swatch{width:8px;height:8px;border-radius:50%}
+.checks{display:flex;flex-direction:column;gap:10px;margin-top:15px}.check{display:flex;align-items:center;gap:9px;color:#657e89;font-size:10px}.check svg{width:16px;color:var(--teal)}
+.quotes{display:flex;flex-direction:column;gap:9px;margin-top:15px}.quote{padding:11px 12px;border-radius:12px;background:#f7fbfc;border:1px solid #e5eff2;font-size:10px;color:#617984;line-height:1.5}.quote strong{display:block;color:var(--navy);font-size:9px;margin-bottom:3px}
+@media(max-width:950px){.metrics{grid-template-columns:1fr 1fr}.overall{grid-column:span 2}.main{padding:30px 25px}.split{grid-template-columns:1fr}}
+@media(max-width:650px){.sidebar{position:fixed;left:0;top:0}.sidebar.collapsed{left:-255px}.main{padding:25px 16px}.header{flex-direction:column}.metrics{grid-template-columns:1fr}.overall{grid-column:auto}.picker{width:100%}.picker-btn{width:100%;justify-content:space-between}.picker-menu{width:100%}.stats{grid-template-columns:1fr 1fr}}
+
+/* Shared page controls used by Voice & Delivery */
+:root{--navy-soft:#294653;--muted-light:#91a4ad;--border-soft:#e7f0f3}
+body{overflow-x:hidden}
+.app{position:relative;isolation:isolate;overflow:hidden}
+.sidebar{overflow:visible;transition:width .3s ease,flex-basis .3s ease,padding .3s ease,box-shadow .3s ease;-webkit-backdrop-filter:blur(14px)}
+.sidebar-inner{transition:opacity .2s ease,visibility .2s ease}
+.app.sidebar-collapsed .sidebar{width:0;flex-basis:0;padding-left:0;padding-right:0;border-right-color:transparent}
+.app.sidebar-collapsed .sidebar-inner{opacity:0;visibility:hidden;pointer-events:none}
+.sidebar-toggle{transition:left .3s ease,background .2s ease,color .2s ease,transform .2s ease}
+.sidebar-toggle:focus-visible{outline:2px solid #08a979;outline-offset:2px}
+.app.sidebar-collapsed .sidebar-toggle{position:fixed;left:12px;top:18px}
+.main{position:relative;z-index:1}
+.header{align-items:flex-start;gap:30px;margin-bottom:30px}
+.picker{position:relative;flex:0 0 auto}
+.picker-btn{cursor:pointer;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}
+.picker-btn:hover,.picker-btn[aria-expanded="true"]{background:white;border-color:rgba(15,167,121,.38);box-shadow:0 9px 24px rgba(43,119,104,.12)}
+.picker-btn:focus-visible{outline:2px solid #08a979;outline-offset:2px}
+.picker-btn svg:last-child{transition:transform .18s ease}
+.picker-btn[aria-expanded="true"] svg:last-child{transform:rotate(180deg)}
+.picker-menu{position:fixed;top:0;left:0;right:auto;width:min(320px,calc(100vw - 24px));max-height:min(380px,calc(100vh - 24px));overflow-y:auto;overscroll-behavior:contain;z-index:80;padding:8px;background:rgba(255,255,255,.97);border:1px solid rgba(220,233,238,.95);border-radius:16px;box-shadow:0 18px 45px rgba(23,63,78,.16),0 3px 10px rgba(23,63,78,.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.picker-menu[hidden]{display:none}
+.group+.group{border-top:1px solid var(--border-soft);margin-top:6px;padding-top:6px}
+.group-label{padding:7px 10px 5px;color:var(--muted-light);font-size:9px;font-weight:800;letter-spacing:.08em}
+.option{min-height:43px;align-items:center;gap:12px;padding:8px 10px;border:0;text-align:left;cursor:pointer;transition:background .16s ease,color .16s ease}
+.option:hover,.option:focus-visible,.option[aria-checked="true"]{background:linear-gradient(100deg,rgba(15,199,143,.1),rgba(11,183,223,.07));color:#08a979;outline:0}
+.option-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:700}
+.option-meta{display:flex;align-items:center;gap:8px;flex:0 0 auto;color:var(--muted);font-size:10px;font-weight:600}
+.option-check{width:14px;height:14px;color:#08a979;opacity:0}
+.option[aria-checked="true"] .option-check{opacity:1}
+.org-card{align-items:center;gap:10px}
+.sidebar-footer .org-title{color:var(--navy)}
+.main{padding-top:42px}
+.toast{position:fixed;right:24px;bottom:24px;z-index:200;display:flex;align-items:center;gap:9px;padding:12px 16px;border-radius:13px;background:rgba(16,45,61,.95);color:white;font-size:11px;font-weight:600;box-shadow:0 12px 35px rgba(16,45,61,.2);transform:translateY(100px);opacity:0;pointer-events:none;transition:transform .3s ease,opacity .3s ease}
+.toast.show{transform:translateY(0);opacity:1}
+.toast svg{width:16px;color:var(--teal)}
+@media(max-width:950px){.header{flex-direction:column}.header-controls{width:100%}.picker{width:fit-content}}
+@media(max-width:650px){.main{padding:28px 18px 55px}.picker{width:100%}.picker-btn{width:100%;justify-content:space-between}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:470px){.sidebar{position:fixed;inset:0 auto 0 0;width:0;flex-basis:0;height:100vh;min-height:100vh;padding:28px 0 20px;box-shadow:none;transition:width .3s ease,flex-basis .3s ease,padding .3s ease,box-shadow .3s ease}.sidebar-inner{height:calc(100vh - 48px);min-width:225px}.app.sidebar-open .sidebar{width:225px;flex-basis:225px;padding-left:16px;padding-right:16px;box-shadow:12px 0 35px rgba(32,72,88,.12)}.app:not(.sidebar-open) .sidebar-inner{opacity:0;visibility:hidden}.sidebar-toggle{position:fixed;top:18px;left:12px}.app.sidebar-open .sidebar-toggle{left:189px}.main{width:100%;padding:72px 16px 55px}.header{gap:22px}.picker{width:100%}.picker-menu{max-height:calc(100vh - 24px)}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <div>
+      <div class="logo"><div class="logo-mark"><i data-lucide="waves"></i></div><span class="logo-text">commio</span></div>
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-link active"><i data-lucide="home"></i><span>Home</span></a>
+        <a href="plan.html" class="nav-link"><i data-lucide="check-square"></i><span>Training Plan</span></a>
+        <a href="#" class="nav-link" data-nav-message="Progress page isn't available yet."><i data-lucide="trending-up"></i><span>Progress</span></a>
+        <a href="#" class="nav-link" data-nav-message="Coaching page isn't available yet."><i data-lucide="message-square"></i><span>Coaching</span></a>
+        <a href="#" class="nav-link" data-nav-message="Settings page isn't available yet."><i data-lucide="settings"></i><span>Settings</span></a>
+      </nav>
+    </div>
+    <div class="sidebar-footer"><div class="org-card"><div><div class="org-title">Communication</div><div class="org-sub">Group Operations</div></div><i data-lucide="more-horizontal"></i></div></div>
+  </div>
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true"><i data-lucide="panel-left-close"></i></button>
+</aside>
+
+<main class="main"><div class="content">
+<header class="header">
+<div><a class="back" href="dashboard.html"><i data-lucide="arrow-left"></i>Back to Analytics</a>
+<h1 class="title">Body Language</h1><p class="desc">Analyze posture, gestures and eye contact throughout your communication.</p></div>
+
+<div class="picker" id="picker">
+  <button class="picker-btn" id="pickerBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="pickerMenu" aria-label="Choose a presentation or video">
+    <i data-lucide="play-circle"></i>
+    <span class="option-label" id="selected">Presentation 01</span>
+    <span class="option-meta" id="duration">1.7 min</span>
+    <i data-lucide="chevron-down"></i>
+  </button>
+  <div class="picker-menu" id="pickerMenu" role="menu" aria-label="Presentations and videos" hidden>
+    <div class="group" role="group" aria-labelledby="presentationsLabel">
+      <div class="group-label" id="presentationsLabel">Presentations</div>
+      <button class="option" type="button" role="menuitemradio" data-title="Presentation 01" data-time="1.7 min" aria-checked="true"><span class="option-label">Presentation 01</span><span class="option-meta">1.7 min<i data-lucide="check" class="option-check"></i></span></button>
+      <button class="option" type="button" role="menuitemradio" data-title="Presentation 02" data-time="4.3 min" aria-checked="false"><span class="option-label">Presentation 02</span><span class="option-meta">4.3 min<i data-lucide="check" class="option-check"></i></span></button>
+      <button class="option" type="button" role="menuitemradio" data-title="Presentation 03" data-time="6.6 min" aria-checked="false"><span class="option-label">Presentation 03</span><span class="option-meta">6.6 min<i data-lucide="check" class="option-check"></i></span></button>
+    </div>
+    <div class="group" role="group" aria-labelledby="videosLabel">
+      <div class="group-label" id="videosLabel">Videos</div>
+      <button class="option" type="button" role="menuitemradio" data-title="Product Demo" data-time="6.2 min" aria-checked="false"><span class="option-label">Product Demo</span><span class="option-meta">6.2 min<i data-lucide="check" class="option-check"></i></span></button>
+      <button class="option" type="button" role="menuitemradio" data-title="Interview Practice" data-time="9.1 min" aria-checked="false"><span class="option-label">Interview Practice</span><span class="option-meta">9.1 min<i data-lucide="check" class="option-check"></i></span></button>
+      <button class="option" type="button" role="menuitemradio" data-title="Team Update" data-time="12.1 min" aria-checked="false"><span class="option-label">Team Update</span><span class="option-meta">12.1 min<i data-lucide="check" class="option-check"></i></span></button>
+    </div>
+  </div>
+</div>
+
+</header>
+<section class="metrics">
+<div class="metric overall"><div class="donut"><svg viewBox="0 0 42 42"><circle class="ring" cx="21" cy="21" r="15.9155"></circle><circle class="fill" cx="21" cy="21" r="15.9155" stroke-dasharray="84 16"></circle></svg><div class="donut-num"><b>84</b><span>/ 100</span></div></div><div><h3>Body Language Score</h3><div class="status"><i></i>Strong non-verbal presence</div></div></div>
+<div class="metric"><div class="metric-head"><i data-lucide="person-standing"></i><span>Posture</span></div><div class="metric-value"><b>88</b><span>/ 100</span></div></div><div class="metric"><div class="metric-head"><i data-lucide="hand"></i><span>Gestures</span></div><div class="metric-value"><b>76</b><span>/ 100</span></div></div><div class="metric"><div class="metric-head"><i data-lucide="eye"></i><span>Eye Contact</span></div><div class="metric-value"><b>81</b><span>%</span></div></div>
+</section>
+
+<section class="card"><div class="card-head"><div class="head-title"><i data-lucide="person-standing"></i><div><h2>Posture Stability</h2><p class="sub">How consistently your posture supported a confident and open presence.</p></div></div><span class="tag"><i></i>Mostly steady</span></div><div class="big"><b>88</b><span>/ 100 posture score</span></div><div class="timeline"><div class="bar t" style="height:82%"></div><div class="bar t" style="height:88%"></div><div class="bar" style="height:72%"></div><div class="bar t" style="height:91%"></div><div class="bar t" style="height:86%"></div><div class="bar" style="height:68%"></div><div class="bar t" style="height:94%"></div><div class="bar t" style="height:90%"></div><div class="bar" style="height:78%"></div><div class="bar t" style="height:92%"></div></div><div class="labels"><span>0:00</span><span>0:30</span><span>1:00</span><span>1:30</span></div><div class="feedback" style="margin-top:18px"><i data-lucide="lightbulb"></i><span>Your posture stayed stable for most of the presentation, with a few moments of increased movement.</span></div></section>
+<div class="split">
+<section class="card"><div class="card-head"><div class="head-title"><i data-lucide="hand"></i><div><h3>Gestures</h3><p class="sub">Frequency and timing of visible hand and arm movements.</p></div></div></div><div class="stats"><div class="stat"><b>23</b><span>Gestures</span></div><div class="stat"><b>13/min</b><span>Average rate</span></div><div class="stat"><b>72%</b><span>Relevant</span></div><div class="stat"><b>6</b><span>Large gestures</span></div></div><div class="progress"><div class="phead"><span>Natural movement</span><strong>76%</strong></div><div class="track"><div style="width:76%"></div></div></div><div class="progress"><div class="phead"><span>Gesture relevance</span><strong>72%</strong></div><div class="track"><div style="width:72%"></div></div></div><div class="feedback"><i data-lucide="lightbulb"></i><span>Your gestures generally supported your points without becoming distracting.</span></div></section>
+<section class="card"><div class="card-head"><div class="head-title"><i data-lucide="eye"></i><div><h3>Eye Contact</h3><p class="sub">How consistently your gaze stayed connected with the audience or camera.</p></div></div></div><div class="big"><b>81%</b><span>engaged gaze time</span></div><div class="dist"><span style="width:81%;background:var(--teal)"></span><span style="width:12%;background:#8ed5e8"></span><span style="width:7%;background:#f1bf5c"></span></div><div class="legend"><div><i class="swatch" style="background:var(--teal)"></i>Connected 81%</div><div><i class="swatch" style="background:#8ed5e8"></i>Brief glance 12%</div><div><i class="swatch" style="background:#f1bf5c"></i>Away 7%</div></div><div class="feedback" style="margin-top:17px"><i data-lucide="lightbulb"></i><span>Your gaze was consistent and helped maintain audience connection.</span></div></section></div>
+
+</div></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="check-circle"></i><span id="toastMessage">Done</span></div>
+<script>
+lucide.createIcons();
+const toast=document.getElementById('toast');
+const toastMessage=document.getElementById('toastMessage');
+let toastTimer;
+function showToast(message){
+  toastMessage.textContent=message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toast.classList.remove('show'),2600);
+}
+document.querySelectorAll('.nav-link[data-nav-message]').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();showToast(link.dataset.navMessage);}));
+
+const app=document.querySelector('.app');
+const sidebar=document.getElementById('sidebar');
+const toggle=document.getElementById('sidebarToggle');
+
+function isMobile(){return window.innerWidth<=470;}
+
+function updateSidebarToggle(){
+  const expanded=isMobile()?app.classList.contains('sidebar-open'):!app.classList.contains('sidebar-collapsed');
+  toggle.setAttribute('aria-expanded',String(expanded));
+  toggle.setAttribute('aria-label',expanded?'Collapse sidebar':'Expand sidebar');
+  toggle.title=expanded?'Collapse sidebar':'Expand sidebar';
+  toggle.innerHTML=expanded?'<i data-lucide="panel-left-close"></i>':'<i data-lucide="panel-left-open"></i>';
+  lucide.createIcons();
+}
+
+toggle.addEventListener('click',()=>{
+  if(isMobile()){
+    app.classList.toggle('sidebar-open');
+    app.classList.remove('sidebar-collapsed');
+  }else{
+    app.classList.toggle('sidebar-collapsed');
+    app.classList.remove('sidebar-open');
+  }
+  updateSidebarToggle();
+});
+
+window.addEventListener('resize',()=>{
+  if(isMobile())app.classList.remove('sidebar-collapsed');
+  else app.classList.remove('sidebar-open');
+  updateSidebarToggle();
+});
+updateSidebarToggle();
+
+const picker=document.getElementById('picker');
+const btn=document.getElementById('pickerBtn');
+const menu=document.getElementById('pickerMenu');
+const options=[...menu.querySelectorAll('.option')];
+
+function positionMenu(){
+  const trigger=btn.getBoundingClientRect();
+  const edge=12;
+  const width=Math.min(320,window.innerWidth-edge*2);
+  const height=menu.getBoundingClientRect().height;
+  const left=Math.min(Math.max(trigger.left,edge),window.innerWidth-width-edge);
+  let top=trigger.bottom+8;
+  if(top+height>window.innerHeight-edge)top=Math.max(edge,trigger.top-height-8);
+  menu.style.width=`${width}px`;
+  menu.style.left=`${left}px`;
+  menu.style.top=`${top}px`;
+}
+
+function setMenuOpen(open){
+  menu.hidden=!open;
+  btn.setAttribute('aria-expanded',String(open));
+  if(open){positionMenu();options.find(option=>option.getAttribute('aria-checked')==='true').focus();}
+}
+
+btn.addEventListener('click',()=>setMenuOpen(menu.hidden));
+menu.addEventListener('click',event=>{
+  const selected=event.target.closest('.option');
+  if(!selected)return;
+  options.forEach(option=>option.setAttribute('aria-checked',String(option===selected)));
+  document.getElementById('selected').textContent=selected.dataset.title;
+  document.getElementById('duration').textContent=selected.dataset.time;
+  setMenuOpen(false);
+  btn.focus();
+});
+menu.addEventListener('keydown',event=>{
+  const index=options.indexOf(document.activeElement);
+  if(event.key==='Escape'){
+    event.preventDefault();
+    setMenuOpen(false);
+    btn.focus();
+  }else if(event.key==='ArrowDown'||event.key==='ArrowUp'){
+    event.preventDefault();
+    const step=event.key==='ArrowDown'?1:-1;
+    options[(index+step+options.length)%options.length].focus();
+  }else if(event.key==='Home'||event.key==='End'){
+    event.preventDefault();
+    options[event.key==='Home'?0:options.length-1].focus();
+  }
+});
+document.addEventListener('click',event=>{if(!picker.contains(event.target))setMenuOpen(false);});
+window.addEventListener('resize',()=>{if(!menu.hidden)positionMenu();});
+window.addEventListener('scroll',()=>{if(!menu.hidden)positionMenu();},{passive:true});
+</script>
+</body></html>
