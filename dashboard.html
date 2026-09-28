@@ -1,0 +1,3108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;750;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background: #f4f9fc;
+            color: #102d3d;
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           PAGE
+        ========================================================= */
+
+        .app {
+            min-height: 100vh;
+            display: flex;
+            position: relative;
+            isolation: isolate;
+
+            background:
+                radial-gradient(
+                    circle at 82% 25%,
+                    rgba(116, 210, 247, 0.11),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 18% 85%,
+                    rgba(53, 220, 168, 0.08),
+                    transparent 30%
+                ),
+                #f5fafc;
+
+            overflow: hidden;
+        }
+
+        .background-waves {
+            position: absolute;
+            inset: auto 0 0;
+            height: clamp(190px, 32vh, 320px);
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .background-waves svg {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 200%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .corner-waves {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: min(54vw, 640px);
+            height: clamp(220px, 34vh, 340px);
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .corner-waves svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .corner-wave-track {
+            animation: corner-wave-drift 12s ease-in-out infinite;
+        }
+
+        .corner-wave-line {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+        }
+
+        .corner-wave-line:nth-child(1) {
+            stroke: rgba(16, 184, 228, 0.09);
+        }
+
+        .corner-wave-line:nth-child(2) {
+            stroke: rgba(16, 199, 150, 0.08);
+        }
+
+        .corner-wave-line:nth-child(3) {
+            stroke: rgba(116, 210, 247, 0.10);
+        }
+
+        .wave-track {
+            transform-box: fill-box;
+            animation: wave-drift 26s linear infinite;
+        }
+
+        .wave-track.wave-mid {
+            animation-duration: 34s;
+            animation-direction: reverse;
+        }
+
+        .wave-track.wave-front {
+            animation-duration: 42s;
+        }
+
+        .wave-back {
+            fill: rgba(48, 190, 218, 0.10);
+        }
+
+        .wave-mid {
+            fill: rgba(24, 195, 165, 0.09);
+        }
+
+        .wave-front {
+            fill: rgba(111, 214, 226, 0.11);
+        }
+
+        @keyframes wave-drift {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @keyframes corner-wave-drift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-12px, 10px); }
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .sidebar {
+            --sidebar-width: 255px;
+
+            width: var(--sidebar-width);
+            flex: 0 0 var(--sidebar-width);
+            min-height: 100vh;
+
+            background: rgba(255, 255, 255, 0.82);
+            border-right: 1px solid #dce9ee;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            padding: 25px 16px;
+
+            position: relative;
+            z-index: 10;
+
+            backdrop-filter: blur(14px);
+
+            transition:
+                width 0.28s ease,
+                flex-basis 0.28s ease,
+                margin-left 0.28s ease,
+                padding 0.28s ease;
+        }
+
+
+        /* Remove underlines from ALL sidebar links */
+
+        .sidebar a,
+        .sidebar a:visited,
+        .sidebar a:hover,
+        .sidebar a:active {
+            text-decoration: none;
+        }
+
+
+        /* =========================================================
+           SIDEBAR TOGGLE
+
+           IMPORTANT:
+           The button is physically INSIDE the sidebar.
+        ========================================================= */
+
+        .sidebar-toggle {
+            position: fixed;
+
+            top: 28px;
+            left: 239px;
+            right: auto;
+
+            z-index: 100;
+
+            width: 32px;
+            height: 32px;
+
+            display: grid;
+            place-items: center;
+
+            color: #496674;
+            background: white;
+
+            border: 1px solid #dce9ee;
+            border-radius: 8px;
+
+            box-shadow:
+                0 3px 10px rgba(38, 78, 96, 0.08);
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .sidebar-toggle:hover {
+            color: #0d9e96;
+            background: #effaf9;
+
+            box-shadow:
+                0 5px 14px rgba(38, 78, 96, 0.12);
+
+            transform: translateY(-1px);
+        }
+
+        .sidebar-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+
+        /* =========================================================
+           COLLAPSED SIDEBAR
+        ========================================================= */
+
+        .app.sidebar-collapsed .sidebar {
+            width: 0;
+            flex-basis: 0;
+            margin-left: 0;
+
+            padding-left: 0;
+            padding-right: 0;
+
+            border-right: 0;
+
+            overflow: hidden;
+        }
+
+        .sidebar-toggle.is-collapsed {
+            left: 12px;
+            background: white;
+        }
+
+
+        /* =========================================================
+           LOGO
+        ========================================================= */
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 3px 11px 28px;
+
+            color: #173445;
+
+            font-size: 24px;
+            font-weight: 750;
+
+            letter-spacing: -0.8px;
+        }
+
+        .logo-mark {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #10c796,
+                    #10b8e4
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 7px 18px rgba(18,188,173,0.20);
+        }
+
+        .logo-mark::after {
+            content: "";
+
+            width: 13px;
+            height: 13px;
+
+            border-radius: 50%;
+
+            background: white;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        .navigation {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 12px 14px;
+
+            border-radius: 14px;
+
+            color: #667f8d;
+
+            font-size: 14px;
+            font-weight: 550;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav-item svg {
+            width: 19px;
+            height: 19px;
+
+            stroke-width: 1.8;
+        }
+
+        .nav-item:hover {
+            color: #109e9d;
+            background: #effaf9;
+
+            transform: translateX(2px);
+        }
+
+        .nav-item.active {
+            color: #0d9e96;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    rgba(18,199,151,0.10),
+                    rgba(11,183,223,0.08)
+                );
+
+            font-weight: 650;
+        }
+
+        .nav-item.active svg {
+            stroke: #0db59e;
+        }
+
+
+        /* =========================================================
+           USER PROFILE
+        ========================================================= */
+
+        .profile-area {
+            padding-top: 20px;
+            border-top: 1px solid #e2edf1;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 10px;
+
+            border-radius: 16px;
+
+            background: rgba(248,252,253,0.8);
+
+            border: 1px solid #e2edf1;
+
+            transition: 0.2s ease;
+        }
+
+        .profile:hover {
+            background: white;
+
+            box-shadow:
+                0 7px 20px rgba(38,78,96,0.06);
+        }
+
+        .avatar {
+            width: 37px;
+            height: 37px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            font-size: 12px;
+            font-weight: 750;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #10c796,
+                    #10b8e4
+                );
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+
+            min-width: 0;
+        }
+
+        .profile-name {
+            color: #203e4e;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-type {
+            color: #8aa0aa;
+
+            font-size: 10px;
+
+            margin-top: 2px;
+        }
+
+        .profile-more {
+            margin-left: auto;
+
+            color: #91a5ae;
+
+            background: transparent;
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+            flex: 1;
+
+            min-width: 0;
+
+            overflow-y: auto;
+
+            position: relative;
+            z-index: 1;
+
+            padding: 42px 48px 60px;
+
+            transition:
+                padding 0.28s ease;
+        }
+
+        .main::before {
+            content: "";
+
+            position: absolute;
+
+            width: 480px;
+            height: 480px;
+
+            border-radius: 50%;
+
+            right: 0;
+            top: 80px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(64,203,236,0.08),
+                    transparent 65%
+                );
+
+            pointer-events: none;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 1180px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #102d3d;
+
+            font-size: 29px;
+
+            letter-spacing: -1.2px;
+            line-height: 1.15;
+
+            font-weight: 750;
+        }
+
+        .header p {
+            color: #718894;
+
+            font-size: 14px;
+
+            margin-top: 7px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           SCORE CARD
+        ========================================================= */
+
+        .score-wrapper {
+            display: flex;
+            justify-content: center;
+
+            margin-bottom: 39px;
+        }
+
+        .score-card {
+            width: 100%;
+            max-width: 680px;
+
+            min-height: 155px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 42px;
+
+            padding: 24px 38px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.94),
+                    rgba(247,253,254,0.88)
+                );
+
+            border: 1px solid #dcebf0;
+
+            box-shadow:
+                0 16px 45px rgba(45,91,109,0.07);
+        }
+
+
+        /* =========================================================
+           SCORE BUTTONS
+        ========================================================= */
+
+        .score-action {
+            min-width: 138px;
+
+            padding: 12px 18px;
+
+            border-radius: 999px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .score-action:hover {
+            transform: translateY(-2px);
+        }
+
+        .strength-btn {
+            color: white;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #0fc78f,
+                    #0bb7df
+                );
+
+            box-shadow:
+                0 8px 20px rgba(14,183,175,0.17);
+        }
+
+        .improve-btn {
+            color: #9a6500;
+
+            background: #fffaf0;
+
+            border: 1.5px solid #e5b84b;
+        }
+
+        .improve-btn:hover {
+            background: #fff1c9;
+        }
+
+
+        /* =========================================================
+           SCORE CIRCLE
+        ========================================================= */
+
+        .score {
+            position: relative;
+
+            width: 105px;
+            height: 105px;
+
+            flex-shrink: 0;
+        }
+
+        .score svg {
+            width: 100%;
+            height: 100%;
+
+            transform: rotate(-90deg);
+        }
+
+        .score-bg {
+            fill: none;
+
+            stroke: #e1edf1;
+
+            stroke-width: 3.5;
+        }
+
+        .score-progress {
+            fill: none;
+
+            stroke: url(#scoreGradient);
+
+            stroke-width: 3.5;
+
+            stroke-linecap: round;
+
+            stroke-dasharray: 78 100;
+        }
+
+        .score-number {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-number strong {
+            color: #173445;
+
+            font-size: 27px;
+
+            letter-spacing: -1px;
+        }
+
+        .score-number span {
+            color: #8aa0aa;
+
+            font-size: 10px;
+
+            font-weight: 650;
+        }
+
+
+        /* =========================================================
+           SECTIONS
+        ========================================================= */
+
+        .section {
+            margin-bottom: 38px;
+        }
+
+        .section-heading {
+            margin-bottom: 15px;
+        }
+
+        .section-heading h2 {
+            color: #173445;
+
+            font-size: 18px;
+
+            letter-spacing: -0.5px;
+
+            font-weight: 720;
+        }
+
+        .section-heading p {
+            color: #8297a1;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =========================================================
+           GOALS
+        ========================================================= */
+
+        .goal-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 17px;
+        }
+
+        .goal-card {
+            padding: 20px;
+
+            border-radius: 21px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(218,250,240,0.48),
+                    rgba(224,248,253,0.45)
+                );
+
+            border: 1px solid #d9eceb;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-3px);
+
+            border-color: #9edfd5;
+
+            box-shadow:
+                0 12px 28px rgba(44,116,126,0.09);
+        }
+
+        .goal-card.selected {
+            border-color: #12b4a1;
+
+            box-shadow:
+                0 0 0 3px rgba(18,180,161,0.09);
+        }
+
+        .goal-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 15px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #0da998;
+
+            background: white;
+
+            border: 1px solid #dcefeb;
+
+            box-shadow:
+                0 6px 14px rgba(40,90,100,0.05);
+        }
+
+        .goal-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .goal-card h3 {
+            color: #173445;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .goal-card p {
+            color: #718894;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            margin-top: 4px;
+        }
+
+
+        /* =========================================================
+           ANALYSIS CARDS
+        ========================================================= */
+
+        .analysis-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            gap: 14px;
+        }
+
+        .analysis-card {
+            min-height: 174px;
+
+            padding: 17px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            border-radius: 21px;
+
+            background: rgba(255,255,255,0.82);
+
+            border: 1px solid #dce9ee;
+
+            box-shadow:
+                0 5px 18px rgba(40,80,95,0.025);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .analysis-card:hover {
+            transform: translateY(-4px);
+
+            border-color: #a9dfe2;
+
+            box-shadow:
+                0 15px 30px rgba(40,90,105,0.09);
+        }
+
+        .analysis-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #0aa79d;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e8faf5,
+                    #e8f8fc
+                );
+
+            margin-bottom: 12px;
+        }
+
+        .analysis-icon svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .analysis-card h4 {
+            color: #173445;
+
+            font-size: 12px;
+
+            line-height: 1.3;
+
+            font-weight: 700;
+        }
+
+        .analysis-card p {
+            color: #8499a3;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+            margin-top: 4px;
+        }
+
+        .analysis-arrow {
+            width: 27px;
+            height: 27px;
+
+            border-radius: 50%;
+
+            margin-left: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #0aa79d;
+
+            background: #edfafa;
+
+            transition: 0.2s ease;
+        }
+
+        .analysis-card:hover .analysis-arrow {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0fc796,
+                    #0bb7df
+                );
+
+            transform: translateX(2px);
+        }
+
+        .analysis-arrow svg {
+            width: 14px;
+            height: 14px;
+        }
+
+
+        /* =========================================================
+           FOCUS CARD
+        ========================================================= */
+
+        .focus-card {
+            padding: 20px 22px;
+
+            border-radius: 23px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            background: rgba(255,255,255,0.88);
+
+            border: 1px solid #dce9ee;
+
+            box-shadow:
+                0 10px 28px rgba(38,78,96,0.045);
+        }
+
+        .focus-left {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            min-width: 0;
+        }
+
+        .focus-icon {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #0ba69d;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e9faf4,
+                    #e9f9fc
+                );
+        }
+
+        .focus-info h3 {
+            color: #173445;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .focus-info p {
+            color: #8297a1;
+
+            font-size: 10px;
+
+            margin-top: 4px;
+        }
+
+        .focus-select {
+            width: 260px;
+
+            margin-top: 10px;
+
+            padding: 9px 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-radius: 11px;
+
+            background: #f6fafb;
+
+            border: 1px solid #dce8ed;
+
+            color: #58717f;
+
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+        .focus-select:hover {
+            border-color: #b5dfe1;
+
+            background: white;
+        }
+
+        .plan-btn {
+            flex-shrink: 0;
+
+            padding: 13px 21px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            border-radius: 999px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #0fc78f,
+                    #0bb7df
+                );
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 20px rgba(14,183,175,0.15);
+
+            transition: 0.2s ease;
+        }
+
+        .plan-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 26px rgba(14,183,175,0.22);
+        }
+
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+
+            z-index: 100;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(16,45,61,0.32);
+
+            backdrop-filter: blur(9px);
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 510px;
+
+            padding: 27px;
+
+            border-radius: 27px;
+
+            background:
+                rgba(255,255,255,0.97);
+
+            border: 1px solid rgba(255,255,255,0.8);
+
+            box-shadow:
+                0 25px 70px rgba(25,65,82,0.20);
+
+            animation:
+                modalIn 0.22s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(10px)
+                    scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 21px;
+        }
+
+        .modal-title {
+            color: #173445;
+
+            font-size: 21px;
+
+            letter-spacing: -0.5px;
+
+            font-weight: 750;
+        }
+
+        .modal-close {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #80949e;
+
+            background: #f2f7f9;
+        }
+
+        .modal-close:hover {
+            background: #e7f0f3;
+
+            color: #405c6b;
+        }
+
+        .selection-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+        .selection-header span:first-child {
+            color: #6d8490;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .selected-badge {
+            padding: 7px 11px;
+
+            border-radius: 999px;
+
+            color: #0a9e94;
+
+            background: #eafaf5;
+
+            border: 1px solid #ccefe5;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           FOCUS PILLS
+        ========================================================= */
+
+        .pill-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+        .focus-pill {
+            min-height: 46px;
+
+            padding: 8px 12px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            border-radius: 13px;
+
+            font-size: 11px;
+            font-weight: 650;
+
+            text-align: left;
+
+            transition: 0.18s ease;
+        }
+
+        .focus-pill.selected {
+            color: #078f89;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #effbf7,
+                    #edfafa
+                );
+
+            border: 1px solid #9ddfd3;
+        }
+
+        .focus-pill:not(.selected) {
+            color: #667e8b;
+
+            background: #f8fafb;
+
+            border: 1px solid #dfe9ed;
+        }
+
+        .focus-pill:hover {
+            transform: translateY(-1px);
+
+            border-color: #9edbd8;
+        }
+
+        .pill-check {
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .selected .pill-check {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0fc796,
+                    #0bb7df
+                );
+        }
+
+        .focus-pill:not(.selected) .pill-check {
+            border: 1.5px solid #a6b8c0;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+
+            margin-top: 21px;
+        }
+
+        .done-btn {
+            padding: 10px 20px;
+
+            border-radius: 999px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #0fc78f,
+                    #0bb7df
+                );
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           DETAIL MODALS
+        ========================================================= */
+
+        .detail-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .detail-item {
+            padding: 13px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            background: #f2faf8;
+
+            border: 1px solid #dcefe9;
+
+            color: #506b77;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+        .detail-item.warning {
+            background: #fffaf0;
+
+            border-color: #f4e6c5;
+
+            color: #77654a;
+        }
+
+        .detail-item svg {
+            flex-shrink: 0;
+
+            color: #0cab96;
+        }
+
+        .detail-item.warning svg {
+            color: #d39a2e;
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            z-index: 200;
+
+            padding: 12px 17px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            border-radius: 14px;
+
+            color: white;
+
+            background: #173445;
+
+            box-shadow:
+                0 15px 35px rgba(20,50,65,0.22);
+
+            font-size: 11px;
+
+            font-weight: 650;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform: translateY(10px);
+
+            transition:
+                opacity 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+        .toast svg {
+            color: #49d9ad;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1150px) {
+
+            .main {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .analysis-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                --sidebar-width: 76px;
+
+                width: 76px;
+
+                padding: 20px 10px;
+            }
+
+            .sidebar-toggle {
+                left: 60px;
+            }
+
+            .logo {
+                justify-content: center;
+
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .logo span:last-child {
+                display: none;
+            }
+
+            .nav-item {
+                justify-content: center;
+
+                padding: 12px;
+            }
+
+            .nav-item span {
+                display: none;
+            }
+
+            .profile {
+                justify-content: center;
+            }
+
+            .profile-info,
+            .profile-more {
+                display: none;
+            }
+
+            .goal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .focus-card {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .plan-btn {
+                width: 100%;
+            }
+
+            .focus-select {
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .main {
+                padding: 28px 18px 40px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .score-card {
+                gap: 13px;
+
+                padding: 20px 13px;
+            }
+
+            .score-action {
+                min-width: 0;
+
+                padding: 10px 12px;
+
+                font-size: 10px;
+            }
+
+            .score {
+                width: 88px;
+                height: 88px;
+            }
+
+            .score-number strong {
+                font-size: 23px;
+            }
+
+            .analysis-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .pill-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 470px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            /*
+               On mobile the sidebar becomes a slide-out drawer.
+            */
+
+            .app.sidebar-open .sidebar {
+                display: flex;
+
+                position: fixed;
+
+                inset: 0 auto 0 0;
+
+                width: min(255px, 85vw);
+
+                flex-basis: min(255px, 85vw);
+
+                padding: 25px 16px;
+
+                background: rgba(255,255,255,0.97);
+
+                box-shadow:
+                    10px 0 30px rgba(20,50,65,0.12);
+            }
+
+            .app.sidebar-open .logo span:last-child,
+            .app.sidebar-open .nav-item span,
+            .app.sidebar-open .profile-info,
+            .app.sidebar-open .profile-more {
+                display: initial;
+            }
+
+            .app.sidebar-open .logo {
+                justify-content: flex-start;
+            }
+
+            .app.sidebar-open .nav-item {
+                justify-content: flex-start;
+
+                padding: 12px 14px;
+            }
+
+            .app.sidebar-open .profile {
+                justify-content: flex-start;
+            }
+
+            .sidebar-toggle {
+                position: fixed;
+
+                top: 12px;
+                left: 12px;
+                right: auto;
+
+                z-index: 50;
+            }
+
+            .sidebar-toggle.is-open {
+                left: calc(min(85vw, 255px) - 44px);
+            }
+
+            .main {
+                width: 100%;
+            }
+
+            .score-card {
+                flex-wrap: wrap;
+            }
+
+            .score {
+                order: -1;
+
+                width: 90px;
+                height: 90px;
+
+                flex-basis: 100%;
+
+                margin-bottom: 2px;
+            }
+
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .wave-track,
+            .corner-wave-track {
+                animation: none;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <div class="corner-waves" aria-hidden="true">
+        <svg viewBox="0 0 640 340" preserveAspectRatio="none">
+            <g class="corner-wave-track">
+                <path class="corner-wave-line" d="M 90 24 C 225 75, 345 130, 455 181 S 575 254, 640 296"></path>
+                <path class="corner-wave-line" d="M 90 12 C 225 63, 345 118, 455 169 S 575 242, 640 284"></path>
+                <path class="corner-wave-line" d="M 90 0 C 225 51, 345 106, 455 157 S 575 230, 640 272"></path>
+            </g>
+        </svg>
+    </div>
+
+    <div class="background-waves" aria-hidden="true">
+        <svg viewBox="0 0 2880 320" preserveAspectRatio="none">
+            <g class="wave-track wave-back">
+                <path d="M0 164 C240 112 480 214 720 164 S1200 112 1440 164 L1440 320 L0 320 Z"></path>
+                <use href="#wave-back-shape" x="1440"></use>
+            </g>
+            <defs>
+                <path id="wave-back-shape" d="M0 164 C240 112 480 214 720 164 S1200 112 1440 164 L1440 320 L0 320 Z"></path>
+            </defs>
+            <g class="wave-track wave-mid">
+                <path d="M0 208 C240 152 480 254 720 208 S1200 152 1440 208 L1440 320 L0 320 Z"></path>
+                <path d="M1440 208 C1680 152 1920 254 2160 208 S2640 152 2880 208 L2880 320 L1440 320 Z"></path>
+            </g>
+            <g class="wave-track wave-front">
+                <path d="M0 250 C240 194 480 288 720 250 S1200 194 1440 250 L1440 320 L0 320 Z"></path>
+                <path d="M1440 250 C1680 194 1920 288 2160 250 S2640 194 2880 250 L2880 320 L1440 320 Z"></path>
+            </g>
+        </svg>
+    </div>
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
+
+    <aside class="sidebar">
+
+        <div>
+
+            <!-- LOGO -->
+
+            <div class="logo">
+
+                <span class="logo-mark"></span>
+
+                <span>commio</span>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="navigation">
+
+                <a
+                    href="dashboard.html"
+                    class="nav-item active"
+                >
+                    <i data-lucide="home"></i>
+                    <span>Home</span>
+                </a>
+
+
+                <a
+                    href="plan.html"
+                    class="nav-item"
+                >
+                    <i data-lucide="calendar"></i>
+                    <span>Learning Plan</span>
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    onclick="setActiveNav(this); return false;"
+                >
+                    <i data-lucide="book-open"></i>
+                    <span>Exercises</span>
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    onclick="setActiveNav(this); return false;"
+                >
+                    <i data-lucide="line-chart"></i>
+                    <span>Progress</span>
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    onclick="setActiveNav(this); return false;"
+                >
+                    <i data-lucide="message-circle"></i>
+                    <span>Coaching</span>
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    onclick="setActiveNav(this); return false;"
+                >
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- PROFILE -->
+
+        <div class="profile-area">
+
+            <div class="profile">
+
+                <div class="avatar">
+                    RM
+                </div>
+
+                <div class="profile-info">
+
+                    <span class="profile-name">
+                        Reem Mousa
+                    </span>
+
+                    <span class="profile-type">
+                        Personal
+                    </span>
+
+                </div>
+
+                <button
+                    class="profile-more"
+                    type="button"
+                >
+                    <i data-lucide="more-horizontal"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+
+    <main class="main">
+
+        <div class="content">
+
+
+            <!-- HEADER -->
+
+            <header class="header">
+
+                <div>
+
+                    <h1>
+                        Good morning, Reem
+                    </h1>
+
+                    <p>
+                        Here's a quick look at your communication performance.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+            <!-- SCORE -->
+
+            <section class="score-wrapper">
+
+                <div class="score-card">
+
+
+                    <button
+                        class="score-action strength-btn"
+                        type="button"
+                        onclick="openModal('strengthsModal')"
+                    >
+
+                        <i data-lucide="arrow-up"></i>
+
+                        <span>
+                            Strengths
+                        </span>
+
+                    </button>
+
+
+                    <div class="score">
+
+                        <svg viewBox="0 0 36 36">
+
+                            <defs>
+
+                                <linearGradient
+                                    id="scoreGradient"
+                                    x1="0%"
+                                    y1="0%"
+                                    x2="100%"
+                                    y2="100%"
+                                >
+
+                                    <stop
+                                        offset="0%"
+                                        stop-color="#10c796"
+                                    >
+
+                                    <stop
+                                        offset="100%"
+                                        stop-color="#10b8e4"
+                                    >
+
+                                </linearGradient>
+
+                            </defs>
+
+
+                            <path
+                                class="score-bg"
+                                d="M18 2.0845
+                                   a15.9155 15.9155 0 0 1 0 31.831
+                                   a15.9155 15.9155 0 0 1 0 -31.831"
+                            />
+
+
+                            <path
+                                class="score-progress"
+                                d="M18 2.0845
+                                   a15.9155 15.9155 0 0 1 0 31.831
+                                   a15.9155 15.9155 0 0 1 0 -31.831"
+                            />
+
+                        </svg>
+
+
+                        <div class="score-number">
+
+                            <strong>
+                                78
+                            </strong>
+
+                            <span>
+                                /100
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="score-action improve-btn"
+                        type="button"
+                        onclick="openModal('improveModal')"
+                    >
+
+                        <i data-lucide="plus"></i>
+
+                        <span>
+                            Areas to Improve
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- GOALS -->
+
+            <section class="section">
+
+                <div class="section-heading">
+
+                    <h2>
+                        What do you want us to work on?
+                    </h2>
+
+                </div>
+
+
+                <div class="goal-grid">
+
+
+                    <div
+                        class="goal-card"
+                        onclick="selectGoal(this)"
+                    >
+
+                        <div class="goal-icon">
+
+                            <i data-lucide="presentation"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Presentation
+                            </h3>
+
+                            <p>
+                                Make your message clear, confident and engaging.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="goal-card"
+                        onclick="selectGoal(this)"
+                    >
+
+                        <div class="goal-icon">
+
+                            <i data-lucide="users"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Interview
+                            </h3>
+
+                            <p>
+                                Show your confidence and communicate your value.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ANALYSIS -->
+
+            <section class="section">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Analysis Categories
+                    </h2>
+
+                    <p>
+                        Explore each area to see detailed insights and scores.
+                    </p>
+
+                </div>
+
+
+                <div class="analysis-grid">
+
+
+                    <div
+                        class="analysis-card"
+                        onclick="showToast('Opening Voice & Delivery analysis...')"
+                    >
+
+                        <div>
+
+                            <div class="analysis-icon">
+                                <i data-lucide="mic"></i>
+                            </div>
+
+                            <h4>
+                                Voice & Delivery
+                            </h4>
+
+                            <p>
+                                Tone, pitch, variation and pace.
+                            </p>
+
+                        </div>
+
+                        <div class="analysis-arrow">
+                            <i data-lucide="arrow-up-right"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analysis-card"
+                        onclick="showToast('Opening Body Language analysis...')"
+                    >
+
+                        <div>
+
+                            <div class="analysis-icon">
+                                <i data-lucide="video"></i>
+                            </div>
+
+                            <h4>
+                                Body Language
+                            </h4>
+
+                            <p>
+                                Posture, gestures and eye contact.
+                            </p>
+
+                        </div>
+
+                        <div class="analysis-arrow">
+                            <i data-lucide="arrow-up-right"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analysis-card"
+                        onclick="showToast('Opening Facial Expressions analysis...')"
+                    >
+
+                        <div>
+
+                            <div class="analysis-icon">
+                                <i data-lucide="smile"></i>
+                            </div>
+
+                            <h4>
+                                Facial Expressions
+                            </h4>
+
+                            <p>
+                                Expression, engagement and emphasis.
+                            </p>
+
+                        </div>
+
+                        <div class="analysis-arrow">
+                            <i data-lucide="arrow-up-right"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analysis-card"
+                        onclick="showToast('Opening Speech analysis...')"
+                    >
+
+                        <div>
+
+                            <div class="analysis-icon">
+                                <i data-lucide="message-square"></i>
+                            </div>
+
+                            <h4>
+                                Speech
+                            </h4>
+
+                            <p>
+                                Fluency, pronunciation and filler words.
+                            </p>
+
+                        </div>
+
+                        <div class="analysis-arrow">
+                            <i data-lucide="arrow-up-right"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analysis-card"
+                        onclick="showToast('Opening Content analysis...')"
+                    >
+
+                        <div>
+
+                            <div class="analysis-icon">
+                                <i data-lucide="layers"></i>
+                            </div>
+
+                            <h4>
+                                Content
+                            </h4>
+
+                            <p>
+                                Topics, key points and relevance.
+                            </p>
+
+                        </div>
+
+                        <div class="analysis-arrow">
+                            <i data-lucide="arrow-up-right"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOCUS -->
+
+            <section class="section">
+
+                <div class="focus-card">
+
+
+                    <div class="focus-left">
+
+                        <div class="focus-icon">
+
+                            <i data-lucide="target"></i>
+
+                        </div>
+
+
+                        <div class="focus-info">
+
+                            <h3>
+                                Choose Your Focus
+                            </h3>
+
+                            <p>
+                                Select up to 4 areas you want to work on and get personalized exercises.
+                            </p>
+
+
+                            <button
+                                class="focus-select"
+                                type="button"
+                                onclick="openModal('focusModal')"
+                            >
+
+                                <span id="focusLabel">
+                                    Select a focus area
+                                </span>
+
+                                <i data-lucide="chevron-down"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="plan-btn"
+                        type="button"
+                        onclick="createPlan()"
+                    >
+
+                        <span>
+                            Create Training Plan
+                        </span>
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+<button
+    class="sidebar-toggle"
+    type="button"
+    aria-label="Hide sidebar"
+    aria-expanded="true"
+    title="Hide sidebar"
+    onclick="toggleSidebar()"
+>
+    <i data-lucide="panel-left-close"></i>
+</button>
+
+<!-- =========================================================
+     FOCUS MODAL
+========================================================== -->
+
+<div
+    id="focusModal"
+    class="modal-overlay"
+    onclick="closeOnOverlay(event, 'focusModal')"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2 class="modal-title">
+                Your focus
+            </h2>
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeModal('focusModal')"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+        </div>
+
+
+        <div class="selection-header">
+
+            <span>
+                Select the areas you want to practice
+            </span>
+
+            <span
+                class="selected-badge"
+                id="selectedCount"
+            >
+                2 selected
+            </span>
+
+        </div>
+
+
+        <div class="pill-grid">
+
+
+            <button
+                class="focus-pill selected"
+                data-selected="true"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check">
+                    <i data-lucide="check"></i>
+                </span>
+
+                <span>
+                    Speaking pace
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill selected"
+                data-selected="true"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check">
+                    <i data-lucide="check"></i>
+                </span>
+
+                <span>
+                    Filler words
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill"
+                data-selected="false"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check"></span>
+
+                <span>
+                    Vocal variation
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill"
+                data-selected="false"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check"></span>
+
+                <span>
+                    Eye contact
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill"
+                data-selected="false"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check"></span>
+
+                <span>
+                    Hand gestures
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill"
+                data-selected="false"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check"></span>
+
+                <span>
+                    Posture
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill"
+                data-selected="false"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check"></span>
+
+                <span>
+                    Facial expressions
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill"
+                data-selected="false"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check"></span>
+
+                <span>
+                    Confidence
+                </span>
+
+            </button>
+
+
+            <button
+                class="focus-pill"
+                data-selected="false"
+                type="button"
+                onclick="togglePill(this)"
+            >
+
+                <span class="pill-check"></span>
+
+                <span>
+                    Content organization
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="done-btn"
+                type="button"
+                onclick="applyFocus()"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     STRENGTHS MODAL
+========================================================== -->
+
+<div
+    id="strengthsModal"
+    class="modal-overlay"
+    onclick="closeOnOverlay(event, 'strengthsModal')"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2 class="modal-title">
+                Your strengths
+            </h2>
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeModal('strengthsModal')"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+        </div>
+
+
+        <div class="detail-list">
+
+            <div class="detail-item">
+
+                <i data-lucide="check-circle-2"></i>
+
+                <span>
+                    <strong>Clear tone:</strong>
+                    Your voice remains articulate and easy to follow.
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <i data-lucide="check-circle-2"></i>
+
+                <span>
+                    <strong>Eye contact:</strong>
+                    You maintain consistent visual engagement.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     IMPROVEMENT MODAL
+========================================================== -->
+
+<div
+    id="improveModal"
+    class="modal-overlay"
+    onclick="closeOnOverlay(event, 'improveModal')"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2 class="modal-title">
+                Areas to improve
+            </h2>
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeModal('improveModal')"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+        </div>
+
+
+        <div class="detail-list">
+
+            <div class="detail-item warning">
+
+                <i data-lucide="alert-circle"></i>
+
+                <span>
+                    <strong>Pacing:</strong>
+                    Slow down slightly during introductory sections.
+                </span>
+
+            </div>
+
+
+            <div class="detail-item warning">
+
+                <i data-lucide="alert-circle"></i>
+
+                <span>
+                    <strong>Filler words:</strong>
+                    Reduce frequent use of "um" and "like".
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================== -->
+
+<div
+    id="toast"
+    class="toast"
+>
+
+    <i data-lucide="check-circle"></i>
+
+    <span id="toastMessage">
+        Done
+    </span>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       INITIALIZE ICONS
+    ========================================================= */
+
+    document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+        updateCount();
+    });
+
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    function setActiveNav(element) {
+
+        document
+            .querySelectorAll(".nav-item")
+            .forEach(item => {
+                item.classList.remove("active");
+            });
+
+        element.classList.add("active");
+    }
+
+
+    /* =========================================================
+       SIDEBAR TOGGLE
+       
+       Desktop/tablet:
+       - Sidebar slides completely out.
+       - Toggle remains visible on the left.
+       
+       Mobile:
+       - Sidebar becomes a drawer.
+       - Toggle stays at the top-right of the drawer.
+    ========================================================= */
+
+    function toggleSidebar() {
+
+        const app = document.querySelector(".app");
+        const toggle = document.querySelector(".sidebar-toggle");
+
+        const isMobile =
+            window.matchMedia("(max-width: 470px)").matches;
+
+
+        if (isMobile) {
+
+            const opened =
+                app.classList.toggle("sidebar-open");
+
+            toggle.classList.toggle("is-open", opened);
+            toggle.classList.remove("is-collapsed");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                String(opened)
+            );
+
+            toggle.setAttribute(
+                "aria-label",
+                opened ? "Hide sidebar" : "Show sidebar"
+            );
+
+            toggle.setAttribute(
+                "title",
+                opened ? "Hide sidebar" : "Show sidebar"
+            );
+
+            toggle.innerHTML =
+                opened
+                    ? '<i data-lucide="panel-left-close"></i>'
+                    : '<i data-lucide="panel-left-open"></i>';
+
+        }
+
+        else {
+
+            const collapsed =
+                app.classList.toggle("sidebar-collapsed");
+
+            toggle.classList.toggle("is-collapsed", collapsed);
+            toggle.classList.remove("is-open");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                String(!collapsed)
+            );
+
+            toggle.setAttribute(
+                "aria-label",
+                collapsed ? "Show sidebar" : "Hide sidebar"
+            );
+
+            toggle.setAttribute(
+                "title",
+                collapsed ? "Show sidebar" : "Hide sidebar"
+            );
+
+            toggle.innerHTML =
+                collapsed
+                    ? '<i data-lucide="panel-left-open"></i>'
+                    : '<i data-lucide="panel-left-close"></i>';
+        }
+
+
+        lucide.createIcons();
+    }
+
+
+    /* =========================================================
+       GOAL SELECTION
+    ========================================================= */
+
+    function selectGoal(card) {
+
+        document
+            .querySelectorAll(".goal-card")
+            .forEach(item => {
+                item.classList.remove("selected");
+            });
+
+        card.classList.add("selected");
+
+        showToast(
+            "Your target goal has been updated."
+        );
+    }
+
+
+    /* =========================================================
+       MODALS
+    ========================================================= */
+
+    function openModal(id) {
+
+        const modal =
+            document.getElementById(id);
+
+        if (modal) {
+            modal.classList.add("open");
+        }
+    }
+
+
+    function closeModal(id) {
+
+        const modal =
+            document.getElementById(id);
+
+        if (modal) {
+            modal.classList.remove("open");
+        }
+    }
+
+
+    function closeOnOverlay(event, id) {
+
+        if (
+            event.target ===
+            document.getElementById(id)
+        ) {
+            closeModal(id);
+        }
+    }
+
+
+    /* =========================================================
+       FOCUS PILLS
+    ========================================================= */
+
+    function togglePill(pill) {
+
+        const selected =
+            pill.dataset.selected === "true";
+
+
+        const currentlySelected =
+            document.querySelectorAll(
+                '.focus-pill[data-selected="true"]'
+            ).length;
+
+
+        if (
+            !selected &&
+            currentlySelected >= 4
+        ) {
+
+            showToast(
+                "You can select up to 4 focus areas."
+            );
+
+            return;
+        }
+
+
+        if (selected) {
+
+            pill.dataset.selected = "false";
+
+            pill.classList.remove("selected");
+
+            pill.querySelector(
+                ".pill-check"
+            ).innerHTML = "";
+
+        }
+
+        else {
+
+            pill.dataset.selected = "true";
+
+            pill.classList.add("selected");
+
+            pill.querySelector(
+                ".pill-check"
+            ).innerHTML =
+                '<i data-lucide="check"></i>';
+        }
+
+
+        updateCount();
+
+        lucide.createIcons();
+    }
+
+
+    /* =========================================================
+       UPDATE COUNT
+    ========================================================= */
+
+    function updateCount() {
+
+        const count =
+            document.querySelectorAll(
+                '.focus-pill[data-selected="true"]'
+            ).length;
+
+
+        document.getElementById(
+            "selectedCount"
+        ).textContent =
+            `${count} selected`;
+    }
+
+
+    /* =========================================================
+       APPLY FOCUS
+    ========================================================= */
+
+    function applyFocus() {
+
+        const selected =
+            document.querySelectorAll(
+                '.focus-pill[data-selected="true"]'
+            );
+
+
+        if (selected.length === 0) {
+
+            document.getElementById(
+                "focusLabel"
+            ).textContent =
+                "Select a focus area";
+
+        }
+
+        else {
+
+            const names =
+                Array.from(selected)
+                    .map(item =>
+                        item.querySelector(
+                            "span:last-child"
+                        ).textContent.trim()
+                    );
+
+
+            if (names.length <= 2) {
+
+                document.getElementById(
+                    "focusLabel"
+                ).textContent =
+                    names.join(", ");
+
+            }
+
+            else {
+
+                document.getElementById(
+                    "focusLabel"
+                ).textContent =
+                    `${names[0]}, ${names[1]} +${names.length - 2} more`;
+            }
+        }
+
+
+        closeModal("focusModal");
+
+        showToast(
+            "Your focus areas have been saved."
+        );
+    }
+
+
+    /* =========================================================
+       CREATE TRAINING PLAN
+    ========================================================= */
+
+    function createPlan() {
+
+        showToast(
+            "Creating your personalized training plan..."
+        );
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        const text =
+            document.getElementById("toastMessage");
+
+
+        text.textContent = message;
+
+        toast.classList.add("show");
+
+
+        clearTimeout(toastTimer);
+
+
+        toastTimer =
+            setTimeout(() => {
+
+                toast.classList.remove("show");
+
+            }, 3000);
+    }
+
+
+    /* =========================================================
+       ESC KEY
+       Close any open modal.
+    ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+
+                document
+                    .querySelectorAll(".modal-overlay.open")
+                    .forEach(modal => {
+                        modal.classList.remove("open");
+                    });
+            }
+        }
+    );
+
+
+    /* =========================================================
+       RESPONSIVE SIDEBAR RESET
+       
+       If the user resizes the browser from mobile to desktop,
+       remove mobile-only state so the sidebar doesn't get stuck.
+    ========================================================= */
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            const app =
+                document.querySelector(".app");
+            const toggle =
+                document.querySelector(".sidebar-toggle");
+
+            if (
+                app &&
+                toggle &&
+                !window.matchMedia(
+                    "(max-width: 470px)"
+                ).matches
+            ) {
+
+                app.classList.remove(
+                    "sidebar-open"
+                );
+
+                toggle.classList.remove("is-open");
+            }
+        }
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2864 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Training Plan — Commio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;750;800&display=swap"
+    rel="stylesheet"
+>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
+
+        background: #f5fafc;
+        color: #102d3d;
+        min-height: 100vh;
+    }
+
+    button,
+    input,
+    select {
+        font: inherit;
+    }
+
+    button {
+        border: none;
+        cursor: pointer;
+    }
+
+
+    /* =========================================================
+       APP
+    ========================================================= */
+
+    .app {
+        min-height: 100vh;
+
+        display: flex;
+
+        position: relative;
+        isolation: isolate;
+
+        background:
+            radial-gradient(
+                circle at 82% 20%,
+                rgba(116, 210, 247, 0.11),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 15% 85%,
+                rgba(53, 220, 168, 0.08),
+                transparent 30%
+            ),
+            #f5fafc;
+
+        overflow: hidden;
+    }
+
+
+    /* =========================================================
+       BACKGROUND WAVES
+    ========================================================= */
+
+    .background-waves {
+        position: fixed;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        height: clamp(170px, 28vh, 290px);
+
+        z-index: 0;
+
+        overflow: hidden;
+
+        pointer-events: none;
+    }
+
+    .background-waves svg {
+        position: absolute;
+
+        left: 0;
+        bottom: 0;
+
+        width: 200%;
+        height: 100%;
+    }
+
+    .wave-track {
+        transform-box: fill-box;
+
+        animation:
+            wave-drift 26s linear infinite;
+    }
+
+    .wave-track.wave-mid {
+        animation-duration: 34s;
+        animation-direction: reverse;
+    }
+
+    .wave-track.wave-front {
+        animation-duration: 42s;
+    }
+
+    .wave-back {
+        fill: rgba(48, 190, 218, 0.10);
+    }
+
+    .wave-mid {
+        fill: rgba(24, 195, 165, 0.09);
+    }
+
+    .wave-front {
+        fill: rgba(111, 214, 226, 0.11);
+    }
+
+    @keyframes wave-drift {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+
+    /* =========================================================
+       CORNER WAVES
+    ========================================================= */
+
+    .corner-waves {
+        position: fixed;
+
+        top: 0;
+        right: 0;
+
+        width: min(54vw, 640px);
+        height: clamp(220px, 34vh, 340px);
+
+        z-index: 0;
+
+        overflow: hidden;
+
+        pointer-events: none;
+    }
+
+    .corner-waves svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .corner-wave-track {
+        animation:
+            corner-wave-drift 12s ease-in-out infinite;
+    }
+
+    .corner-wave-line {
+        fill: none;
+
+        stroke-width: 12;
+
+        stroke-linecap: round;
+    }
+
+    .corner-wave-line:nth-child(1) {
+        stroke: rgba(16, 184, 228, 0.09);
+    }
+
+    .corner-wave-line:nth-child(2) {
+        stroke: rgba(16, 199, 150, 0.08);
+    }
+
+    .corner-wave-line:nth-child(3) {
+        stroke: rgba(116, 210, 247, 0.10);
+    }
+
+    @keyframes corner-wave-drift {
+
+        0%,
+        100% {
+            transform: translate(0, 0);
+        }
+
+        50% {
+            transform: translate(-12px, 10px);
+        }
+    }
+
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    .sidebar {
+        --sidebar-width: 255px;
+
+        width: var(--sidebar-width);
+        flex: 0 0 var(--sidebar-width);
+
+        min-height: 100vh;
+
+        background: rgba(255, 255, 255, 0.82);
+
+        border-right: 1px solid #dce9ee;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        padding: 25px 16px;
+
+        position: relative;
+        z-index: 20;
+
+        backdrop-filter: blur(14px);
+
+        transition:
+            width 0.28s ease,
+            flex-basis 0.28s ease,
+            padding 0.28s ease,
+            border 0.28s ease;
+    }
+
+
+    /* Remove underlines */
+
+    .sidebar a,
+    .sidebar a:visited,
+    .sidebar a:hover,
+    .sidebar a:active {
+        text-decoration: none;
+    }
+
+
+    /* =========================================================
+       SIDEBAR TOP
+    ========================================================= */
+
+    .sidebar-top {
+        position: relative;
+    }
+
+
+    /* =========================================================
+       LOGO
+    ========================================================= */
+
+    .logo {
+        display: flex;
+        align-items: center;
+
+        gap: 11px;
+
+        padding: 3px 11px 28px;
+
+        color: #173445;
+
+        font-size: 24px;
+        font-weight: 750;
+
+        letter-spacing: -0.8px;
+    }
+
+    .logo-mark {
+        width: 35px;
+        height: 35px;
+
+        border-radius: 50%;
+
+        background:
+            linear-gradient(
+                135deg,
+                #10c796,
+                #10b8e4
+            );
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        box-shadow:
+            0 7px 18px rgba(18, 188, 173, 0.20);
+
+        flex-shrink: 0;
+    }
+
+    .logo-mark::after {
+        content: "";
+
+        width: 13px;
+        height: 13px;
+
+        border-radius: 50%;
+
+        background: white;
+    }
+
+
+    /* =========================================================
+       SIDEBAR TOGGLE
+    ========================================================= */
+
+    .sidebar-toggle {
+        position: fixed;
+
+        top: 28px;
+        left: 239px;
+        right: auto;
+
+        z-index: 100;
+
+        width: 32px;
+        height: 32px;
+
+        display: grid;
+        place-items: center;
+
+        color: #496674;
+
+        background: white;
+
+        border: 1px solid #dce9ee;
+
+        border-radius: 8px;
+
+        box-shadow:
+            0 3px 10px rgba(38, 78, 96, 0.08);
+
+        transition:
+            color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .sidebar-toggle:hover {
+        color: #0d9e96;
+
+        background: #effaf9;
+
+        box-shadow:
+            0 5px 14px rgba(38, 78, 96, 0.12);
+
+        transform: translateY(-1px);
+    }
+
+    .sidebar-toggle svg {
+        width: 18px;
+        height: 18px;
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    .navigation {
+        display: flex;
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+
+        gap: 13px;
+
+        padding: 12px 14px;
+
+        border-radius: 14px;
+
+        color: #667f8d;
+
+        font-size: 14px;
+        font-weight: 550;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .nav-item svg {
+        width: 19px;
+        height: 19px;
+
+        stroke-width: 1.8;
+    }
+
+    .nav-item:hover {
+        color: #109e9d;
+
+        background: #effaf9;
+
+        transform: translateX(2px);
+    }
+
+    .nav-item.active {
+        color: #0d9e96;
+
+        background:
+            linear-gradient(
+                100deg,
+                rgba(18, 199, 151, 0.10),
+                rgba(11, 183, 223, 0.08)
+            );
+
+        font-weight: 650;
+    }
+
+    .nav-item.active svg {
+        stroke: #0db59e;
+    }
+
+
+    /* =========================================================
+       PROFILE
+    ========================================================= */
+
+    .profile-area {
+        padding-top: 20px;
+
+        border-top: 1px solid #e2edf1;
+    }
+
+    .profile {
+        display: flex;
+        align-items: center;
+
+        gap: 11px;
+
+        padding: 10px;
+
+        border-radius: 16px;
+
+        background: rgba(248, 252, 253, 0.8);
+
+        border: 1px solid #e2edf1;
+
+        transition: 0.2s ease;
+    }
+
+    .profile:hover {
+        background: white;
+
+        box-shadow:
+            0 7px 20px rgba(38, 78, 96, 0.06);
+    }
+
+    .avatar {
+        width: 37px;
+        height: 37px;
+
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: white;
+
+        font-size: 12px;
+        font-weight: 750;
+
+        background:
+            linear-gradient(
+                135deg,
+                #10c796,
+                #10b8e4
+            );
+
+        flex-shrink: 0;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+
+        min-width: 0;
+    }
+
+    .profile-name {
+        color: #203e4e;
+
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .profile-type {
+        color: #8aa0aa;
+
+        font-size: 10px;
+
+        margin-top: 2px;
+    }
+
+    .profile-more {
+        margin-left: auto;
+
+        color: #91a5ae;
+
+        background: transparent;
+    }
+
+
+    /* =========================================================
+       COLLAPSED SIDEBAR
+    ========================================================= */
+
+    .app.sidebar-collapsed .sidebar {
+        width: 0;
+        flex-basis: 0;
+
+        padding-left: 0;
+        padding-right: 0;
+
+        border-right: 0;
+
+        overflow: visible;
+    }
+
+    .app.sidebar-collapsed .sidebar > * {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .sidebar-toggle.is-collapsed {
+        left: 12px;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+
+    /* =========================================================
+       MAIN
+    ========================================================= */
+
+    .main {
+        flex: 1;
+
+        min-width: 0;
+
+        overflow-y: auto;
+
+        position: relative;
+        z-index: 1;
+
+        padding: 42px 48px 70px;
+
+        transition:
+            padding 0.28s ease;
+    }
+
+    .main::before {
+        content: "";
+
+        position: absolute;
+
+        width: 480px;
+        height: 480px;
+
+        border-radius: 50%;
+
+        right: 0;
+        top: 80px;
+
+        background:
+            radial-gradient(
+                circle,
+                rgba(64, 203, 236, 0.08),
+                transparent 65%
+            );
+
+        pointer-events: none;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 1180px;
+
+        margin: auto;
+
+        position: relative;
+        z-index: 2;
+    }
+
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 34px;
+    }
+
+    .header-titles .eyebrow {
+        color: #0da99d;
+
+        font-size: 10px;
+
+        font-weight: 750;
+
+        letter-spacing: 1.4px;
+
+        margin-bottom: 7px;
+    }
+
+    .header h1 {
+        color: #102d3d;
+
+        font-size: 29px;
+
+        letter-spacing: -1.2px;
+
+        line-height: 1.15;
+
+        font-weight: 750;
+    }
+
+    .header p {
+        color: #718894;
+
+        font-size: 14px;
+
+        margin-top: 8px;
+
+        line-height: 1.5;
+    }
+
+
+    /* =========================================================
+       OVERVIEW CARD
+    ========================================================= */
+
+    .overview-card {
+        width: 100%;
+
+        min-height: 155px;
+
+        padding: 25px 30px;
+
+        margin-bottom: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 30px;
+
+        border-radius: 27px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255,255,255,0.94),
+                rgba(247,253,254,0.88)
+            );
+
+        border: 1px solid #dcebf0;
+
+        box-shadow:
+            0 16px 45px rgba(45, 91, 109, 0.07);
+    }
+
+    .overview-left {
+        display: flex;
+        align-items: center;
+
+        gap: 20px;
+    }
+
+    .overview-icon {
+        width: 54px;
+        height: 54px;
+
+        border-radius: 17px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #0aa79d;
+
+        background:
+            linear-gradient(
+                135deg,
+                #e8faf5,
+                #e8f8fc
+            );
+
+        border: 1px solid #d7eee9;
+    }
+
+    .overview-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .overview-info h2 {
+        color: #173445;
+
+        font-size: 17px;
+
+        font-weight: 720;
+    }
+
+    .overview-info p {
+        color: #8297a1;
+
+        font-size: 11px;
+
+        margin-top: 5px;
+    }
+
+    .overview-progress {
+        width: 270px;
+    }
+
+    .overview-progress-top {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+
+        font-size: 10px;
+    }
+
+    .overview-progress-top span:first-child {
+        color: #718894;
+    }
+
+    .overview-progress-top span:last-child {
+        color: #0da99d;
+
+        font-weight: 750;
+    }
+
+    .overview-track {
+        height: 8px;
+
+        border-radius: 999px;
+
+        background: #e5eff2;
+
+        overflow: hidden;
+    }
+
+    .overview-fill {
+        width: 62%;
+
+        height: 100%;
+
+        border-radius: inherit;
+
+        background:
+            linear-gradient(
+                90deg,
+                #0fc78f,
+                #0bb7df
+            );
+    }
+
+
+    /* =========================================================
+       SECTIONS
+    ========================================================= */
+
+    .section {
+        margin-bottom: 39px;
+    }
+
+    .section-heading {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        gap: 20px;
+
+        margin-bottom: 16px;
+    }
+
+    .section-heading h2 {
+        color: #173445;
+
+        font-size: 18px;
+
+        letter-spacing: -0.5px;
+
+        font-weight: 720;
+    }
+
+    .section-heading p {
+        color: #8297a1;
+
+        font-size: 11px;
+
+        margin-top: 5px;
+    }
+
+
+    /* =========================================================
+       METRIC CARDS
+    ========================================================= */
+
+    .cards-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 15px;
+    }
+
+    .metric-card {
+        position: relative;
+
+        overflow: hidden;
+
+        padding: 18px;
+
+        border-radius: 21px;
+
+        background:
+            rgba(255,255,255,0.84);
+
+        border: 1px solid #dce9ee;
+
+        box-shadow:
+            0 5px 18px rgba(40,80,95,0.025);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-3px);
+
+        border-color: #a9dfe2;
+
+        box-shadow:
+            0 14px 30px rgba(40,90,105,0.08);
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+    }
+
+    .metric-icon {
+        width: 39px;
+        height: 39px;
+
+        flex-shrink: 0;
+
+        border-radius: 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #0aa79d;
+
+        background:
+            linear-gradient(
+                135deg,
+                #e8faf5,
+                #e8f8fc
+            );
+    }
+
+    .metric-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .metric-title-group h3 {
+        color: #173445;
+
+        font-size: 13px;
+
+        font-weight: 700;
+    }
+
+    .target-text {
+        display: block;
+
+        color: #8aa0aa;
+
+        font-size: 9px;
+
+        margin-top: 3px;
+    }
+
+    .card-body {
+        min-height: 100px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 14px;
+
+        margin-top: 18px;
+    }
+
+    .progress-circle {
+        --percent: 78;
+
+        width: 70px;
+        height: 70px;
+
+        position: relative;
+
+        flex-shrink: 0;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 50%;
+
+        background:
+            conic-gradient(
+                from -90deg,
+                #10c796 calc(var(--percent) * 1%),
+                #e4eef1 0
+            );
+    }
+
+    .progress-circle::before {
+        content: "";
+
+        position: absolute;
+
+        width: 56px;
+        height: 56px;
+
+        border-radius: 50%;
+
+        background: white;
+    }
+
+    .circle-value {
+        position: relative;
+        z-index: 1;
+
+        color: #173445;
+
+        font-size: 17px;
+
+        font-weight: 750;
+    }
+
+    .stat-meta {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-percentage {
+        color: #0da99d;
+
+        font-size: 18px;
+
+        font-weight: 750;
+    }
+
+    .stat-label {
+        color: #8aa0aa;
+
+        font-size: 9px;
+
+        margin-top: 2px;
+    }
+
+    .mini-chart {
+        width: 75px;
+
+        margin-left: auto;
+    }
+
+    .sparkline {
+        width: 100%;
+        height: 42px;
+    }
+
+    .card-bar {
+        height: 5px;
+
+        margin-top: 4px;
+
+        border-radius: 999px;
+
+        background: #e6eff2;
+
+        overflow: hidden;
+    }
+
+    .card-bar .fill {
+        height: 100%;
+
+        border-radius: inherit;
+
+        background:
+            linear-gradient(
+                90deg,
+                #0fc78f,
+                #0bb7df
+            );
+    }
+
+
+    /* =========================================================
+       MODULE HEADER
+    ========================================================= */
+
+    .modules-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 16px;
+    }
+
+    .modules-header .section-label {
+        color: #173445;
+
+        font-size: 18px;
+
+        letter-spacing: -0.5px;
+
+        font-weight: 720;
+    }
+
+    .view-toggles {
+        display: flex;
+
+        gap: 5px;
+
+        padding: 4px;
+
+        border-radius: 12px;
+
+        background: #edf4f6;
+
+        border: 1px solid #dce9ee;
+    }
+
+    .toggle-btn {
+        padding: 7px 12px;
+
+        border-radius: 9px;
+
+        color: #80949e;
+
+        background: transparent;
+
+        font-size: 10px;
+
+        font-weight: 650;
+
+        transition: 0.2s ease;
+    }
+
+    .toggle-btn:hover {
+        color: #0d9e96;
+    }
+
+    .toggle-btn.active {
+        color: #078f89;
+
+        background: white;
+
+        box-shadow:
+            0 2px 7px rgba(40,80,95,0.06);
+    }
+
+
+    /* =========================================================
+       MODULE LIST
+    ========================================================= */
+
+    .modules-list {
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .module-card {
+        min-height: 104px;
+
+        padding: 17px 19px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 20px;
+
+        background:
+            rgba(255,255,255,0.86);
+
+        border: 1px solid #dce9ee;
+
+        border-left-width: 4px;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 5px 17px rgba(40,80,95,0.025);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .module-card:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 26px rgba(40,90,105,0.07);
+    }
+
+    .border-red {
+        border-left-color: #e99b9b;
+    }
+
+    .border-yellow {
+        border-left-color: #e5bd58;
+    }
+
+    .border-green {
+        border-left-color: #61c8a3;
+    }
+
+    .module-left {
+        display: flex;
+        align-items: center;
+
+        gap: 15px;
+
+        min-width: 0;
+    }
+
+    .module-number {
+        width: 38px;
+        height: 38px;
+
+        flex-shrink: 0;
+
+        border-radius: 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 13px;
+
+        font-weight: 750;
+    }
+
+    .module-number.red {
+        color: #bd6666;
+        background: #fff1f1;
+    }
+
+    .module-number.yellow {
+        color: #ad8121;
+        background: #fff8e6;
+    }
+
+    .module-number.green {
+        color: #178c69;
+        background: #eafaf4;
+    }
+
+    .module-details {
+        min-width: 0;
+    }
+
+    .module-details h4 {
+        color: #173445;
+
+        font-size: 13px;
+
+        font-weight: 700;
+    }
+
+    .module-details p {
+        color: #7c919b;
+
+        font-size: 10px;
+
+        line-height: 1.5;
+
+        margin-top: 4px;
+    }
+
+    .duration {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 5px;
+
+        color: #91a3ab;
+
+        font-size: 9px;
+
+        margin-top: 7px;
+    }
+
+    .duration svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .module-right {
+        display: flex;
+        align-items: center;
+
+        gap: 13px;
+
+        flex-shrink: 0;
+    }
+
+
+    /* =========================================================
+       BADGES
+    ========================================================= */
+
+    .badge {
+        padding: 6px 10px;
+
+        border-radius: 999px;
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    .priority-high {
+        color: #b46767;
+
+        background: #fff2f2;
+
+        border: 1px solid #f2d6d6;
+    }
+
+    .priority-medium {
+        color: #a27a20;
+
+        background: #fff9e9;
+
+        border: 1px solid #f0e1b8;
+    }
+
+    .priority-low {
+        color: #238767;
+
+        background: #eafaf4;
+
+        border: 1px solid #ccefe1;
+    }
+
+
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+
+    .btn {
+        padding: 10px 16px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 999px;
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+        color: white;
+
+        background:
+            linear-gradient(
+                100deg,
+                #0fc78f,
+                #0bb7df
+            );
+
+        box-shadow:
+            0 7px 17px rgba(14,183,175,0.14);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 22px rgba(14,183,175,0.20);
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 1100px) {
+
+        .main {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .cards-grid {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+        .overview-card {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .overview-progress {
+            width: 100%;
+        }
+    }
+
+
+    @media (max-width: 850px) {
+
+        .sidebar {
+            --sidebar-width: 76px;
+
+            width: 76px;
+
+            padding: 20px 10px;
+        }
+
+        .logo {
+            justify-content: center;
+
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .logo span:last-child {
+            display: none;
+        }
+
+        .nav-item {
+            justify-content: center;
+
+            padding: 12px;
+        }
+
+        .nav-item span {
+            display: none;
+        }
+
+        .profile {
+            justify-content: center;
+        }
+
+        .profile-info,
+        .profile-more {
+            display: none;
+        }
+
+        .sidebar-toggle {
+            left: 60px;
+        }
+
+        .module-card {
+            align-items: flex-start;
+
+            flex-direction: column;
+        }
+
+        .module-right {
+            width: 100%;
+
+            justify-content: flex-end;
+        }
+    }
+
+
+    @media (max-width: 650px) {
+
+        .main {
+            padding: 30px 18px 50px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header p {
+            font-size: 12px;
+        }
+
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .overview-card {
+            padding: 20px;
+        }
+
+        .overview-left {
+            align-items: flex-start;
+        }
+
+        .section-heading {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .modules-header {
+            align-items: flex-start;
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .module-left {
+            align-items: flex-start;
+        }
+
+        .module-right {
+            justify-content: flex-start;
+
+            flex-wrap: wrap;
+        }
+
+        .view-toggles {
+            width: 100%;
+        }
+
+        .toggle-btn {
+            flex: 1;
+        }
+    }
+
+
+    @media (max-width: 470px) {
+
+        .sidebar {
+            display: none;
+        }
+
+        .app.sidebar-open .sidebar {
+            display: flex;
+
+            position: fixed;
+
+            inset: 0 auto 0 0;
+
+            width: min(255px, 85vw);
+
+            flex-basis: min(255px, 85vw);
+
+            padding: 25px 16px;
+
+            background:
+                rgba(255,255,255,0.97);
+
+            box-shadow:
+                10px 0 30px rgba(20,50,65,0.12);
+        }
+
+        .app.sidebar-open .logo span:last-child,
+        .app.sidebar-open .nav-item span,
+        .app.sidebar-open .profile-info,
+        .app.sidebar-open .profile-more {
+            display: initial;
+        }
+
+        .app.sidebar-open .logo {
+            justify-content: flex-start;
+        }
+
+        .app.sidebar-open .nav-item {
+            justify-content: flex-start;
+
+            padding: 12px 14px;
+        }
+
+        .app.sidebar-open .profile {
+            justify-content: flex-start;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+
+            top: 12px;
+            left: 12px;
+            right: auto;
+
+            z-index: 100;
+        }
+
+        .sidebar-toggle.is-open {
+            left:
+                calc(
+                    min(85vw, 255px) - 44px
+                );
+        }
+
+        .overview-left {
+            flex-direction: column;
+        }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .wave-track,
+        .corner-wave-track {
+            animation: none;
+        }
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================================================
+     BACKGROUND
+========================================================== -->
+
+<div class="corner-waves" aria-hidden="true">
+
+    <svg
+        viewBox="0 0 640 340"
+        preserveAspectRatio="none"
+    >
+
+        <g class="corner-wave-track">
+
+            <path
+                class="corner-wave-line"
+                d="M 90 24 C 225 75, 345 130, 455 181 S 575 254, 640 296"
+            ></path>
+
+            <path
+                class="corner-wave-line"
+                d="M 90 12 C 225 63, 345 118, 455 169 S 575 242, 640 284"
+            ></path>
+
+            <path
+                class="corner-wave-line"
+                d="M 90 0 C 225 51, 345 106, 455 157 S 575 230, 640 272"
+            ></path>
+
+        </g>
+
+    </svg>
+
+</div>
+
+
+<div class="background-waves" aria-hidden="true">
+
+    <svg
+        viewBox="0 0 2880 320"
+        preserveAspectRatio="none"
+    >
+
+        <g class="wave-track wave-back">
+
+            <path
+                d="M0 164
+                   C240 112 480 214 720 164
+                   S1200 112 1440 164
+                   L1440 320
+                   L0 320 Z"
+            ></path>
+
+            <path
+                d="M1440 164
+                   C1680 112 1920 214 2160 164
+                   S2640 112 2880 164
+                   L2880 320
+                   L1440 320 Z"
+            ></path>
+
+        </g>
+
+
+        <g class="wave-track wave-mid">
+
+            <path
+                d="M0 208
+                   C240 152 480 254 720 208
+                   S1200 152 1440 208
+                   L1440 320
+                   L0 320 Z"
+            ></path>
+
+            <path
+                d="M1440 208
+                   C1680 152 1920 254 2160 208
+                   S2640 152 2880 208
+                   L2880 320
+                   L1440 320 Z"
+            ></path>
+
+        </g>
+
+
+        <g class="wave-track wave-front">
+
+            <path
+                d="M0 250
+                   C240 194 480 288 720 250
+                   S1200 194 1440 250
+                   L1440 320
+                   L0 320 Z"
+            ></path>
+
+            <path
+                d="M1440 250
+                   C1680 194 1920 288 2160 250
+                   S2640 194 2880 250
+                   L2880 320
+                   L1440 320 Z"
+            ></path>
+
+        </g>
+
+    </svg>
+
+</div>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-top">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <span class="logo-mark"></span>
+
+            <span>commio</span>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <i data-lucide="home"></i>
+
+                <span>
+                    Home
+                </span>
+            </a>
+
+
+            <a
+                href="plan.html"
+                class="nav-item active"
+            >
+                <i data-lucide="calendar"></i>
+
+                <span>
+                    Learning Plan
+                </span>
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                onclick="setActiveNav(this); return false;"
+            >
+                <i data-lucide="book-open"></i>
+
+                <span>
+                    Exercises
+                </span>
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                onclick="setActiveNav(this); return false;"
+            >
+                <i data-lucide="line-chart"></i>
+
+                <span>
+                    Progress
+                </span>
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                onclick="setActiveNav(this); return false;"
+            >
+                <i data-lucide="message-circle"></i>
+
+                <span>
+                    Coaching
+                </span>
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                onclick="setActiveNav(this); return false;"
+            >
+                <i data-lucide="settings"></i>
+
+                <span>
+                    Settings
+                </span>
+            </a>
+
+        </nav>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-area">
+
+        <div class="profile">
+
+            <div class="avatar">
+                RM
+            </div>
+
+            <div class="profile-info">
+
+                <span class="profile-name">
+                    Reem Mousa
+                </span>
+
+                <span class="profile-type">
+                    Personal
+                </span>
+
+            </div>
+
+            <button
+                class="profile-more"
+                type="button"
+            >
+
+                <i data-lucide="more-horizontal"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN
+========================================================== -->
+
+<main class="main">
+
+    <div class="content">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="header-titles">
+
+                <div class="eyebrow">
+                    YOUR LEARNING PLAN
+                </div>
+
+                <h1>
+                    Training Plan
+                </h1>
+
+                <p>
+                    Build your confidence. Improve your delivery. Make every word count.
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PLAN OVERVIEW
+        ================================================== -->
+
+        <section class="overview-card">
+
+            <div class="overview-left">
+
+                <div class="overview-icon">
+
+                    <i data-lucide="target"></i>
+
+                </div>
+
+                <div class="overview-info">
+
+                    <h2>
+                        Your communication journey
+                    </h2>
+
+                    <p>
+                        Keep practicing to strengthen your communication skills.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="overview-progress">
+
+                <div class="overview-progress-top">
+
+                    <span>
+                        Plan progress
+                    </span>
+
+                    <span>
+                        62%
+                    </span>
+
+                </div>
+
+                <div class="overview-track">
+
+                    <div class="overview-fill"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PROGRESS
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Your Progress
+                    </h2>
+
+                    <p>
+                        A quick look at the areas you're currently working on.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="cards-grid">
+
+
+                <!-- SPEAKING PACE -->
+
+                <div class="metric-card">
+
+                    <div class="card-header">
+
+                        <div class="metric-icon">
+
+                            <i data-lucide="gauge"></i>
+
+                        </div>
+
+                        <div class="metric-title-group">
+
+                            <h3>
+                                Speaking Pace
+                            </h3>
+
+                            <span class="target-text">
+                                Target: 120–160 WPM
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div
+                            class="progress-circle"
+                            style="--percent: 78;"
+                        >
+
+                            <span class="circle-value">
+                                142
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat-meta">
+
+                            <span class="stat-percentage">
+                                78%
+                            </span>
+
+                            <span class="stat-label">
+                                toward target
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-chart">
+
+                            <svg
+                                viewBox="0 0 100 40"
+                                class="sparkline"
+                            >
+
+                                <path
+                                    d="M0 30 Q15 20,25 35 T50 15 T75 25 T100 10"
+                                    fill="none"
+                                    stroke="#2dd4bf"
+                                    stroke-width="2"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-bar">
+
+                        <div
+                            class="fill"
+                            style="width: 78%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILLER WORDS -->
+
+                <div class="metric-card">
+
+                    <div class="card-header">
+
+                        <div class="metric-icon">
+
+                            <i data-lucide="message-square"></i>
+
+                        </div>
+
+                        <div class="metric-title-group">
+
+                            <h3>
+                                Filler Words
+                            </h3>
+
+                            <span class="target-text">
+                                Target: &lt; 3%
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div
+                            class="progress-circle"
+                            style="--percent: 83;"
+                        >
+
+                            <span class="circle-value">
+                                5
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat-meta">
+
+                            <span class="stat-percentage">
+                                83%
+                            </span>
+
+                            <span class="stat-label">
+                                toward target
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-chart">
+
+                            <svg
+                                viewBox="0 0 100 40"
+                                class="sparkline"
+                            >
+
+                                <path
+                                    d="M0 25 Q20 35,35 15 T65 30 T100 12"
+                                    fill="none"
+                                    stroke="#2dd4bf"
+                                    stroke-width="2"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-bar">
+
+                        <div
+                            class="fill"
+                            style="width: 83%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EYE CONTACT -->
+
+                <div class="metric-card">
+
+                    <div class="card-header">
+
+                        <div class="metric-icon">
+
+                            <i data-lucide="eye"></i>
+
+                        </div>
+
+                        <div class="metric-title-group">
+
+                            <h3>
+                                Eye Contact
+                            </h3>
+
+                            <span class="target-text">
+                                Target: 80–90%
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div
+                            class="progress-circle"
+                            style="--percent: 72;"
+                        >
+
+                            <span class="circle-value">
+                                72
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat-meta">
+
+                            <span class="stat-percentage">
+                                72%
+                            </span>
+
+                            <span class="stat-label">
+                                toward target
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-chart">
+
+                            <svg
+                                viewBox="0 0 100 40"
+                                class="sparkline"
+                            >
+
+                                <path
+                                    d="M0 35 Q25 10,45 25 T75 15 T100 20"
+                                    fill="none"
+                                    stroke="#2dd4bf"
+                                    stroke-width="2"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-bar">
+
+                        <div
+                            class="fill"
+                            style="width: 72%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TRAINING MODULES
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="modules-header">
+
+                <h2 class="section-label">
+                    Training Modules
+                </h2>
+
+
+                <div class="view-toggles">
+
+                    <button
+                        class="toggle-btn active"
+                        type="button"
+                        onclick="setModuleView(this)"
+                    >
+                        Priority
+                    </button>
+
+                    <button
+                        class="toggle-btn"
+                        type="button"
+                        onclick="setModuleView(this)"
+                    >
+                        Alphabetical
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="modules-list">
+
+
+                <!-- MODULE 1 -->
+
+                <div class="module-card border-red">
+
+                    <div class="module-left">
+
+                        <div class="module-number red">
+                            1
+                        </div>
+
+                        <div class="module-details">
+
+                            <h4>
+                                Find Your Natural Pace
+                            </h4>
+
+                            <p>
+                                Learn to speak at the right speed for clarity and confidence.
+                            </p>
+
+                            <span class="duration">
+
+                                <i data-lucide="clock"></i>
+
+                                3 min
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="module-right">
+
+                        <span class="badge priority-high">
+                            Priority: High
+                        </span>
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            onclick="startModule('Find Your Natural Pace')"
+                        >
+                            Start Module
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MODULE 2 -->
+
+                <div class="module-card border-yellow">
+
+                    <div class="module-left">
+
+                        <div class="module-number yellow">
+                            2
+                        </div>
+
+                        <div class="module-details">
+
+                            <h4>
+                                Eliminate Filler Words
+                            </h4>
+
+                            <p>
+                                Replace "um", "uh", and other fillers with powerful pauses.
+                            </p>
+
+                            <span class="duration">
+
+                                <i data-lucide="clock"></i>
+
+                                4 min
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="module-right">
+
+                        <span class="badge priority-medium">
+                            Priority: Medium
+                        </span>
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            onclick="startModule('Eliminate Filler Words')"
+                        >
+                            Start Module
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MODULE 3 -->
+
+                <div class="module-card border-green">
+
+                    <div class="module-left">
+
+                        <div class="module-number green">
+                            3
+                        </div>
+
+                        <div class="module-details">
+
+                            <h4>
+                                Master Eye Contact
+                            </h4>
+
+                            <p>
+                                Build natural eye contact and connect with your audience.
+                            </p>
+
+                            <span class="duration">
+
+                                <i data-lucide="clock"></i>
+
+                                3 min
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="module-right">
+
+                        <span class="badge priority-low">
+                            Priority: Low
+                        </span>
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            onclick="startModule('Master Eye Contact')"
+                        >
+                            Start Module
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MODULE 4 -->
+
+                <div class="module-card border-green">
+
+                    <div class="module-left">
+
+                        <div class="module-number green">
+                            4
+                        </div>
+
+                        <div class="module-details">
+
+                            <h4>
+                                Improve Body Language
+                            </h4>
+
+                            <p>
+                                Use confident posture and gestures to reinforce your message.
+                            </p>
+
+                            <span class="duration">
+
+                                <i data-lucide="clock"></i>
+
+                                3 min
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="module-right">
+
+                        <span class="badge priority-low">
+                            Priority: Low
+                        </span>
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            onclick="startModule('Improve Body Language')"
+                        >
+                            Start Module
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+</div>
+
+<button
+    class="sidebar-toggle"
+    type="button"
+    aria-label="Hide sidebar"
+    aria-expanded="true"
+    title="Hide sidebar"
+    onclick="toggleSidebar()"
+>
+    <i data-lucide="panel-left-close"></i>
+</button>
+
+<!-- =========================================================
+     SCRIPT
+========================================================== -->
+
+<script>
+
+    /* =========================================================
+       INITIALIZE LUCIDE
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            lucide.createIcons();
+
+        }
+    );
+
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    function setActiveNav(element) {
+
+        document
+            .querySelectorAll(".nav-item")
+            .forEach(item => {
+
+                item.classList.remove("active");
+
+            });
+
+        element.classList.add("active");
+    }
+
+
+    /* =========================================================
+       SIDEBAR TOGGLE
+       
+       Desktop:
+       Sidebar completely collapses.
+
+       Mobile:
+       Sidebar becomes a drawer.
+    ========================================================= */
+
+    function toggleSidebar() {
+
+        const app =
+            document.querySelector(".app");
+
+        const toggle =
+            document.querySelector(".sidebar-toggle");
+
+        const isMobile =
+            window.matchMedia(
+                "(max-width: 470px)"
+            ).matches;
+
+
+        if (isMobile) {
+
+            const opened =
+                app.classList.toggle(
+                    "sidebar-open"
+                );
+
+            toggle.classList.toggle("is-open", opened);
+            toggle.classList.remove("is-collapsed");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                String(opened)
+            );
+
+            toggle.setAttribute(
+                "aria-label",
+                opened
+                    ? "Hide sidebar"
+                    : "Show sidebar"
+            );
+
+            toggle.setAttribute(
+                "title",
+                opened
+                    ? "Hide sidebar"
+                    : "Show sidebar"
+            );
+
+            toggle.innerHTML =
+                opened
+                    ? '<i data-lucide="panel-left-close"></i>'
+                    : '<i data-lucide="panel-left-open"></i>';
+
+        }
+
+        else {
+
+            const collapsed =
+                app.classList.toggle(
+                    "sidebar-collapsed"
+                );
+
+            toggle.classList.toggle("is-collapsed", collapsed);
+            toggle.classList.remove("is-open");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                String(!collapsed)
+            );
+
+            toggle.setAttribute(
+                "aria-label",
+                collapsed
+                    ? "Show sidebar"
+                    : "Hide sidebar"
+            );
+
+            toggle.setAttribute(
+                "title",
+                collapsed
+                    ? "Show sidebar"
+                    : "Hide sidebar"
+            );
+
+            toggle.innerHTML =
+                collapsed
+                    ? '<i data-lucide="panel-left-open"></i>'
+                    : '<i data-lucide="panel-left-close"></i>';
+        }
+
+
+        lucide.createIcons();
+    }
+
+
+    /* =========================================================
+       MODULE VIEW TOGGLE
+    ========================================================= */
+
+    function setModuleView(button) {
+
+        document
+            .querySelectorAll(".toggle-btn")
+            .forEach(item => {
+
+                item.classList.remove("active");
+
+            });
+
+        button.classList.add("active");
+
+        if (
+            button.textContent
+                .trim()
+                .toLowerCase()
+                === "alphabetical"
+        ) {
+
+            sortModulesAlphabetically();
+
+        }
+
+        else {
+
+            restorePriorityOrder();
+
+        }
+    }
+
+
+    /* =========================================================
+       ALPHABETICAL SORT
+    ========================================================= */
+
+    function sortModulesAlphabetically() {
+
+        const list =
+            document.querySelector(".modules-list");
+
+        const modules =
+            Array.from(
+                list.querySelectorAll(".module-card")
+            );
+
+        modules.sort(
+            (a, b) => {
+
+                const titleA =
+                    a.querySelector("h4")
+                        .textContent
+                        .trim()
+                        .toLowerCase();
+
+                const titleB =
+                    b.querySelector("h4")
+                        .textContent
+                        .trim()
+                        .toLowerCase();
+
+                return titleA.localeCompare(titleB);
+            }
+        );
+
+        modules.forEach(module => {
+
+            list.appendChild(module);
+
+        });
+    }
+
+
+    /* =========================================================
+       RESTORE PRIORITY ORDER
+    ========================================================= */
+
+    function restorePriorityOrder() {
+
+        const list =
+            document.querySelector(".modules-list");
+
+        const modules =
+            Array.from(
+                list.querySelectorAll(".module-card")
+            );
+
+        modules.sort(
+            (a, b) => {
+
+                const numberA =
+                    parseInt(
+                        a.querySelector(".module-number")
+                            .textContent
+                    );
+
+                const numberB =
+                    parseInt(
+                        b.querySelector(".module-number")
+                            .textContent
+                    );
+
+                return numberA - numberB;
+            }
+        );
+
+        modules.forEach(module => {
+
+            list.appendChild(module);
+
+        });
+    }
+
+
+    /* =========================================================
+       START MODULE
+    ========================================================= */
+
+    function startModule(name) {
+
+        showToast(
+            `Opening ${name}...`
+        );
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+        let toast =
+            document.getElementById("toast");
+
+
+        if (!toast) {
+
+            toast =
+                document.createElement("div");
+
+            toast.id = "toast";
+
+            toast.style.position = "fixed";
+            toast.style.right = "25px";
+            toast.style.bottom = "25px";
+            toast.style.zIndex = "200";
+
+            toast.style.padding =
+                "12px 17px";
+
+            toast.style.borderRadius =
+                "14px";
+
+            toast.style.color = "white";
+
+            toast.style.background =
+                "#173445";
+
+            toast.style.boxShadow =
+                "0 15px 35px rgba(20,50,65,0.22)";
+
+            toast.style.fontSize =
+                "11px";
+
+            toast.style.fontWeight =
+                "650";
+
+            toast.style.opacity = "0";
+
+            toast.style.transform =
+                "translateY(10px)";
+
+            toast.style.transition =
+                "opacity 0.25s ease, transform 0.25s ease";
+
+            document.body.appendChild(toast);
+        }
+
+
+        toast.textContent = message;
+
+        requestAnimationFrame(() => {
+
+            toast.style.opacity = "1";
+
+            toast.style.transform =
+                "translateY(0)";
+
+        });
+
+
+        clearTimeout(toastTimer);
+
+
+        toastTimer =
+            setTimeout(() => {
+
+                toast.style.opacity = "0";
+
+                toast.style.transform =
+                    "translateY(10px)";
+
+            }, 2500);
+    }
+
+
+    /* =========================================================
+       RESPONSIVE SIDEBAR RESET
+    ========================================================= */
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            const app =
+                document.querySelector(".app");
+            const toggle =
+                document.querySelector(".sidebar-toggle");
+
+            if (
+                app &&
+                toggle &&
+                !window.matchMedia(
+                    "(max-width: 470px)"
+                ).matches
+            ) {
+
+                app.classList.remove(
+                    "sidebar-open"
+                );
+
+                toggle.classList.remove("is-open");
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
