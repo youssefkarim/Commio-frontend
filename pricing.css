@@ -18,7 +18,7 @@ html { scroll-behavior: smooth; }
 body {
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--ink);
-    background: #f7fafd;
+    background: #f1f8f8;
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -27,51 +27,6 @@ a { color: inherit; text-decoration: none; }
 
 :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.topbar {
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 30px 32px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    color: #173445;
-    font-size: 25px;
-    font-weight: 750;
-    letter-spacing: -0.8px;
-}
-
-.brand-mark {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #10c796, #10b8e4);
-    display: grid;
-    place-items: center;
-    box-shadow: 0 6px 18px rgba(18, 188, 173, 0.2);
-}
-
-.brand-mark::after {
-    content: "";
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: #fff;
-}
-
-.topbar-links { display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 600; }
-.topbar-links a { color: #617887; transition: color 0.2s ease; }
-.topbar-links a:hover { color: #13aeae; }
 
 
 /* =========================================================
@@ -217,64 +172,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 600px) {
-    .topbar, .pricing { padding-left: 20px; padding-right: 20px; }
-    .pricing { padding-top: 44px; }
-    .brand { font-size: 21px; }
+    .pricing { padding-left: 20px; padding-right: 20px; padding-top: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
 }
-
-/* =========================================================
-   LOGO IMAGE
-   logo.png has some transparent padding, so the negative margin
-   lines the icon up with the page edge.
-========================================================= */
-
-.site-logo {
-    display: block;
-    height: 56px;
-    width: auto;
-    margin-left: -19px;
-}
-
-@media (max-width: 600px) {
-    .site-logo { height: 46px; margin-left: -16px; }
-}
-
-/* Pricing page refresh */
-body { background: #f5fafb; }
-
-.topbar {
-    width: min(calc(100% - 64px), 1280px);
-    max-width: none;
-    min-height: 82px;
-    padding: 18px 0;
-    gap: 28px;
-}
-
-.brand .site-logo { height: 46px; margin-left: -15px; }
-.topbar-links { gap: 28px; margin-left: auto; }
-.topbar-links a[aria-current="page"] { color: var(--ink); }
-
-.topbar-cta {
-    display: inline-flex;
-    min-height: 42px;
-    align-items: center;
-    justify-content: center;
-    padding: 0 18px;
-    border: 1px solid #b9e2df;
-    border-radius: 8px;
-    background: #f7fcfb;
-    color: #147f86;
-    font-size: 13px;
-    font-weight: 650;
-    white-space: nowrap;
-    transition: background 0.18s ease, border-color 0.18s ease;
-}
-
-.topbar-cta:hover { border-color: #7bc9c2; background: #eaf7f5; }
 
 .pricing {
     width: min(calc(100% - 64px), 1240px);
@@ -367,7 +270,6 @@ body { background: #f5fafb; }
 .featured .plan-features li { border-color: rgba(57, 150, 149, 0.18); }
 
 @media (max-width: 1050px) {
-    .topbar-links { gap: 18px; }
     .plan-grid { gap: 14px; }
     .plan { padding: 22px; }
 }
@@ -383,11 +285,6 @@ body { background: #f5fafb; }
 }
 
 @media (max-width: 600px) {
-    .topbar { width: calc(100% - 40px); min-height: 70px; gap: 12px; }
-    .brand .site-logo { height: 42px; margin-left: -13px; }
-    .topbar-links { gap: 14px; font-size: 13px; }
-    .topbar-links a:nth-child(2), .topbar-links a:nth-child(3) { display: none; }
-    .topbar-cta { display: none; }
     .pricing { width: calc(100% - 40px); padding: 38px 0 68px; }
     .pricing-hero { margin-bottom: 38px; }
     .pricing-hero h1 { font-size: 38px; }
