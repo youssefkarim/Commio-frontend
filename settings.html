@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings — Commio</title>
+    
+    <!-- Meta tags for SEO & best practices -->
+    <meta name="description" content="Manage your Commio account, app preferences, privacy & data settings, training goals, and support.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;750;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="brand-logo.css">
+    <link rel="stylesheet" href="sidebar.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* =========================================================
+           RESET & CORE STYLES
+        ========================================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f4f9fc;
+            color: #102d3d;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+
+        /* Dark Theme Variables */
+        body.dark-mode {
+            background: #0d171d;
+            color: #e2eeef;
+        }
+
+        body.dark-mode .app {
+            background:
+                radial-gradient(circle at 85% 22%, rgba(13, 110, 125, 0.25), transparent 35%),
+                radial-gradient(circle at 18% 72%, rgba(15, 120, 90, 0.20), transparent 35%),
+                linear-gradient(135deg, #091217 0%, #0d171d 40%, #112028 100%);
+        }
+
+        body.dark-mode #sidebar {
+            background: rgba(15, 27, 34, 0.88);
+            border-color: #1e333f;
+        }
+
+        body.dark-mode #sidebar .nav-item {
+            color: #8da5b3;
+        }
+
+        body.dark-mode #sidebar .nav-item:hover {
+            color: #14b8a6;
+            background: rgba(20, 184, 166, 0.12);
+        }
+
+        body.dark-mode #sidebar .nav-item.active {
+            color: #2dd4bf;
+            background: linear-gradient(100deg, rgba(45, 212, 191, 0.18), rgba(14, 165, 233, 0.15));
+        }
+
+        body.dark-mode #sidebar .profile {
+            background: rgba(20, 35, 45, 0.7);
+            border-color: #223c4a;
+        }
+
+        body.dark-mode #sidebar .profile-name {
+            color: #e2eeef;
+        }
+
+        body.dark-mode .settings-card {
+            background: rgba(18, 32, 42, 0.85);
+            border-color: #223c4a;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .settings-section-title {
+            color: #20c997;
+        }
+
+        body.dark-mode .settings-divider {
+            border-color: #233e4d;
+        }
+
+        body.dark-mode .settings-row {
+            border-color: #1a2f3b;
+        }
+
+        body.dark-mode .settings-row:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        body.dark-mode .settings-label {
+            color: #e2eeef;
+        }
+
+        body.dark-mode .settings-val {
+            color: #8da5b3;
+        }
+
+        body.dark-mode .modal-content {
+            background: #12202a;
+            border-color: #233e4d;
+            color: #e2eeef;
+        }
+
+        body.dark-mode .modal-header h3 {
+            color: #ffffff;
+        }
+
+        body.dark-mode .form-control {
+            background: #0d171d;
+            border-color: #223c4a;
+            color: #e2eeef;
+        }
+
+        body.dark-mode .modal-footer {
+            border-color: #1e333f;
+        }
+
+        /* =========================================================
+           LAYOUT CONTAINER
+        ========================================================= */
+        .app {
+            min-height: 100vh;
+            display: flex;
+            position: relative;
+            isolation: isolate;
+            background:
+                radial-gradient(circle at 85% 22%, rgba(178, 231, 239, 0.32), transparent 30%),
+                radial-gradient(circle at 18% 72%, rgba(190, 235, 207, 0.30), transparent 32%),
+                radial-gradient(circle at 72% 5%, rgba(255, 239, 176, 0.22), transparent 25%),
+                linear-gradient(135deg, #f5fbf6 0%, #f1faf8 35%, #f0f9fc 68%, #fffdf4 100%);
+            overflow: visible;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            padding: 42px 48px 70px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .settings-container {
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #102d3d;
+            letter-spacing: -1.2px;
+            line-height: 1.2;
+        }
+
+        body.dark-mode .page-title {
+            color: #ffffff;
+        }
+
+        .page-subtitle {
+            margin-top: 6px;
+            font-size: 15px;
+            color: #718894;
+            font-weight: 450;
+            line-height: 1.5;
+        }
+
+        body.dark-mode .page-subtitle {
+            color: #8da5b3;
+        }
+
+        /* =========================================================
+           SETTINGS CARD & SECTIONS
+        ========================================================= */
+        .settings-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            border: 1px solid #dce9ee;
+            border-radius: 24px;
+            padding: 32px 36px;
+            box-shadow: 0 16px 45px rgba(37, 76, 91, 0.06);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .settings-group {
+            margin-bottom: 36px;
+        }
+
+        .settings-group:last-child {
+            margin-bottom: 12px;
+        }
+
+        .settings-section-title {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            color: #0da99d;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .settings-divider {
+            border: 0;
+            border-top: 1px solid #e1edf1;
+            margin-bottom: 6px;
+        }
+
+        /* =========================================================
+           SETTINGS ROWS
+        ========================================================= */
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 12px;
+            border-bottom: 1px solid #f0f6f8;
+            border-radius: 12px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.18s ease, transform 0.18s ease;
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-row:hover {
+            background: rgba(13, 169, 157, 0.05);
+            transform: translateX(2px);
+        }
+
+        .settings-row:active {
+            transform: translateX(0);
+        }
+
+        .settings-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .settings-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #173445;
+        }
+
+        .settings-sublabel {
+            font-size: 13px;
+            color: #718894;
+            font-weight: 450;
+        }
+
+        .settings-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .settings-val {
+            font-size: 14.5px;
+            font-weight: 500;
+            color: #647d8b;
+        }
+
+        .chevron-icon {
+            width: 18px;
+            height: 18px;
+            stroke: #9cb1bc;
+            transition: transform 0.2s ease, stroke 0.2s ease;
+        }
+
+        .settings-row:hover .chevron-icon {
+            stroke: #0da99d;
+            transform: translateX(3px);
+        }
+
+        /* Switch Toggle Control */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd8de;
+            transition: .25s ease;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .25s ease;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.18);
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, #0fc78f, #0bb7df);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Danger Row */
+        .settings-row.danger-row:hover {
+            background: rgba(220, 53, 69, 0.06);
+        }
+        .settings-row.danger-row .settings-label {
+            color: #dc3545;
+        }
+        .settings-row.danger-row .chevron-icon {
+            stroke: #e47883;
+        }
+        .settings-row.danger-row:hover .chevron-icon {
+            stroke: #dc3545;
+        }
+
+        /* =========================================================
+           VERSION FOOTER
+        ========================================================= */
+        .settings-footer {
+            margin-top: 36px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #9cb1bc;
+            letter-spacing: 0.3px;
+        }
+
+        body.dark-mode .settings-footer {
+            color: #587080;
+        }
+
+        /* =========================================================
+           MODAL DIALOGS
+        ========================================================= */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 45, 61, 0.42);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            width: min(500px, 100%);
+            border-radius: 20px;
+            border: 1px solid #dce9ee;
+            box-shadow: 0 24px 70px rgba(25, 65, 82, 0.22);
+            transform: translateY(16px) scale(0.97);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .modal-overlay.open .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            padding: 22px 28px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #edf4f7;
+        }
+
+        body.dark-mode .modal-header {
+            border-color: #1e333f;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 750;
+            color: #173445;
+        }
+
+        .modal-close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            color: #718894;
+            transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: #eef6f9;
+            color: #102d3d;
+        }
+
+        body.dark-mode .modal-close-btn:hover {
+            background: #1a2d38;
+            color: #ffffff;
+        }
+
+        .modal-body {
+            padding: 24px 28px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 16px 28px 22px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid #edf4f7;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
+        }
+
+        .btn-secondary {
+            background: #eef5f8;
+            color: #526e7b;
+            border: 1px solid #dce9ee;
+        }
+
+        .btn-secondary:hover {
+            background: #e3edf2;
+            color: #173445;
+        }
+
+        body.dark-mode .btn-secondary {
+            background: #1a2f3d;
+            border-color: #274557;
+            color: #b0c6d4;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background: #223c4e;
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background: linear-gradient(100deg, #0fc78f, #0bb7df);
+            color: white;
+            box-shadow: 0 4px 14px rgba(15, 199, 143, 0.28);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.94;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            box-shadow: 0 4px 14px rgba(220, 53, 69, 0.28);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #526e7b;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-mode .form-group label {
+            color: #8da5b3;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #dce9ee;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #173445;
+            background: #ffffff;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0da99d;
+            box-shadow: 0 0 0 3px rgba(13, 169, 157, 0.15);
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border: 1px solid #dce9ee;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border-color 0.18s ease, background 0.18s ease;
+        }
+
+        body.dark-mode .radio-option {
+            border-color: #223c4a;
+            background: #0d171d;
+        }
+
+        .radio-option:hover {
+            border-color: #0da99d;
+            background: #effaf9;
+        }
+
+        body.dark-mode .radio-option:hover {
+            background: rgba(13, 169, 157, 0.12);
+        }
+
+        .radio-option.selected {
+            border-color: #0da99d;
+            background: #eaf8f6;
+        }
+
+        body.dark-mode .radio-option.selected {
+            border-color: #2dd4bf;
+            background: rgba(45, 212, 191, 0.15);
+        }
+
+        .radio-option input {
+            accent-color: #0da99d;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* =========================================================
+           TOAST NOTIFICATION
+        ========================================================= */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #102d3d;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast svg {
+            color: #0fc78f;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 32px 20px 60px;
+            }
+            .settings-card {
+                padding: 24px 20px;
+            }
+            .settings-row {
+                padding: 14px 8px;
+            }
+            .settings-label {
+                font-size: 14px;
+            }
+            .settings-val {
+                font-size: 13.5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SHARED SIDEBAR MOUNT POINT -->
+    <div data-shared-sidebar></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="settings-container">
+
+            <header class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Manage your Commio experience and account.</p>
+            </header>
+
+            <div class="settings-card">
+
+                <!-- 1. ACCOUNT -->
+                <div class="settings-group">
+                    <div class="settings-section-title">ACCOUNT</div>
+                    <hr class="settings-divider">
+
+                    <div class="settings-row" onclick="openModal('passwordModal')" role="button" tabindex="0" aria-label="Change Password">
+                        <div class="settings-left">
+                            <span class="settings-label">Change Password</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('securityModal')" role="button" tabindex="0" aria-label="Security">
+                        <div class="settings-left">
+                            <span class="settings-label">Security</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row danger-row" onclick="openModal('deleteAccountModal')" role="button" tabindex="0" aria-label="Delete Account">
+                        <div class="settings-left">
+                            <span class="settings-label">Delete Account</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 2. PREFERENCES -->
+                <div class="settings-group">
+                    <div class="settings-section-title">PREFERENCES</div>
+                    <hr class="settings-divider">
+
+                    <div class="settings-row" onclick="openModal('languageModal')" role="button" tabindex="0" aria-label="Language">
+                        <div class="settings-left">
+                            <span class="settings-label">Language</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-language">English</span>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('themeModal')" role="button" tabindex="0" aria-label="Theme">
+                        <div class="settings-left">
+                            <span class="settings-label">Theme</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-theme">Light</span>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="toggleSwitchState('toggle-notifications', 'Notifications', 'val-notifications')" role="button" tabindex="0" aria-label="Notifications">
+                        <div class="settings-left">
+                            <span class="settings-label">Notifications</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-notifications">On</span>
+                            <label class="toggle-switch" onclick="event.stopPropagation()">
+                                <input type="checkbox" id="toggle-notifications" checked onchange="updateToggleText(this, 'val-notifications', 'Notifications')">
+                                <span class="slider"></span>
+                            </label>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="toggleSwitchState('toggle-sound', 'Sound Effects', 'val-sound')" role="button" tabindex="0" aria-label="Sound Effects">
+                        <div class="settings-left">
+                            <span class="settings-label">Sound Effects</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-sound">On</span>
+                            <label class="toggle-switch" onclick="event.stopPropagation()">
+                                <input type="checkbox" id="toggle-sound" checked onchange="updateToggleText(this, 'val-sound', 'Sound Effects')">
+                                <span class="slider"></span>
+                            </label>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="toggleSwitchState('toggle-autoplay', 'Auto-play Feedback', 'val-autoplay')" role="button" tabindex="0" aria-label="Auto-play Feedback">
+                        <div class="settings-left">
+                            <span class="settings-label">Auto-play Feedback</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-autoplay">On</span>
+                            <label class="toggle-switch" onclick="event.stopPropagation()">
+                                <input type="checkbox" id="toggle-autoplay" checked onchange="updateToggleText(this, 'val-autoplay', 'Auto-play Feedback')">
+                                <span class="slider"></span>
+                            </label>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 3. PRIVACY & DATA -->
+                <div class="settings-group">
+                    <div class="settings-section-title">PRIVACY & DATA</div>
+                    <hr class="settings-divider">
+
+                    <div class="settings-row" onclick="openModal('privacyModal')" role="button" tabindex="0" aria-label="Data and Privacy">
+                        <div class="settings-left">
+                            <span class="settings-label">Data & Privacy</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('permissionsModal')" role="button" tabindex="0" aria-label="Recording Permissions">
+                        <div class="settings-left">
+                            <span class="settings-label">Recording Permissions</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('recordingsModal')" role="button" tabindex="0" aria-label="Manage Saved Recordings">
+                        <div class="settings-left">
+                            <span class="settings-label">Manage Saved Recordings</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="downloadUserData()" role="button" tabindex="0" aria-label="Download My Data">
+                        <div class="settings-left">
+                            <span class="settings-label">Download My Data</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 4. TRAINING -->
+                <div class="settings-group">
+                    <div class="settings-section-title">TRAINING</div>
+                    <hr class="settings-divider">
+
+                    <div class="settings-row" onclick="openModal('goalModal')" role="button" tabindex="0" aria-label="Communication Goal">
+                        <div class="settings-left">
+                            <span class="settings-label">Communication Goal</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-goal">Job Interviews</span>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="toggleSwitchState('toggle-reminders', 'Training Reminders', 'val-reminders')" role="button" tabindex="0" aria-label="Training Reminders">
+                        <div class="settings-left">
+                            <span class="settings-label">Training Reminders</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-reminders">On</span>
+                            <label class="toggle-switch" onclick="event.stopPropagation()">
+                                <input type="checkbox" id="toggle-reminders" checked onchange="updateToggleText(this, 'val-reminders', 'Training Reminders')">
+                                <span class="slider"></span>
+                            </label>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('practiceGoalModal')" role="button" tabindex="0" aria-label="Daily Practice Goal">
+                        <div class="settings-left">
+                            <span class="settings-label">Daily Practice Goal</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-practice">15 minutes</span>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('difficultyModal')" role="button" tabindex="0" aria-label="Difficulty">
+                        <div class="settings-left">
+                            <span class="settings-label">Difficulty</span>
+                        </div>
+                        <div class="settings-right">
+                            <span class="settings-val" id="val-difficulty">Adaptive</span>
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 5. SUPPORT & ABOUT -->
+                <div class="settings-group">
+                    <div class="settings-section-title">SUPPORT & ABOUT</div>
+                    <hr class="settings-divider">
+
+                    <div class="settings-row" onclick="openModal('helpModal')" role="button" tabindex="0" aria-label="Help Center">
+                        <div class="settings-left">
+                            <span class="settings-label">Help Center</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('contactModal')" role="button" tabindex="0" aria-label="Contact Support">
+                        <div class="settings-left">
+                            <span class="settings-label">Contact Support</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('aboutModal')" role="button" tabindex="0" aria-label="About Commio">
+                        <div class="settings-left">
+                            <span class="settings-label">About Commio</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('termsModal')" role="button" tabindex="0" aria-label="Terms of Service">
+                        <div class="settings-left">
+                            <span class="settings-label">Terms of Service</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" onclick="openModal('privacyPolicyModal')" role="button" tabindex="0" aria-label="Privacy Policy">
+                        <div class="settings-left">
+                            <span class="settings-label">Privacy Policy</span>
+                        </div>
+                        <div class="settings-right">
+                            <i data-lucide="chevron-right" class="chevron-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="settings-footer">
+                Version 1.0.0
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<!-- =========================================================
+     MODAL DIALOGS
+========================================================= -->
+
+<!-- Change Password Modal -->
+<div class="modal-overlay" id="passwordModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Change Password</h3>
+            <button class="modal-close-btn" onclick="closeModal('passwordModal')"><i data-lucide="x"></i></button>
+        </div>
+        <form onsubmit="handlePasswordChange(event)">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" class="form-control" placeholder="At least 8 characters" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter new password" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('passwordModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Update Password</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Security Modal -->
+<div class="modal-overlay" id="securityModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Security & Sessions</h3>
+            <button class="modal-close-btn" onclick="closeModal('securityModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <div>
+                    <div style="font-weight: 700; color: #173445; font-size: 15px;">Two-Factor Authentication</div>
+                    <div style="font-size: 13px; color: #718894; margin-top: 2px;">Add an extra layer of protection to your account</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="2fa-toggle" onchange="showToast(this.checked ? '2FA enabled on account.' : '2FA disabled.')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #edf4f7; margin: 16px 0;">
+            <div style="font-weight: 700; color: #173445; font-size: 14px; margin-bottom: 12px;">Active Sessions</div>
+            <div style="padding: 12px; background: #f7fafc; border-radius: 12px; border: 1px solid #e1edf1; font-size: 13px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>Chrome on Windows 11</strong> (Current Device)
+                    <div style="color:#718894; font-size: 12px;">Active now • Riyadh, Saudi Arabia</div>
+                </div>
+                <span style="color: #0da99d; font-weight: 700; font-size: 12px;">ACTIVE</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('securityModal')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Account Modal -->
+<div class="modal-overlay" id="deleteAccountModal">
+    <div class="modal-content">
+        <div class="modal-header" style="border-bottom-color: #fee2e2;">
+            <h3 style="color: #dc3545;">Delete Account</h3>
+            <button class="modal-close-btn" onclick="closeModal('deleteAccountModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <p style="color: #647d8b; font-size: 14px; line-height: 1.5; margin-bottom: 16px;">
+                Are you sure you want to delete your Commio account? This action is permanent and will delete all your speech practice logs, recordings, and custom learning plans.
+            </p>
+            <div class="form-group">
+                <label for="deleteConfirmText">Type <strong>DELETE</strong> to confirm:</label>
+                <input type="text" id="deleteConfirmText" class="form-control" placeholder="DELETE">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('deleteAccountModal')">Cancel</button>
+            <button type="button" class="btn btn-danger" onclick="handleDeleteAccount()">Permanently Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Language Modal -->
+<div class="modal-overlay" id="languageModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Select Language</h3>
+            <button class="modal-close-btn" onclick="closeModal('languageModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="radio-option selected" onclick="selectOption('language', 'English', this)">
+                <span style="font-weight: 600;">English</span>
+                <input type="radio" name="lang" checked>
+            </div>
+            <div class="radio-option" onclick="selectOption('language', 'Spanish', this)">
+                <span style="font-weight: 600;">Spanish (Español)</span>
+                <input type="radio" name="lang">
+            </div>
+            <div class="radio-option" onclick="selectOption('language', 'French', this)">
+                <span style="font-weight: 600;">French (Français)</span>
+                <input type="radio" name="lang">
+            </div>
+            <div class="radio-option" onclick="selectOption('language', 'German', this)">
+                <span style="font-weight: 600;">German (Deutsch)</span>
+                <input type="radio" name="lang">
+            </div>
+            <div class="radio-option" onclick="selectOption('language', 'Arabic', this)">
+                <span style="font-weight: 600;">Arabic (العربية)</span>
+                <input type="radio" name="lang">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Theme Modal -->
+<div class="modal-overlay" id="themeModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Appearance & Theme</h3>
+            <button class="modal-close-btn" onclick="closeModal('themeModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="radio-option selected" id="theme-opt-light" onclick="setTheme('Light', this)">
+                <div>
+                    <div style="font-weight: 600;">Light</div>
+                    <div style="font-size: 12px; color: #718894;">Clean, soft teal pastel aesthetic</div>
+                </div>
+                <input type="radio" name="theme" id="radio-theme-light" checked>
+            </div>
+            <div class="radio-option" id="theme-opt-dark" onclick="setTheme('Dark', this)">
+                <div>
+                    <div style="font-weight: 600;">Dark</div>
+                    <div style="font-size: 12px; color: #718894;">Deep cyan dark mode layout</div>
+                </div>
+                <input type="radio" name="theme" id="radio-theme-dark">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Modal -->
+<div class="modal-overlay" id="privacyModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Data & Privacy Options</h3>
+            <button class="modal-close-btn" onclick="closeModal('privacyModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+                <div>
+                    <div style="font-weight: 600; color: #173445; font-size: 14px;">Product Analytics</div>
+                    <div style="font-size: 12px; color: #718894;">Help us improve Commio with anonymous usage data</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked onchange="showToast('Analytics preference updated')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+                <div>
+                    <div style="font-weight: 600; color: #173445; font-size: 14px;">Voice Model Fine-tuning</div>
+                    <div style="font-size: 12px; color: #718894;">Allow voice clips for personalized feedback model tuning</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked onchange="showToast('Voice tuning preference updated')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('privacyModal')">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- Permissions Modal -->
+<div class="modal-overlay" id="permissionsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Recording Permissions</h3>
+            <button class="modal-close-btn" onclick="closeModal('permissionsModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding: 14px; background:#f7fafc; border-radius:12px; margin-bottom: 12px; border: 1px solid #e1edf1;">
+                <div style="display:flex; align-items:center; gap: 12px;">
+                    <i data-lucide="mic" style="color:#0da99d;"></i>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;">Microphone Access</div>
+                        <div style="font-size: 12px; color: #718894;">Used for speech & voice feedback</div>
+                    </div>
+                </div>
+                <span style="background: #e6f7f5; color: #0da99d; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12px;">Granted</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding: 14px; background:#f7fafc; border-radius:12px; border: 1px solid #e1edf1;">
+                <div style="display:flex; align-items:center; gap: 12px;">
+                    <i data-lucide="camera" style="color:#0da99d;"></i>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;">Camera Access</div>
+                        <div style="font-size: 12px; color: #718894;">Used for body language & face analysis</div>
+                    </div>
+                </div>
+                <span style="background: #e6f7f5; color: #0da99d; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12px;">Granted</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('permissionsModal')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Saved Recordings Modal -->
+<div class="modal-overlay" id="recordingsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Saved Recordings</h3>
+            <button class="modal-close-btn" onclick="closeModal('recordingsModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div style="padding: 12px 14px; background: #f8fafc; border-radius: 12px; border: 1px solid #e1edf1; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">Mock Interview Practice #3</div>
+                    <div style="font-size: 12px; color: #718894;">2 mins 14 secs • Saved Sep 28</div>
+                </div>
+                <button style="color: #dc3545; padding: 6px; border-radius: 6px;" onclick="this.closest('div').remove(); showToast('Recording deleted.');" title="Delete Recording"><i data-lucide="trash-2"></i></button>
+            </div>
+            <div style="padding: 12px 14px; background: #f8fafc; border-radius: 12px; border: 1px solid #e1edf1; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">Presentation Pace Drill</div>
+                    <div style="font-size: 12px; color: #718894;">1 min 45 secs • Saved Sep 25</div>
+                </div>
+                <button style="color: #dc3545; padding: 6px; border-radius: 6px;" onclick="this.closest('div').remove(); showToast('Recording deleted.');" title="Delete Recording"><i data-lucide="trash-2"></i></button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('recordingsModal')">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- Goal Modal -->
+<div class="modal-overlay" id="goalModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Communication Goal</h3>
+            <button class="modal-close-btn" onclick="closeModal('goalModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="radio-option selected" onclick="selectOption('goal', 'Job Interviews', this)">
+                <span style="font-weight: 600;">Job Interviews</span>
+                <input type="radio" name="goal" checked>
+            </div>
+            <div class="radio-option" onclick="selectOption('goal', 'Presentations & Pitching', this)">
+                <span style="font-weight: 600;">Presentations & Pitching</span>
+                <input type="radio" name="goal">
+            </div>
+            <div class="radio-option" onclick="selectOption('goal', 'Executive Leadership', this)">
+                <span style="font-weight: 600;">Executive Leadership</span>
+                <input type="radio" name="goal">
+            </div>
+            <div class="radio-option" onclick="selectOption('goal', 'Public Speaking', this)">
+                <span style="font-weight: 600;">Public Speaking</span>
+                <input type="radio" name="goal">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Practice Goal Modal -->
+<div class="modal-overlay" id="practiceGoalModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Daily Practice Goal</h3>
+            <button class="modal-close-btn" onclick="closeModal('practiceGoalModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="radio-option" onclick="selectOption('practice', '5 minutes', this)">
+                <span style="font-weight: 600;">5 minutes / day</span>
+                <input type="radio" name="pg">
+            </div>
+            <div class="radio-option" onclick="selectOption('practice', '10 minutes', this)">
+                <span style="font-weight: 600;">10 minutes / day</span>
+                <input type="radio" name="pg">
+            </div>
+            <div class="radio-option selected" onclick="selectOption('practice', '15 minutes', this)">
+                <span style="font-weight: 600;">15 minutes / day</span>
+                <input type="radio" name="pg" checked>
+            </div>
+            <div class="radio-option" onclick="selectOption('practice', '30 minutes', this)">
+                <span style="font-weight: 600;">30 minutes / day</span>
+                <input type="radio" name="pg">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Difficulty Modal -->
+<div class="modal-overlay" id="difficultyModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Difficulty Level</h3>
+            <button class="modal-close-btn" onclick="closeModal('difficultyModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="radio-option selected" onclick="selectOption('difficulty', 'Adaptive', this)">
+                <div>
+                    <div style="font-weight: 600;">Adaptive</div>
+                    <div style="font-size: 12px; color:#718894;">Adjusts practice intensity based on performance</div>
+                </div>
+                <input type="radio" name="diff" checked>
+            </div>
+            <div class="radio-option" onclick="selectOption('difficulty', 'Beginner', this)">
+                <div>
+                    <div style="font-weight: 600;">Beginner</div>
+                    <div style="font-size: 12px; color:#718894;">Slower speech pace and fundamental prompts</div>
+                </div>
+                <input type="radio" name="diff">
+            </div>
+            <div class="radio-option" onclick="selectOption('difficulty', 'Intermediate', this)">
+                <div>
+                    <div style="font-weight: 600;">Intermediate</div>
+                    <div style="font-size: 12px; color:#718894;">Standard speaking scenarios and moderate pacing</div>
+                </div>
+                <input type="radio" name="diff">
+            </div>
+            <div class="radio-option" onclick="selectOption('difficulty', 'Advanced', this)">
+                <div>
+                    <div style="font-weight: 600;">Advanced</div>
+                    <div style="font-size: 12px; color:#718894;">Rapid follow-up questions and tough feedback</div>
+                </div>
+                <input type="radio" name="diff">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Help Center Modal -->
+<div class="modal-overlay" id="helpModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Commio Help Center</h3>
+            <button class="modal-close-btn" onclick="closeModal('helpModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom: 16px;">
+                <input type="text" class="form-control" placeholder="Search FAQs & guide topics...">
+            </div>
+            <div style="display:grid; gap: 10px;">
+                <div style="padding: 12px; border: 1px solid #e1edf1; border-radius: 10px;">
+                    <div style="font-weight: 700; font-size: 14px;">How does AI voice feedback work?</div>
+                    <div style="font-size: 13px; color: #718894; margin-top: 4px;">Commio analyzes speech rate, filler words, pitch modulation, and confidence indicators in real time.</div>
+                </div>
+                <div style="padding: 12px; border: 1px solid #e1edf1; border-radius: 10px;">
+                    <div style="font-weight: 700; font-size: 14px;">Can I reset my training plan?</div>
+                    <div style="font-size: 13px; color: #718894; margin-top: 4px;">Yes! Navigate to the Learning Plan page and tap "Customize Plan".</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('helpModal')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Support Modal -->
+<div class="modal-overlay" id="contactModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Contact Support</h3>
+            <button class="modal-close-btn" onclick="closeModal('contactModal')"><i data-lucide="x"></i></button>
+        </div>
+        <form onsubmit="handleSupportSubmit(event)">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="supportSubject">Subject</label>
+                    <input type="text" id="supportSubject" class="form-control" placeholder="How can we help?" required>
+                </div>
+                <div class="form-group">
+                    <label for="supportMessage">Message Details</label>
+                    <textarea id="supportMessage" class="form-control" rows="4" placeholder="Describe the issue or feedback..." required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('contactModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- About Modal -->
+<div class="modal-overlay" id="aboutModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>About Commio</h3>
+            <button class="modal-close-btn" onclick="closeModal('aboutModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 28px 24px;">
+            <div style="width: 70px; height: 70px; margin: 0 auto 16px; background: linear-gradient(135deg, #0fc78f, #0bb7df); border-radius: 50%; display: grid; place-items: center; box-shadow: 0 8px 25px rgba(15, 199, 143, 0.3);">
+                <img src="commio-bird.png" alt="Commio Bird" style="width: 50px; height: auto;">
+            </div>
+            <h4 style="font-size: 20px; font-weight: 800; color: #173445; margin-bottom: 6px;">Commio</h4>
+            <div style="font-size: 13px; font-weight: 700; color: #0da99d; margin-bottom: 14px;">Version 1.0.0</div>
+            <p style="font-size: 14px; color: #718894; line-height: 1.6;">
+                Commio is your intelligent communication coach. Mastering body language, vocal cadence, and concise phrasing through instant AI-powered feedback loops.
+            </p>
+        </div>
+        <div class="modal-footer" style="justify-content: center;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('aboutModal')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Terms of Service Modal -->
+<div class="modal-overlay" id="termsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Terms of Service</h3>
+            <button class="modal-close-btn" onclick="closeModal('termsModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body" style="font-size: 13px; color: #647d8b; line-height: 1.6;">
+            <h4 style="color:#173445; margin-bottom: 6px;">1. Usage Terms</h4>
+            <p style="margin-bottom: 12px;">By accessing Commio, you agree to use our AI communication tools responsibly and ethically for personal and professional growth.</p>
+            <h4 style="color:#173445; margin-bottom: 6px;">2. Account Rights</h4>
+            <p>You retain full rights to your recording data and personal account metrics at all times.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('termsModal')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal-overlay" id="privacyPolicyModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Privacy Policy</h3>
+            <button class="modal-close-btn" onclick="closeModal('privacyPolicyModal')"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body" style="font-size: 13px; color: #647d8b; line-height: 1.6;">
+            <h4 style="color:#173445; margin-bottom: 6px;">Data Protection</h4>
+            <p style="margin-bottom: 12px;">Your voice clips and facial video frames are processed locally and securely encrypted in transit. We never sell your personal data.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('privacyPolicyModal')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast" id="toast">
+    <i data-lucide="check-circle-2"></i>
+    <span id="toast-message">Settings updated successfully</span>
+</div>
+
+<script src="sidebar.js"></script>
+
+<script>
+    /* =========================================================
+       SETTINGS STATE & ACTIONS
+    ========================================================= */
+
+    // Load saved settings from localStorage if present
+    const settingsState = {
+        language: localStorage.getItem('commio_language') || 'English',
+        theme: localStorage.getItem('commio_theme') || 'Light',
+        goal: localStorage.getItem('commio_goal') || 'Job Interviews',
+        practice: localStorage.getItem('commio_practice') || '15 minutes',
+        difficulty: localStorage.getItem('commio_difficulty') || 'Adaptive',
+        notifications: localStorage.getItem('commio_notifications') !== 'false',
+        sound: localStorage.getItem('commio_sound') !== 'false',
+        autoplay: localStorage.getItem('commio_autoplay') !== 'false',
+        reminders: localStorage.getItem('commio_reminders') !== 'false'
+    };
+
+    function syncUI() {
+        document.getElementById('val-language').textContent = settingsState.language;
+        document.getElementById('val-theme').textContent = settingsState.theme;
+        document.getElementById('val-goal').textContent = settingsState.goal;
+        document.getElementById('val-practice').textContent = settingsState.practice;
+        document.getElementById('val-difficulty').textContent = settingsState.difficulty;
+
+        setCheckbox('toggle-notifications', 'val-notifications', settingsState.notifications);
+        setCheckbox('toggle-sound', 'val-sound', settingsState.sound);
+        setCheckbox('toggle-autoplay', 'val-autoplay', settingsState.autoplay);
+        setCheckbox('toggle-reminders', 'val-reminders', settingsState.reminders);
+
+        if (settingsState.theme === 'Dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-opt-dark').classList.add('selected');
+            document.getElementById('theme-opt-light').classList.remove('selected');
+            document.getElementById('radio-theme-dark').checked = true;
+        }
+    }
+
+    function setCheckbox(id, valId, isChecked) {
+        const input = document.getElementById(id);
+        const valElem = document.getElementById(valId);
+        if (input) input.checked = isChecked;
+        if (valElem) valElem.textContent = isChecked ? 'On' : 'Off';
+    }
+
+    function toggleSwitchState(checkboxId, settingName, valId) {
+        const cb = document.getElementById(checkboxId);
+        if (cb) {
+            cb.checked = !cb.checked;
+            updateToggleText(cb, valId, settingName);
+        }
+    }
+
+    function updateToggleText(checkbox, valId, settingName) {
+        const valElem = document.getElementById(valId);
+        const status = checkbox.checked ? 'On' : 'Off';
+        valElem.textContent = status;
+        localStorage.setItem(`commio_${settingName.toLowerCase().replace(/\s+/g, '')}`, checkbox.checked);
+        showToast(`${settingName} set to ${status}`);
+    }
+
+    function selectOption(key, value, element) {
+        settingsState[key] = value;
+        localStorage.setItem(`commio_${key}`, value);
+        document.getElementById(`val-${key}`).textContent = value;
+        
+        // Highlight active radio option
+        const modal = element.closest('.modal-content');
+        modal.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+        element.classList.add('selected');
+        const radio = element.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+
+        showToast(`${key.charAt(0).toUpperCase() + key.slice(1)} updated to ${value}`);
+        setTimeout(() => closeModal(modal.parentElement.id), 250);
+    }
+
+    function setTheme(themeName, element) {
+        settingsState.theme = themeName;
+        localStorage.setItem('commio_theme', themeName);
+        document.getElementById('val-theme').textContent = themeName;
+
+        if (themeName === 'Dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+
+        const modal = element.closest('.modal-content');
+        modal.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+        element.classList.add('selected');
+        const radio = element.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+
+        showToast(`Theme switched to ${themeName}`);
+        setTimeout(() => closeModal('themeModal'), 250);
+    }
+
+    /* =========================================================
+       MODAL CONTROLS & EVENT HANDLERS
+    ========================================================= */
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.add('open');
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.remove('open');
+    }
+
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('open');
+            }
+        });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+        }
+    });
+
+    function handlePasswordChange(e) {
+        e.preventDefault();
+        const newPass = document.getElementById('newPassword').value;
+        const confirmPass = document.getElementById('confirmPassword').value;
+        if (newPass !== confirmPass) {
+            showToast('New passwords do not match');
+            return;
+        }
+        closeModal('passwordModal');
+        showToast('Password updated successfully!');
+        e.target.reset();
+    }
+
+    function handleDeleteAccount() {
+        const confirmText = document.getElementById('deleteConfirmText').value.trim();
+        if (confirmText !== 'DELETE') {
+            showToast('Please type DELETE to confirm');
+            return;
+        }
+        closeModal('deleteAccountModal');
+        showToast('Account deletion request initiated.');
+    }
+
+    function handleSupportSubmit(e) {
+        e.preventDefault();
+        closeModal('contactModal');
+        showToast('Support ticket submitted. We will reach out soon!');
+        e.target.reset();
+    }
+
+    function downloadUserData() {
+        const userData = {
+            appName: "Commio",
+            version: "1.0.0",
+            exportDate: new Date().toISOString(),
+            profile: JSON.parse(sessionStorage.getItem("commioProfile") || '{"fullName": "Reem Mousa"}'),
+            settings: settingsState
+        };
+        const blob = new Blob([JSON.stringify(userData, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `commio-user-data.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Downloading user data JSON file...');
+    }
+
+    /* =========================================================
+       TOAST UTILITY
+    ========================================================= */
+    let toastTimeout;
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        const text = document.getElementById('toast-message');
+        text.textContent = msg;
+        toast.classList.add('show');
+
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    // Initialize UI on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        syncUI();
+        if (window.lucide) window.lucide.createIcons();
+    });
+</script>
+
+</body>
+</html>
