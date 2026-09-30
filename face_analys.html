@@ -315,25 +315,11 @@
 		@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
 	</style>
 	<link rel="stylesheet" href="brand-logo.css">
+	<link rel="stylesheet" href="sidebar.css">
 </head>
 <body>
 	<div class="app" id="app">
-		<aside class="sidebar" id="sidebar">
-			<div class="sidebar-inner">
-				<div>
-					<div class="logo"><div class="brand-logo-frame"><img class="brand-logo" src="logo.png" alt="Commio" width="285" height="65"></div></div>
-					<nav class="nav-menu" aria-label="Main navigation">
-						<a href="dashboard.html" class="nav-link active"><i data-lucide="home"></i><span>Home</span></a>
-						<a href="plan.html" class="nav-link"><i data-lucide="check-square"></i><span>Training Plan</span></a>
-						<a href="#" class="nav-link" data-nav-message="Progress page isn't available yet."><i data-lucide="trending-up"></i><span>Progress</span></a>
-						<a href="#" class="nav-link" data-nav-message="Coaching page isn't available yet."><i data-lucide="message-square"></i><span>Coaching</span></a>
-						<a href="#" class="nav-link" data-nav-message="Settings page isn't available yet."><i data-lucide="settings"></i><span>Settings</span></a>
-					</nav>
-				</div>
-				<div class="sidebar-footer"><div class="org-card"><div class="org-info"><span class="org-title">Communication</span><span class="org-sub">Group Operations</span></div><i data-lucide="more-horizontal" class="more-icon"></i></div></div>
-			</div>
-			<button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-expanded="true"><i data-lucide="panel-left-close"></i></button>
-		</aside>
+		<div data-shared-sidebar></div>
 
 		<main class="main"><div class="content">
 			<header class="header">
@@ -401,6 +387,7 @@
 
 	<div class="toast" id="toast" role="status" aria-live="polite"><i data-lucide="check-circle"></i><span id="toastMessage">Done</span></div>
 
+	<script src="sidebar.js"></script>
 	<script>
 		lucide.createIcons();
 

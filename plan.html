@@ -1592,6 +1592,7 @@
 
 </style>
 <link rel="stylesheet" href="brand-logo.css">
+<link rel="stylesheet" href="sidebar.css">
 
 </head>
 
@@ -1712,140 +1713,7 @@
      SIDEBAR
 ========================================================== -->
 
-<aside class="sidebar">
-
-    <div class="sidebar-top">
-
-        <!-- LOGO -->
-
-        <div class="logo">
-            <div class="brand-logo-frame">
-                <img class="brand-logo" src="logo.png" alt="Commio" width="285" height="65">
-            </div>
-
-        </div>
-
-
-        <!-- NAVIGATION -->
-
-        <nav class="navigation">
-
-            <a
-                href="dashboard.html"
-                class="nav-item"
-            >
-                <i data-lucide="home"></i>
-
-                <span>
-                    Home
-                </span>
-            </a>
-
-
-            <a
-                href="plan.html"
-                class="nav-item active"
-            >
-                <i data-lucide="calendar"></i>
-
-                <span>
-                    Learning Plan
-                </span>
-            </a>
-
-
-            <a
-                href="excercise.html"
-                class="nav-item"
-                onclick="setActiveNav(this);"
-            >
-                <i data-lucide="book-open"></i>
-
-                <span>
-                    Exercises
-                </span>
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-item"
-                onclick="setActiveNav(this); return false;"
-            >
-                <i data-lucide="line-chart"></i>
-
-                <span>
-                    Progress
-                </span>
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-item"
-                onclick="setActiveNav(this); return false;"
-            >
-                <i data-lucide="message-circle"></i>
-
-                <span>
-                    Coaching
-                </span>
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-item"
-                onclick="setActiveNav(this); return false;"
-            >
-                <i data-lucide="settings"></i>
-
-                <span>
-                    Settings
-                </span>
-            </a>
-
-        </nav>
-
-    </div>
-
-
-    <!-- PROFILE -->
-
-    <div class="profile-area">
-
-        <div class="profile">
-
-            <div class="avatar">
-                RM
-            </div>
-
-            <div class="profile-info">
-
-                <span class="profile-name">
-                    Reem Mousa
-                </span>
-
-                <span class="profile-type">
-                    Personal
-                </span>
-
-            </div>
-
-            <button
-                class="profile-more"
-                type="button"
-            >
-
-                <i data-lucide="more-horizontal"></i>
-
-            </button>
-
-        </div>
-
-    </div>
-
-</aside>
+<div data-shared-sidebar></div>
 
 
 <!-- =========================================================
@@ -2481,21 +2349,11 @@
 
 </div>
 
-<button
-    class="sidebar-toggle"
-    type="button"
-    aria-label="Hide sidebar"
-    aria-expanded="true"
-    title="Hide sidebar"
-    onclick="toggleSidebar()"
->
-    <i data-lucide="panel-left-close"></i>
-</button>
-
 <!-- =========================================================
      SCRIPT
 ========================================================== -->
 
+<script src="sidebar.js"></script>
 <script>
 
     /* =========================================================

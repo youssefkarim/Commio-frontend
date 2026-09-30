@@ -93,50 +93,6 @@
             overflow: visible;
         }
 
-        .corner-waves {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: min(54vw, 640px);
-            height: clamp(220px, 34vh, 340px);
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .corner-waves svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .corner-wave-track {
-            animation: corner-wave-drift 12s ease-in-out infinite;
-        }
-
-        .corner-wave-line {
-            fill: none;
-            stroke-width: 12;
-            stroke-linecap: round;
-        }
-
-        .corner-wave-line:nth-child(1) {
-            stroke: rgba(16, 184, 228, 0.09);
-        }
-
-        .corner-wave-line:nth-child(2) {
-            stroke: rgba(16, 199, 150, 0.08);
-        }
-
-        .corner-wave-line:nth-child(3) {
-            stroke: rgba(116, 210, 247, 0.10);
-        }
-
-        @keyframes corner-wave-drift {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-12px, 10px); }
-        }
-
-
         /* =========================================================
            SCROLL WAVE
         ========================================================= */
@@ -225,7 +181,6 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .corner-wave-track,
             .wave-track,
             .background-waves svg {
                 animation: none;
@@ -1800,22 +1755,13 @@
 
     </style>
     <link rel="stylesheet" href="brand-logo.css">
+    <link rel="stylesheet" href="sidebar.css">
 </head>
 
 
 <body>
 
 <div class="app">
-
-    <div class="corner-waves" aria-hidden="true">
-        <svg viewBox="0 0 640 340" preserveAspectRatio="none">
-            <g class="corner-wave-track">
-                <path class="corner-wave-line" d="M 90 24 C 225 75, 345 130, 455 181 S 575 254, 640 296"></path>
-                <path class="corner-wave-line" d="M 90 12 C 225 63, 345 118, 455 169 S 575 242, 640 284"></path>
-                <path class="corner-wave-line" d="M 90 0 C 225 51, 345 106, 455 157 S 575 230, 640 272"></path>
-            </g>
-        </svg>
-    </div>
 
     <div class="background-waves" aria-hidden="true">
         <svg viewBox="0 0 2880 320" preserveAspectRatio="none">
@@ -1846,120 +1792,7 @@
          SIDEBAR
     ========================================================== -->
 
-    <aside class="sidebar">
-
-        <div>
-
-            <!-- LOGO -->
-
-            <div class="logo">
-                <div class="brand-logo-frame">
-                    <img class="brand-logo" src="logo.png" alt="Commio" width="285" height="65">
-                </div>
-
-            </div>
-
-
-            <!-- NAVIGATION -->
-
-            <nav class="navigation">
-
-                <a
-                    href="dashboard.html"
-                    class="nav-item active"
-                >
-                    <i data-lucide="home"></i>
-                    <span>Home</span>
-                </a>
-
-
-                <a
-                    href="plan.html"
-                    class="nav-item"
-                >
-                    <i data-lucide="calendar"></i>
-                    <span>Learning Plan</span>
-                </a>
-
-
-                <a
-                    href="excercise.html"
-                    class="nav-item"
-                    onclick="setActiveNav(this);"
-                >
-                    <i data-lucide="book-open"></i>
-                    <span>Exercises</span>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-item"
-                    onclick="setActiveNav(this); return false;"
-                >
-                    <i data-lucide="line-chart"></i>
-                    <span>Progress</span>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-item"
-                    onclick="setActiveNav(this); return false;"
-                >
-                    <i data-lucide="message-circle"></i>
-                    <span>Coaching</span>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-item"
-                    onclick="setActiveNav(this); return false;"
-                >
-                    <i data-lucide="settings"></i>
-                    <span>Settings</span>
-                </a>
-
-            </nav>
-
-        </div>
-
-
-        <!-- PROFILE -->
-
-        <div class="profile-area">
-
-            <div class="profile">
-
-                <div class="avatar">
-                    RM
-                </div>
-
-                <div class="profile-info">
-
-                    <span class="profile-name">
-                        Reem Mousa
-                    </span>
-
-                    <span class="profile-type">
-                        Personal
-                    </span>
-
-                </div>
-
-                <button
-                    class="profile-more"
-                    type="button"
-                >
-                    <i data-lucide="more-horizontal"></i>
-                </button>
-
-            </div>
-
-        </div>
-
-    </aside>
+    <div data-shared-sidebar></div>
 
 
     <!-- =========================================================
@@ -2008,6 +1841,7 @@
                         <span>
                             Strengths
                         </span>
+
 
                     </button>
 
@@ -2399,17 +2233,6 @@
 
 </div>
 
-<button
-    class="sidebar-toggle"
-    type="button"
-    aria-label="Hide sidebar"
-    aria-expanded="true"
-    title="Hide sidebar"
-    onclick="toggleSidebar()"
->
-    <i data-lucide="panel-left-close"></i>
-</button>
-
 <!-- =========================================================
      FOCUS MODAL
 ========================================================== -->
@@ -2763,6 +2586,9 @@
     </span>
 
 </div>
+
+
+<script src="sidebar.js"></script>
 
 
 <script>

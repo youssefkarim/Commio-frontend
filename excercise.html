@@ -1429,6 +1429,7 @@
 
     </style>
     <link rel="stylesheet" href="brand-logo.css">
+    <link rel="stylesheet" href="sidebar.css">
 </head>
 
 <body>
@@ -1550,136 +1551,7 @@
          SIDEBAR
     ========================================================= -->
 
-    <aside class="sidebar">
-
-        <div>
-
-            <!-- LOGO -->
-
-            <div class="logo">
-                <div class="brand-logo-frame">
-                    <img class="brand-logo" src="logo.png" alt="Commio" width="285" height="65">
-                </div>
-
-            </div>
-
-
-            <!-- NAVIGATION -->
-
-            <nav class="navigation">
-
-                <a
-                    href="dashboard.html"
-                    class="nav-item"
-                >
-                    <i data-lucide="home"></i>
-                    <span>Home</span>
-                </a>
-
-
-                <a
-                    href="plan.html"
-                    class="nav-item"
-                >
-                    <i data-lucide="calendar"></i>
-                    <span>Learning Plan</span>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-item active"
-                    onclick="return false;"
-                >
-                    <i data-lucide="book-open"></i>
-                    <span>Exercises</span>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-item"
-                    onclick="return false;"
-                >
-                    <i data-lucide="line-chart"></i>
-                    <span>Progress</span>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-item"
-                    onclick="return false;"
-                >
-                    <i data-lucide="message-circle"></i>
-                    <span>Coaching</span>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="nav-item"
-                    onclick="return false;"
-                >
-                    <i data-lucide="settings"></i>
-                    <span>Settings</span>
-                </a>
-
-            </nav>
-
-        </div>
-
-
-        <!-- SIDEBAR BOTTOM -->
-
-        <div class="sidebar-bottom">
-
-            <div class="coach-card">
-
-                <div class="coach-status">
-
-                    <span class="coach-dot"></span>
-
-                    <span>New Opportunity</span>
-
-                </div>
-
-                <h4>AI Speech Coach is online</h4>
-
-                <p>
-                    Try a mock interview and get instant feedback.
-                </p>
-
-            </div>
-
-
-            <a
-                href="#"
-                class="settings-link"
-                onclick="return false;"
-            >
-
-                <i data-lucide="settings"></i>
-
-                <span>Settings</span>
-
-            </a>
-
-        </div>
-
-    </aside>
-
-
-    <!-- SIDEBAR TOGGLE -->
-
-    <button
-        class="sidebar-toggle"
-        id="sidebarToggle"
-        type="button"
-        aria-label="Toggle sidebar"
-    >
-        <i data-lucide="panel-left"></i>
-    </button>
+    <div data-shared-sidebar></div>
 
 
     <!-- =========================================================
@@ -1710,27 +1582,6 @@
                     <p>
                         Practice focused skills and build stronger communication habits.
                     </p>
-
-                </div>
-
-
-                <div class="profile">
-
-                    <div class="avatar">
-                        JD
-                    </div>
-
-                    <div class="profile-info">
-
-                        <span class="profile-name">
-                            John Doe
-                        </span>
-
-                        <span class="profile-type">
-                            Executive Tier
-                        </span>
-
-                    </div>
 
                 </div>
 
@@ -2280,6 +2131,7 @@
 </div>
 
 
+<script src="sidebar.js"></script>
 <script>
 
     /* =========================================================
