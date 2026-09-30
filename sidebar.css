@@ -167,22 +167,25 @@ body.dark-mode #sidebar .nav-item:hover {
 }
 
 #sidebar .nav-item.active {
-    color: #0d9e96;
-    background: linear-gradient(100deg, rgba(18, 199, 151, 0.12), rgba(11, 183, 223, 0.10));
+    color: #ffffff;
+    background: linear-gradient(100deg, #0fc78f, #0bb7df);
     font-weight: 650;
+    box-shadow: 0 4px 14px rgba(11, 183, 223, 0.25);
+    border-radius: 12px;
 }
 
 body.dark-mode #sidebar .nav-item.active {
-    color: #2dd4bf;
-    background: linear-gradient(100deg, rgba(45, 212, 191, 0.18), rgba(14, 165, 233, 0.15));
+    color: #ffffff;
+    background: linear-gradient(100deg, #0db890, #0aa8d4);
+    box-shadow: 0 4px 14px rgba(11, 183, 223, 0.35);
 }
 
 #sidebar .nav-item.active svg {
-    stroke: #0db59e;
+    stroke: #ffffff;
 }
 
 body.dark-mode #sidebar .nav-item.active svg {
-    stroke: #2dd4bf;
+    stroke: #ffffff;
 }
 
 #sidebar .nav-item span {
@@ -337,21 +340,11 @@ body.sidebar-collapsed #sidebar .profile-info {
 }
 
 /* Hide the toggle button in collapsed mode — logo IS the toggle */
-.app.sidebar-collapsed #sidebar .sidebar-toggle-btn,
-.app-layout.sidebar-collapsed #sidebar .sidebar-toggle-btn,
-body.sidebar-collapsed #sidebar .sidebar-toggle-btn {
-    display: none !important;
-}
+
 
 /* Center logo in collapsed mode */
-.app.sidebar-collapsed #sidebar .logo-header,
-.app-layout.sidebar-collapsed #sidebar .logo-header,
-body.sidebar-collapsed #sidebar .logo-header {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 0 18px;
-    gap: 12px;
+.app.sidebar-collapsed #sidebar .logo-mark-icon {
+    display: none !important;
 }
 
 /* Show icon-only logo or compact mark logo in collapsed mode */
@@ -370,28 +363,27 @@ body.sidebar-collapsed #sidebar .brand-logo-collapsed {
 }
 
 .logo-mark-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #0fc78f, #0bb7df);
-    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(224, 248, 243, 0.5);
+    border: 1px solid rgba(180, 225, 220, 0.6);
     display: grid;
     place-items: center;
-    box-shadow: 0 6px 18px rgba(15, 199, 143, 0.32);
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s ease;
     position: relative;
 }
 
 .logo-mark-icon:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 24px rgba(15, 199, 143, 0.45);
+    transform: scale(1.08);
+    background: rgba(200, 240, 235, 0.7);
 }
 
 .logo-mark-icon::after {
     content: 'Expand';
     position: absolute;
-    left: 48px;
+    left: 56px;
     top: 50%;
     transform: translateY(-50%);
     background: #102d3d;
@@ -412,9 +404,16 @@ body.sidebar-collapsed #sidebar .brand-logo-collapsed {
     opacity: 1;
 }
 
-.logo-mark-icon svg {
-    width: 20px;
-    height: 20px;
+/* Logo icon mark — shows only the left icon part of logo.png */
+.logo-mark-crop {
+    width: 40px;
+    height: 40px;
+    background-image: url('logo.png');
+    background-size: 190px auto;   /* scale full logo so icon part fills 40px */
+    background-position: left center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 2px 6px rgba(11, 183, 150, 0.25));
+    flex-shrink: 0;
 }
 
 .app.sidebar-collapsed #sidebar .nav-item,

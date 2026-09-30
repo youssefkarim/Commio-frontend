@@ -50,7 +50,7 @@
                             </div>
                             <div class="brand-logo-collapsed" aria-hidden="true">
                                 <div class="logo-mark-icon" title="Expand Sidebar">
-                                    <i data-lucide="sparkles"></i>
+                                    <div class="logo-mark-crop"></div>
                                 </div>
                             </div>
                         </a>

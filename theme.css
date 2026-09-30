@@ -1,0 +1,501 @@
+/* =========================================================
+   COMMIO GLOBAL DARK THEME
+   Applied to every app page except index.html and pricing.html.
+   Requires theme.js to add `.dark-mode` to <html> and <body>.
+   Load AFTER the page's own <style> so these rules win.
+   ========================================================= */
+
+/* =========================================================
+   1. TOKENS + PAGE BASE
+   Pages that use :root variables are re-mapped here.
+   ========================================================= */
+body.dark-mode {
+    --bg: #0d171d;
+    --bg-soft: #101c23;
+    --white: rgba(255, 255, 255, 0.05);
+    --ink: #e2eef1;
+    --navy: #e2eef1;
+    --navy-soft: #c2d6dd;
+    --muted: #8da5b3;
+    --muted-light: #7c929c;
+    --line: #223c4a;
+    --border: #223c4a;
+    --border-soft: #1c2f3a;
+    --cream: #2a2412;
+    --cream-border: #3d3520;
+    --shadow: 0 12px 35px rgba(0, 0, 0, 0.38);
+    --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+    background: #0d171d;
+    color: #e2eef1;
+    color-scheme: dark;
+}
+
+body.dark-mode .app {
+    background:
+        radial-gradient(circle at 85% 22%, rgba(13, 110, 125, 0.25), transparent 35%),
+        radial-gradient(circle at 18% 72%, rgba(15, 120, 90, 0.20), transparent 35%),
+        linear-gradient(135deg, #091217 0%, #0d171d 40%, #112028 100%) !important;
+}
+
+body.dark-mode .main,
+body.dark-mode .main-content,
+body.dark-mode .profile-main,
+body.dark-mode .content {
+    scrollbar-color: #24404e #101c23;
+}
+
+/* =========================================================
+   2. GENERIC SURFACES, TEXT, CONTROLS
+   ========================================================= */
+body.dark-mode .card,
+body.dark-mode .metric,
+body.dark-mode .metric-card,
+body.dark-mode .detail-card,
+body.dark-mode .composite-card,
+body.dark-mode .overall,
+body.dark-mode .stat,
+body.dark-mode .stat-box,
+body.dark-mode .quote,
+body.dark-mode .no-results,
+body.dark-mode .goal-card,
+body.dark-mode .analysis-card,
+body.dark-mode .focus-card,
+body.dark-mode .exercise-card,
+body.dark-mode .overview-card,
+body.dark-mode .hero,
+body.dark-mode .profile-section,
+body.dark-mode .edit-dialog,
+body.dark-mode .modal,
+body.dark-mode .picker-menu,
+body.dark-mode .presentation-menu {
+    background: rgba(18, 32, 42, 0.88) !important;
+    border-color: #223c4a !important;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.35);
+    color: #e2eef1;
+}
+
+body.dark-mode .score-card,
+body.dark-mode .metric-card,
+body.dark-mode .overall,
+body.dark-mode .composite-card,
+body.dark-mode .hero {
+    background: linear-gradient(135deg, rgba(20, 36, 47, 0.95), rgba(16, 30, 39, 0.9)) !important;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode .title,
+body.dark-mode .page-title,
+body.dark-mode .logo-text,
+body.dark-mode .org-title,
+body.dark-mode .profile-name,
+body.dark-mode .section-heading h2,
+body.dark-mode .identity h3,
+body.dark-mode .detail-row dd,
+body.dark-mode .circle-value,
+body.dark-mode .donut-num b,
+body.dark-mode .metric-value b,
+body.dark-mode .stat-box .val,
+body.dark-mode .big-stat,
+body.dark-mode .big b,
+body.dark-mode .overview-info h2,
+body.dark-mode .module-details h4,
+body.dark-mode .metric-title-group h3,
+body.dark-mode .exercise-card h3,
+body.dark-mode .analysis-card h4,
+body.dark-mode .focus-info h3,
+body.dark-mode .goal-card h3,
+body.dark-mode .score-number strong,
+body.dark-mode .head-title h2,
+body.dark-mode .head-title h3,
+body.dark-mode .title-with-icon h2,
+body.dark-mode .title-with-icon h3,
+body.dark-mode .composite-info h3,
+body.dark-mode .progress-head strong,
+body.dark-mode .phead strong,
+body.dark-mode .stat b,
+body.dark-mode .quote strong {
+    color: #ffffff;
+}
+
+body.dark-mode p,
+body.dark-mode .desc,
+body.dark-mode .sub,
+body.dark-mode .subtitle,
+body.dark-mode .section-heading p,
+body.dark-mode .page-description,
+body.dark-mode .header p,
+body.dark-mode .hero p,
+body.dark-mode .profile-type,
+body.dark-mode .identity p,
+body.dark-mode .detail-row dt,
+body.dark-mode .exercise-card p,
+body.dark-mode .analysis-card p,
+body.dark-mode .focus-info p,
+body.dark-mode .goal-card p,
+body.dark-mode .module-details p,
+body.dark-mode .overview-info p,
+body.dark-mode .no-results p,
+body.dark-mode .no-results h3,
+body.dark-mode .score-number span,
+body.dark-mode .target-text,
+body.dark-mode .stat-label,
+body.dark-mode .stat-box .lbl,
+body.dark-mode .metric-value span,
+body.dark-mode .donut-num span,
+body.dark-mode .big-stat span,
+body.dark-mode .stat span,
+body.dark-mode .stat-unit,
+body.dark-mode .metric-head,
+body.dark-mode .progress-head,
+body.dark-mode .phead,
+body.dark-mode .labels,
+body.dark-mode .timeline-labels,
+body.dark-mode .count,
+body.dark-mode .word,
+body.dark-mode .duration,
+body.dark-mode .check,
+body.dark-mode .legend-item,
+body.dark-mode .legend div,
+body.dark-mode .org-sub,
+body.dark-mode .picker-group-label,
+body.dark-mode .group-label,
+body.dark-mode .presentation-group-label,
+body.dark-mode .picker-option-meta,
+body.dark-mode .presentation-option-meta,
+body.dark-mode .coach-status,
+body.dark-mode .coach-card p,
+body.dark-mode .settings-link,
+body.dark-mode .back,
+body.dark-mode .back-link,
+body.dark-mode .selection-header span:first-child {
+    color: #8da5b3;
+}
+
+body.dark-mode .eyebrow,
+body.dark-mode .hero-eyebrow {
+    color: #2dd4bf;
+}
+
+/* Form controls */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea,
+body.dark-mode .form-control,
+body.dark-mode .focus-select,
+body.dark-mode .search-box {
+    background: #0d171d;
+    border-color: #223c4a;
+    color: #e2eef1;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #6c828d;
+}
+
+body.dark-mode select {
+    background-image: none;
+}
+
+body.dark-mode .form-field label,
+body.dark-mode .form-group label,
+body.dark-mode label {
+    color: #b6cad3;
+}
+
+/* Secondary / ghost buttons and icon buttons */
+body.dark-mode .btn-secondary,
+body.dark-mode .btn-ghost,
+body.dark-mode .cancel-button,
+body.dark-mode .edit-button,
+body.dark-mode .transcript-btn,
+body.dark-mode .sidebar-toggle,
+body.dark-mode .modal-close,
+body.dark-mode .toggle-pw {
+    background: rgba(20, 35, 45, 0.85);
+    border-color: #223c4a;
+    color: #c2d6dd;
+}
+
+body.dark-mode .btn-secondary:hover,
+body.dark-mode .btn-ghost:hover,
+body.dark-mode .cancel-button:hover,
+body.dark-mode .edit-button:hover,
+body.dark-mode .transcript-btn:hover,
+body.dark-mode .sidebar-toggle:hover,
+body.dark-mode .modal-close:hover,
+body.dark-mode .toggle-pw:hover {
+    background: #1a2f3d;
+    border-color: #2dd4bf;
+    color: #2dd4bf;
+}
+
+/* Amber accent button on dashboard */
+body.dark-mode .improve-btn {
+    background: rgba(72, 58, 20, 0.65);
+    border-color: #8a6f22;
+    color: #f2cf7a;
+}
+
+body.dark-mode .improve-btn:hover {
+    background: rgba(92, 74, 24, 0.8);
+}
+
+/* Tabs, pills, chips, badges */
+body.dark-mode .filter-pill,
+body.dark-mode .focus-pill,
+body.dark-mode .tabs,
+body.dark-mode .view-toggles {
+    background: rgba(20, 35, 45, 0.85);
+    border-color: #223c4a;
+    color: #b6cad3;
+}
+
+body.dark-mode .filter-pill:hover,
+body.dark-mode .focus-pill:hover {
+    background: rgba(45, 212, 191, 0.12);
+    border-color: #2dd4bf;
+    color: #2dd4bf;
+}
+
+body.dark-mode .tab {
+    color: #8da5b3;
+}
+
+body.dark-mode .tab[aria-selected="true"] {
+    background: rgba(45, 212, 191, 0.22);
+    color: #eafcf9;
+}
+
+body.dark-mode .focus-pill.selected,
+body.dark-mode .toggle-btn.active {
+    background: rgba(45, 212, 191, 0.16);
+    border-color: #2dd4bf;
+    color: #2dd4bf;
+}
+
+body.dark-mode .category,
+body.dark-mode .selected-badge,
+body.dark-mode .badge.priority-low,
+body.dark-mode .status,
+body.dark-mode .tag,
+body.dark-mode .status-tag,
+body.dark-mode .ideal-range-tag {
+    background: rgba(45, 212, 191, 0.12);
+    border-color: rgba(45, 212, 191, 0.3);
+    color: #5eead4;
+}
+
+body.dark-mode .badge.priority-high {
+    background: rgba(225, 90, 90, 0.14);
+    border-color: rgba(225, 90, 90, 0.35);
+    color: #fca5a5;
+}
+
+body.dark-mode .badge.priority-medium {
+    background: rgba(234, 179, 8, 0.14);
+    border-color: rgba(234, 179, 8, 0.35);
+    color: #fcd34d;
+}
+
+body.dark-mode .module-number.red {
+    background: rgba(225, 90, 90, 0.16);
+    color: #fca5a5;
+}
+
+body.dark-mode .module-number.yellow {
+    background: rgba(234, 179, 8, 0.16);
+    color: #fcd34d;
+}
+
+body.dark-mode .module-number.green {
+    background: rgba(45, 212, 191, 0.16);
+    color: #5eead4;
+}
+
+/* Icon chips inside cards */
+body.dark-mode .goal-icon,
+body.dark-mode .analysis-icon,
+body.dark-mode .focus-icon,
+body.dark-mode .exercise-icon,
+body.dark-mode .metric-icon,
+body.dark-mode .overview-icon,
+body.dark-mode .analysis-arrow,
+body.dark-mode .profile-avatar {
+    background: rgba(45, 212, 191, 0.14) !important;
+    border-color: rgba(45, 212, 191, 0.3);
+    color: #2dd4bf;
+}
+
+body.dark-mode .analysis-arrow:hover {
+    background: linear-gradient(135deg, #0fc796, #0bb7df) !important;
+    color: #ffffff;
+}
+
+/* Dividers and rows */
+body.dark-mode .settings-divider,
+body.dark-mode .card-footer,
+body.dark-mode .detail-row,
+body.dark-mode .timeline,
+body.dark-mode .filler-total,
+body.dark-mode .picker-group + .picker-group,
+body.dark-mode .group + .group,
+body.dark-mode .presentation-group + .presentation-group,
+body.dark-mode .settings-row,
+body.dark-mode .modal-footer {
+    border-color: #1e333f;
+}
+
+/* Progress tracks */
+body.dark-mode .track,
+body.dark-mode .bar-wrapper,
+body.dark-mode .overview-track,
+body.dark-mode .card-bar,
+body.dark-mode .segments-bar,
+body.dark-mode .distribution,
+body.dark-mode .dist {
+    background: #17272f !important;
+}
+
+body.dark-mode .ring,
+body.dark-mode .circle-bg,
+body.dark-mode .score-bg {
+    stroke: #1c2f3a;
+}
+
+body.dark-mode .progress-circle {
+    background: conic-gradient(from -90deg, #10c796 calc(var(--percent) * 1%), #1c2f3a 0);
+}
+
+body.dark-mode .progress-circle::before {
+    background: #132028;
+}
+
+body.dark-mode .line-chart-svg line {
+    stroke: #1c2f3a;
+}
+
+/* Feedback / quote callouts */
+body.dark-mode .feedback,
+body.dark-mode .feedback-banner,
+body.dark-mode .detail-item {
+    background: rgba(45, 38, 18, 0.7);
+    border-color: #3d3520;
+    color: #e3d5a8;
+}
+
+body.dark-mode .detail-item.warning {
+    background: rgba(60, 45, 16, 0.7);
+    border-color: #4d3d1c;
+    color: #e3cf9d;
+}
+
+body.dark-mode .feedback svg,
+body.dark-mode .bulb-icon {
+    color: #e0b64a;
+}
+
+body.dark-mode .quote {
+    background: rgba(20, 35, 45, 0.8);
+    border-color: #223c4a;
+    color: #a9c1cb;
+}
+
+/* Picker / dropdown menus */
+body.dark-mode .picker-btn,
+body.dark-mode .dropdown-pill,
+body.dark-mode .picker-option,
+body.dark-mode .presentation-option {
+    color: #e2eef1;
+}
+
+body.dark-mode .picker-btn:hover,
+body.dark-mode .picker-btn[aria-expanded="true"],
+body.dark-mode .dropdown-pill:hover,
+body.dark-mode .dropdown-pill[aria-expanded="true"],
+body.dark-mode .picker-option:hover,
+body.dark-mode .picker-option:focus-visible,
+body.dark-mode .picker-option[aria-checked="true"],
+body.dark-mode .option:hover,
+body.dark-mode .option[aria-checked="true"],
+body.dark-mode .presentation-option:hover,
+body.dark-mode .presentation-option:focus-visible,
+body.dark-mode .presentation-option[aria-checked="true"] {
+    background: linear-gradient(100deg, rgba(45, 212, 191, 0.16), rgba(14, 165, 233, 0.12));
+    color: #5eead4;
+}
+
+body.dark-mode .play-icon,
+body.dark-mode .picker-btn svg:first-child,
+body.dark-mode .metric-head svg,
+body.dark-mode .check svg,
+body.dark-mode .head-title > svg,
+body.dark-mode .title-icon,
+body.dark-mode .icon-teal {
+    color: #2dd4bf;
+}
+
+body.dark-mode .chevron-icon,
+body.dark-mode .picker-btn svg:last-child,
+body.dark-mode .more-icon,
+body.dark-mode .profile-more {
+    color: #8da5b3;
+}
+
+/* Toast */
+body.dark-mode .toast {
+    background: #12202a;
+    border: 1px solid #223c4a;
+    color: #e2eef1;
+}
+
+/* Dialog backdrop */
+body.dark-mode .edit-dialog::backdrop,
+body.dark-mode .modal-overlay {
+    background: rgba(4, 12, 16, 0.6);
+}
+
+/* Decorative waves */
+body.dark-mode .wave-track path,
+body.dark-mode .wave-back,
+body.dark-mode .wave-mid,
+body.dark-mode .wave-front {
+    fill: rgba(45, 212, 191, 0.06);
+}
+
+body.dark-mode .background-waves {
+    opacity: 0.5;
+}
+
+/* =========================================================
+   3. AUTH PAGES (signin / register / personal-register)
+   ========================================================= */
+body.dark-mode .auth-card,
+body.dark-mode .card {
+    background: rgba(15, 27, 34, 0.92);
+}
+
+body.dark-mode .card h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .btn-ghost {
+    background: rgba(20, 35, 45, 0.9);
+    color: #e2eef1;
+}
+
+body.dark-mode .foot,
+body.dark-mode .check,
+body.dark-mode .password-status {
+    color: #8da5b3;
+}
+
+body.dark-mode .notice {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.3);
+    color: #b6cad3;
+}
