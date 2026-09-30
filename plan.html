@@ -296,38 +296,11 @@
         letter-spacing: -0.8px;
     }
 
-    .logo-mark {
-        width: 35px;
-        height: 35px;
-
-        border-radius: 50%;
-
-        background:
-            linear-gradient(
-                135deg,
-                #10c796,
-                #10b8e4
-            );
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        box-shadow:
-            0 7px 18px rgba(18, 188, 173, 0.20);
-
+    .logo .site-logo {
+        width: 124px;
+        height: auto;
+        display: block;
         flex-shrink: 0;
-    }
-
-    .logo-mark::after {
-        content: "";
-
-        width: 13px;
-        height: 13px;
-
-        border-radius: 50%;
-
-        background: white;
     }
 
 
@@ -1702,9 +1675,11 @@
 
         <div class="logo">
 
-            <span class="logo-mark"></span>
-
-            <span>commio</span>
+            <img
+                src="logo.png"
+                alt="Commio"
+                class="site-logo"
+            >
 
         </div>
 

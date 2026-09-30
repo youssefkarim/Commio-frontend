@@ -302,48 +302,17 @@
             display: flex;
             align-items: center;
 
-            gap: 11px;
-
             padding: 3px 11px 28px;
 
-            color: #173445;
-
-            font-size: 24px;
-            font-weight: 750;
-
-            letter-spacing: -0.8px;
+            text-decoration: none;
         }
 
-        .logo-mark {
-            width: 35px;
-            height: 35px;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #10c796,
-                    #10b8e4
-                );
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            box-shadow:
-                0 7px 18px rgba(18,188,173,0.20);
-        }
-
-        .logo-mark::after {
-            content: "";
-
-            width: 13px;
-            height: 13px;
-
-            border-radius: 50%;
-
-            background: white;
+        /* Use the exact same logo asset as index.html */
+        .site-logo {
+            display: block;
+            width: 138px;
+            height: auto;
+            max-width: 100%;
         }
 
 
@@ -1551,8 +1520,8 @@
                 padding-right: 0;
             }
 
-            .logo span:last-child {
-                display: none;
+            .site-logo {
+                width: 138px;
             }
 
             .nav-item {
@@ -1667,7 +1636,6 @@
                     10px 0 30px rgba(20,50,65,0.12);
             }
 
-            .app.sidebar-open .logo span:last-child,
             .app.sidebar-open .nav-item span,
             .app.sidebar-open .profile-info,
             .app.sidebar-open .profile-more {
@@ -1781,13 +1749,15 @@
 
             <!-- LOGO -->
 
-            <div class="logo">
+            <a href="index.html" class="logo">
 
-                <span class="logo-mark"></span>
+                <img
+                    src="logo.png"
+                    alt="Commio"
+                    class="site-logo"
+                >
 
-                <span>commio</span>
-
-            </div>
+            </a>
 
 
             <!-- NAVIGATION -->
