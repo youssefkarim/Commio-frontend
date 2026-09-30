@@ -27,6 +27,7 @@ button { font: inherit; border: none; }
     min-height: 100vh;
     position: relative;
     overflow: hidden;
+    padding-top: 92px;
     background:
         radial-gradient(ellipse at 75% 82%, rgba(108, 211, 204, 0.12), transparent 42%),
         #f1f8f8;
@@ -40,25 +41,31 @@ button { font: inherit; border: none; }
 .navbar {
     width: min(94%, 1480px);
     height: 76px;
-    margin: 16px auto 0;
+    margin: 0;
     padding: 0 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    position: fixed;
+    top: 16px;
+    left: 50%;
     z-index: 30;
-    border: 1px solid transparent;
-    border-radius: 16px;
-    background: transparent;
+    border: 1px solid rgba(27, 112, 116, 0.2);
+    border-radius: 35px;
+    background: rgba(220, 243, 241, 0.95);
     box-shadow: none;
-    transition: border-color 0.05s ease, box-shadow 0.05s ease, background 0.05s ease;
+    transform: translateX(-50%);
+    transition: box-shadow 0.2s ease, transform 0.25s ease;
 }
 
 .navbar:hover,
 .navbar:focus-within {
-    border-color: rgba(27, 112, 116, 0.2);
-    background: rgba(220, 243, 241, 0.95);
-    box-shadow: 0 2px 5px rgba(31, 105, 109, 0.08);
+    box-shadow: 0 4px 12px rgba(31, 105, 109, 0.18);
+}
+
+.navbar.navbar-hidden {
+    transform: translate(-50%, calc(-100% - 24px));
+    pointer-events: none;
 }
 
 .logo {
@@ -1261,7 +1268,9 @@ button { font: inherit; border: none; }
 
 @media (max-width: 950px) {
 
-    .navbar { width: calc(100% - 32px); height: 72px; margin-top: 12px; }
+    .page { padding-top: 84px; }
+
+    .navbar { width: calc(100% - 32px); height: 72px; top: 12px; }
 
     .nav-center,
     .nav-right .signin { display: none; }
@@ -1306,7 +1315,9 @@ button { font: inherit; border: none; }
 
 @media (max-width: 600px) {
 
-    .navbar { width: calc(100% - 24px); height: 64px; margin-top: 10px; padding: 0 16px; }
+    .page { padding-top: 74px; }
+
+    .navbar { width: calc(100% - 24px); height: 64px; top: 10px; padding: 0 16px; }
 
     .logo { font-size: 21px; }
 

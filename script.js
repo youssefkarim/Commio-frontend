@@ -171,3 +171,26 @@ if (mobileMenu && navCenter) {
         navCenter.classList.toggle("mobile-open");
     });
 }
+
+
+/* =========================================================
+   NAVBAR SCROLL DIRECTION
+========================================================= */
+
+const navbar = document.querySelector(".navbar");
+
+if (navbar) {
+    let previousScrollY = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY <= 0 || currentScrollY < previousScrollY) {
+            navbar.classList.remove("navbar-hidden");
+        } else if (currentScrollY > previousScrollY) {
+            navbar.classList.add("navbar-hidden");
+        }
+
+        previousScrollY = currentScrollY;
+    }, { passive: true });
+}
