@@ -68,50 +68,29 @@
 
             background:
                 radial-gradient(
-                    circle at 82% 25%,
-                    rgba(116, 210, 247, 0.11),
+                    circle at 85% 22%,
+                    rgba(178, 231, 239, 0.32),
                     transparent 30%
                 ),
                 radial-gradient(
-                    circle at 18% 85%,
-                    rgba(53, 220, 168, 0.08),
-                    transparent 30%
+                    circle at 18% 72%,
+                    rgba(190, 235, 207, 0.30),
+                    transparent 32%
                 ),
-                #f5fafc;
+                radial-gradient(
+                    circle at 72% 5%,
+                    rgba(255, 239, 176, 0.22),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f5fbf6 0%,
+                    #f1faf8 35%,
+                    #f0f9fc 68%,
+                    #fffdf4 100%
+                );
 
             overflow: visible;
-        }
-
-        .background-waves {
-            position: fixed;
-
-            left: -12vw;
-            right: -12vw;
-            bottom: -26px;
-
-            height: clamp(220px, 36vh, 360px);
-
-            z-index: 0;
-
-            overflow: hidden;
-
-            pointer-events: none;
-            transform: translate3d(0, var(--wave-shift, 0px), 0);
-            transition: transform 0.2s ease-out;
-            will-change: transform;
-        }
-
-        .background-waves svg {
-            position: absolute;
-
-            left: 0;
-            bottom: 0;
-
-            width: 140vw;
-            min-width: 1500px;
-            height: 100%;
-            display: block;
-            animation: wave-breathe 8s ease-in-out infinite;
         }
 
         .corner-waves {
@@ -152,11 +131,56 @@
             stroke: rgba(116, 210, 247, 0.10);
         }
 
+        @keyframes corner-wave-drift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-12px, 10px); }
+        }
+
+
+        /* =========================================================
+           SCROLL WAVE
+        ========================================================= */
+
+        .main {
+            position: relative;
+            z-index: 1;
+        }
+
+        .background-waves {
+            position: fixed;
+
+            left: -12vw;
+            right: -12vw;
+            bottom: -26px;
+
+            height: clamp(220px, 36vh, 360px);
+
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+
+            transform: translate3d(0, var(--wave-shift, 0px), 0);
+            transition: transform 0.18s ease-out;
+            will-change: transform;
+        }
+
+        .background-waves svg {
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 140vw;
+            min-width: 1500px;
+            height: 100%;
+
+            display: block;
+            animation: wave-breathe 8s ease-in-out infinite;
+        }
+
         .wave-track {
             transform-box: fill-box;
-
-            animation:
-                wave-drift 26s linear infinite;
+            animation: wave-drift 26s linear infinite;
         }
 
         .wave-track.wave-mid {
@@ -169,15 +193,15 @@
         }
 
         .wave-back {
-            fill: rgba(48, 190, 218, 0.10);
+            fill: rgba(216, 242, 201, 0.58);
         }
 
         .wave-mid {
-            fill: rgba(24, 195, 165, 0.09);
+            fill: rgba(146, 214, 242, 0.60);
         }
 
         .wave-front {
-            fill: rgba(111, 214, 226, 0.11);
+            fill: rgba(255, 195, 160, 0.46);
         }
 
         @keyframes wave-drift {
@@ -196,13 +220,16 @@
             }
 
             50% {
-                transform: translateY(-12px) scaleY(1.04);
+                transform: translateY(-10px) scaleY(1.04);
             }
         }
 
-        @keyframes corner-wave-drift {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-12px, 10px); }
+        @media (prefers-reduced-motion: reduce) {
+            .corner-wave-track,
+            .wave-track,
+            .background-waves svg {
+                animation: none;
+            }
         }
 
 
@@ -531,7 +558,6 @@
 
         /* =========================================================
            SOFT PASTEL BACKGROUND
-           Only changes the page background
         ========================================================= */
 
         .main {
@@ -549,29 +575,7 @@
             transition:
                 padding 0.28s ease;
 
-            background:
-                radial-gradient(
-                    circle at 85% 22%,
-                    rgba(178, 231, 239, 0.32),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 18% 72%,
-                    rgba(190, 235, 207, 0.30),
-                    transparent 32%
-                ),
-                radial-gradient(
-                    circle at 72% 5%,
-                    rgba(255, 239, 176, 0.22),
-                    transparent 25%
-                ),
-                linear-gradient(
-                    135deg,
-                    #f5fbf6 0%,
-                    #f1faf8 35%,
-                    #f0f9fc 68%,
-                    #fffdf4 100%
-                );
+            background: transparent;
         }
 
         /* =========================================================
@@ -598,45 +602,6 @@
                     rgba(170, 225, 237, 0.10) 35%,
                     transparent 68%
                 );
-
-            pointer-events: none;
-
-            z-index: 0;
-        }
-
-        /* =========================================================
-           PASTEL WAVES
-        ========================================================= */
-
-        .main::after {
-            content: "";
-
-            position: absolute;
-
-            left: -5%;
-            bottom: -85px;
-
-            width: 110%;
-            height: 190px;
-
-            background:
-                radial-gradient(
-                    ellipse at 25% 0%,
-                    rgba(188, 232, 210, 0.45) 0%,
-                    rgba(188, 232, 210, 0.45) 35%,
-                    transparent 36%
-                ),
-                linear-gradient(
-                    175deg,
-                    rgba(190, 235, 218, 0.42) 0%,
-                    rgba(190, 235, 218, 0.42) 45%,
-                    rgba(176, 226, 236, 0.30) 46%,
-                    rgba(176, 226, 236, 0.30) 72%,
-                    rgba(255, 238, 181, 0.22) 73%,
-                    rgba(255, 238, 181, 0.22) 100%
-                );
-
-            border-radius: 50% 50% 0 0 / 35% 35% 0 0;
 
             pointer-events: none;
 
@@ -1833,14 +1798,8 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .wave-track,
-            .corner-wave-track {
-                animation: none;
-            }
-        }
-
     </style>
+    <link rel="stylesheet" href="brand-logo.css">
 </head>
 
 
@@ -1860,19 +1819,25 @@
 
     <div class="background-waves" aria-hidden="true">
         <svg viewBox="0 0 2880 320" preserveAspectRatio="none">
-            <g class="wave-track wave-back">
-                <path d="M0 164 C240 112 480 214 720 164 S1200 112 1440 164 L1440 320 L0 320 Z"></path>
-                <path d="M1440 164 C1680 112 1920 214 2160 164 S2640 112 2880 164 L2880 320 L1440 320 Z"></path>
+            <g class="wave-track">
+                <path
+                    class="wave-back"
+                    d="M0 210 C240 155 480 270 720 210 S1200 155 1440 210 S1920 270 2160 210 S2640 155 2880 210 L2880 320 L0 320 Z"
+                />
             </g>
 
             <g class="wave-track wave-mid">
-                <path d="M0 208 C240 152 480 254 720 208 S1200 152 1440 208 L1440 320 L0 320 Z"></path>
-                <path d="M1440 208 C1680 152 1920 254 2160 208 S2640 152 2880 208 L2880 320 L1440 320 Z"></path>
+                <path
+                    class="wave-mid"
+                    d="M0 250 C240 195 480 300 720 250 S1200 195 1440 250 S1920 300 2160 250 S2640 195 2880 250 L2880 320 L0 320 Z"
+                />
             </g>
 
             <g class="wave-track wave-front">
-                <path d="M0 250 C240 194 480 288 720 250 S1200 194 1440 250 L1440 320 L0 320 Z"></path>
-                <path d="M1440 250 C1680 194 1920 288 2160 250 S2640 194 2880 250 L2880 320 L1440 320 Z"></path>
+                <path
+                    class="wave-front"
+                    d="M0 280 C240 225 480 315 720 280 S1200 225 1440 280 S1920 315 2160 280 S2640 225 2880 280 L2880 320 L0 320 Z"
+                />
             </g>
         </svg>
     </div>
@@ -1888,10 +1853,9 @@
             <!-- LOGO -->
 
             <div class="logo">
-
-                <span class="logo-mark"></span>
-
-                <span>commio</span>
+                <div class="brand-logo-frame">
+                    <img class="brand-logo" src="logo.png" alt="Commio" width="285" height="65">
+                </div>
 
             </div>
 
@@ -3179,24 +3143,6 @@
        remove mobile-only state so the sidebar doesn't get stuck.
     ========================================================= */
 
-    const waveLayer = document.querySelector(".background-waves");
-
-    function updateWavePosition() {
-        if (!waveLayer) return;
-
-        const scrollY = window.scrollY || window.pageYOffset;
-        const offset = Math.min(Math.max(-scrollY * 0.18, -80), 30);
-        const bob = Math.sin(scrollY * 0.012) * 14;
-
-        waveLayer.style.setProperty(
-            "--wave-shift",
-            `${offset + bob}px`
-        );
-    }
-
-    updateWavePosition();
-    window.addEventListener("scroll", updateWavePosition, { passive: true });
-
     window.addEventListener(
         "resize",
         function () {
@@ -3224,6 +3170,29 @@
             updateWavePosition();
         }
     );
+
+
+    /* =========================================================
+       SCROLL WAVE
+    ========================================================= */
+
+    const scrollWave = document.querySelector(".background-waves");
+
+    function updateWavePosition() {
+        if (!scrollWave) return;
+
+        const scrollY = window.scrollY || window.pageYOffset;
+        const offset = Math.min(Math.max(-scrollY * 0.18, -80), 28);
+        const bob = Math.sin(scrollY * 0.011) * 16;
+
+        scrollWave.style.setProperty(
+            "--wave-shift",
+            `${offset + bob}px`
+        );
+    }
+
+    updateWavePosition();
+    window.addEventListener("scroll", updateWavePosition, { passive: true });
 
 </script>
 
