@@ -4,61 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing — Commio</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="pricing.css">
 </head>
 <body>
 
-    <header class="topbar">
-        <a href="index.html" class="brand" aria-label="Commio home">
+    <div class="page">
+    <header class="navbar">
+        <a href="index.html" class="logo" aria-label="Commio home">
             <img src="logo.png" alt="Commio" class="site-logo">
         </a>
-        <nav class="topbar-links">
-            <a href="index.html">Home</a>
-            <a href="signin.html">Sign in</a>
+        <nav class="nav-center">
+            <a href="index.html#how-it-works">How it works</a>
+            <a href="index.html#signals">Signals</a>
+            <a href="index.html#privacy">Privacy</a>
+            <a href="#plans" aria-current="page">Pricing</a>
         </nav>
+        <div class="nav-right">
+            <a href="signin.html" class="signin">Sign in</a>
+            <a href="signin.html" class="btn nav-cta"><span>Try Commio →</span></a>
+            <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
+                <span></span>
+            </button>
+        </div>
     </header>
 
     <main class="pricing">
+        <section class="pricing-hero" aria-labelledby="pricing-title">
+            <p class="eyebrow">A place to grow into</p>
+            <h1 id="pricing-title">More useful practice.<br><span>Clear, simple pricing.</span></h1>
+            <p class="pricing-intro">Start with five guided analyses. Upgrade when you need unlimited practice, comparisons, or team-wide insights.</p>
+        </section>
 
-        <div class="head">
-            <div>
-                <div class="eyebrow">A place to grow into</div>
-                <h1>Start with a moment worth understanding.</h1>
-            </div>
-            <p>For thoughtful communicators, educators, recruiters, and teams building a shared practice.</p>
+        <div class="plans-heading" id="plans">
+            <div><p class="eyebrow">Choose your plan</p><h2>Built around your next step</h2></div>
+            <p>Every plan includes evidence-first analysis.</p>
         </div>
 
-        <div class="plans">
-
-            <div class="intro">
-                <div class="eyebrow">Choose your room</div>
-                <p>Bring one recording or a whole learning culture. Every plan includes evidence-first analysis.</p>
-            </div>
-
+        <div class="plan-grid">
             <article class="plan personal">
-                <h2 class="plan-name">Personal</h2>
+                <div class="plan-topline"><span class="plan-index">01</span><span class="plan-category">For individuals</span></div>
+                <h3 class="plan-name">Personal</h3>
                 <div class="price">Free</div>
-                <p class="desc">Five guided analyses each month. Keep your practice private.</p>
+                <p class="desc">A private place to understand how you communicate.</p>
                 <a href="signin.html" class="plan-btn">Begin</a>
+                <ul class="plan-features">
+                    <li>Five guided analyses each month</li>
+                    <li>Private practice</li>
+                    <li>Evidence-first feedback</li>
+                </ul>
             </article>
 
             <article class="plan featured">
-                <h2 class="plan-name">Practice</h2>
+                <div class="plan-topline"><span class="plan-index">02</span><span class="plan-category">For regular practice</span></div>
+                <h3 class="plan-name">Practice</h3>
                 <div class="price">$18<small>/ month</small></div>
-                <p class="desc">Unlimited practice loops, comparisons, and interview rehearsal.</p>
+                <p class="desc">More room to rehearse, compare, and improve.</p>
                 <a href="signin.html" class="plan-btn">Choose Practice</a>
+                <ul class="plan-features">
+                    <li>Unlimited practice loops</li>
+                    <li>Comparisons and interview rehearsal</li>
+                    <li>Evidence-first feedback</li>
+                </ul>
             </article>
 
             <article class="plan">
-                <h2 class="plan-name">Teams</h2>
-                <div class="price">Let’s talk</div>
+                <div class="plan-topline"><span class="plan-index">03</span><span class="plan-category">For organizations</span></div>
+                <h3 class="plan-name">Teams</h3>
+                <div class="price price-contact">Let’s talk</div>
                 <p class="desc">Privacy-conscious insight for educators and organizations.</p>
                 <a href="mailto:hello@commio.com" class="plan-btn">Contact us</a>
+                <ul class="plan-features">
+                    <li>Configurable evaluation criteria</li>
+                    <li>Privacy-conscious reporting</li>
+                    <li>Organization-wide insights</li>
+                </ul>
             </article>
-
         </div>
-
     </main>
+    </div>
 
 </body>
 </html>
