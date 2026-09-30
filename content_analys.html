@@ -25,7 +25,7 @@
 			background: radial-gradient(circle at 90% 5%,rgba(11,183,223,.10),transparent 25%),radial-gradient(circle at 25% 100%,rgba(15,199,143,.08),transparent 30%),var(--bg);
 		}
 		button { font: inherit; border: 0; cursor: pointer; }
-		.app { min-height: 100vh; display: flex; position: relative; isolation: isolate; overflow: hidden; }
+		.app { min-height: 100vh; display: flex; position: relative; isolation: isolate; overflow: visible; }
 		.sidebar { width: 255px; flex: 0 0 255px; min-height: 100vh; padding: 28px 16px 20px; position: relative; z-index: 20; overflow: visible; background: rgba(255,255,255,.76); border-right: 1px solid var(--border); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: width .3s ease,flex-basis .3s ease,padding .3s ease,box-shadow .3s ease; }
 		.sidebar-inner { height: calc(100vh - 48px); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; transition: opacity .2s ease,visibility .2s ease; }
 		.logo { display: flex; align-items: center; gap: 10px; padding: 4px 10px 30px; }

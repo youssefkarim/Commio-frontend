@@ -547,32 +547,8 @@
 
 
         /* =========================================================
-           COLLAPSED SIDEBAR
+           COLLAPSED SIDEBAR (Controlled by sidebar.css)
         ========================================================= */
-
-        .app.sidebar-collapsed .sidebar {
-            width: 0;
-            flex-basis: 0;
-
-            padding-left: 0;
-            padding-right: 0;
-
-            border-right: 0;
-
-            overflow: visible;
-        }
-
-        .app.sidebar-collapsed .sidebar > * {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .sidebar-toggle.is-collapsed {
-            left: 12px;
-
-            opacity: 1;
-            pointer-events: auto;
-        }
 
 
         /* =========================================================
@@ -805,19 +781,16 @@
         }
 
 
-        /* =========================================================
-           HERO ILLUSTRATION
+/* =========================================================
+   INTERACTIVE HERO ILLUSTRATION
         ========================================================= */
 
         .hero-illustration {
             width: 100%;
-
             display: flex;
             justify-content: center;
             align-items: center;
-
             margin-top: 18px;
-
             position: relative;
             z-index: 2;
         }
@@ -826,8 +799,146 @@
             width: 100%;
             max-width: 200px;
             height: auto;
-
             display: block;
+            overflow: visible;
+        }
+
+        /* Make the people clickable */
+        .talking-person {
+            cursor: pointer;
+            transform-box: fill-box;
+            transform-origin: center bottom;
+            transition:
+                transform 0.25s ease,
+                filter 0.25s ease;
+        }
+
+        /* Gentle interaction when hovering */
+        .talking-person:hover {
+            transform: translateY(-5px);
+            filter: drop-shadow(0 5px 5px rgba(16, 199, 150, 0.16));
+        }
+
+        /* Speech bubbles */
+        .speech-bubble {
+            transform-box: fill-box;
+            transform-origin: center;
+            transition:
+                transform 0.3s ease,
+                filter 0.3s ease;
+        }
+
+        /* Bubble reacts when its person is hovered */
+        .hero-illustration svg:has(.person-left:hover) .bubble-left {
+            transform: translateY(-4px) scale(1.025);
+        }
+
+        .hero-illustration svg:has(.person-right:hover) .bubble-right {
+            transform: translateY(-4px) scale(1.025);
+        }
+
+        /* Little talking dots */
+        .talking-dots {
+            opacity: 0;
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: opacity 0.2s ease;
+        }
+
+        .talking-person:hover ~ .talking-dots,
+        .talking-person.active ~ .talking-dots {
+            opacity: 1;
+        }
+
+        .talking-dot {
+            animation: talking-dot-bounce 1.2s ease-in-out infinite;
+        }
+
+        .talking-dot:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .talking-dot:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes talking-dot-bounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.35;
+            }
+
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
+
+        /* Active talking animation */
+        .talking-person.active {
+            animation: person-talk 0.8s ease-in-out;
+        }
+
+        .talking-person.active .arm-gesture {
+            animation: arm-talk 0.8s ease-in-out;
+        }
+
+        @keyframes person-talk {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-4px) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-6px) rotate(1deg);
+            }
+
+            75% {
+                transform: translateY(-3px) rotate(-0.5deg);
+            }
+        }
+
+        @keyframes arm-talk {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+
+            35% {
+                transform: rotate(-5deg);
+            }
+
+            70% {
+                transform: rotate(4deg);
+            }
+        }
+
+        /* Click feedback */
+        .talking-person:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        /* Accessibility */
+        .talking-person:focus {
+            outline: none;
+        }
+
+        .talking-person:focus-visible {
+            filter: drop-shadow(0 0 0 rgba(16, 199, 150, 0));
+            stroke: #10c796;
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .talking-person,
+            .talking-person.active,
+            .talking-person.active .arm-gesture,
+            .talking-dot {
+                animation: none !important;
+                transition: none !important;
+            }
         }
 
 
@@ -1611,57 +1722,347 @@
                 </div>
 
 
-                <div class="hero-illustration">
+               <div class="hero-illustration">
 
-                    <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="People communicating through speech bubbles">
-                        <!-- Drop Shadows -->
-                        <ellipse cx="130" cy="222" rx="26" ry="4" fill="#e2edf1" />
-                        <ellipse cx="270" cy="222" rx="26" ry="4" fill="#e2edf1" />
-                        
-                        <!-- Speech Bubble 2 (Back) -->
-                        <path d="M 180 115 C 180 70, 255 60, 275 60 C 320 60, 350 88, 350 125 C 350 160, 315 182, 270 182 C 255 182, 245 187, 235 197 C 240 186, 242 180, 238 178 C 190 173, 180 142, 180 115 Z" 
-                              fill="#ffffff" stroke="#2c3e50" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg
+        viewBox="0 0 400 240"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Two people communicating through speech bubbles"
+    >
 
-                        <!-- Speech Bubble 1 (Front) -->
-                        <path d="M 120 30 C 185 30, 215 58, 215 95 C 215 132, 180 160, 130 160 C 115 160, 105 165, 95 175 C 100 164, 102 158, 98 156 C 60 151, 50 120, 50 95 C 50 58, 80 30, 120 30 Z" 
-                              fill="#ffffff" stroke="#2c3e50" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Drop Shadows -->
+        <ellipse
+            cx="130"
+            cy="222"
+            rx="26"
+            ry="4"
+            fill="#e2edf1"
+        />
 
-                        <!-- Left Figure -->
-                        <g stroke="#2c3e50" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                            <!-- Head -->
-                            <ellipse cx="120" cy="148" rx="20" ry="22" fill="#ffffff"/>
-                            <!-- Eyes -->
-                            <line x1="114" y1="144" x2="114" y2="150" stroke-width="3.5"/>
-                            <line x1="126" y1="144" x2="126" y2="150" stroke-width="3.5"/>
-                            <!-- Left Arm (On Hip) -->
-                            <path d="M 105 182 C 93 184, 91 197, 102 201"/>
-                            <!-- Body & Legs -->
-                            <path d="M 105 180 C 107 170, 133 170, 135 180 C 129 198, 127 210, 127 222 C 120 222, 118 198, 115 198 C 112 198, 110 222, 103 222 C 101 210, 101 198, 105 180 Z" fill="#ffffff"/>
-                            <!-- Right Arm (Raised Gesture) -->
-                            <path d="M 135 180 C 147 176, 156 158, 151 149 C 147 147, 140 162, 133 185"/>
-                            <!-- Tie -->
-                            <path d="M 118 172 L 122 172 L 125 191 L 120 197 L 115 191 Z" fill="#10c796" stroke-width="2.5"/>
-                        </g>
+        <ellipse
+            cx="270"
+            cy="222"
+            rx="26"
+            ry="4"
+            fill="#e2edf1"
+        />
 
-                        <!-- Right Figure -->
-                        <g stroke="#2c3e50" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                            <!-- Head -->
-                            <ellipse cx="270" cy="153" rx="20" ry="22" fill="#ffffff"/>
-                            <!-- Eyes -->
-                            <line x1="264" y1="149" x2="264" y2="155" stroke-width="3.5"/>
-                            <line x1="276" y1="149" x2="276" y2="155" stroke-width="3.5"/>
-                            <!-- Left Arm (On Hip) -->
-                            <path d="M 255 187 C 243 189, 241 202, 252 206"/>
-                            <!-- Right Arm (On Hip) -->
-                            <path d="M 285 187 C 297 189, 299 202, 288 206"/>
-                            <!-- Body & Legs -->
-                            <path d="M 255 185 C 257 175, 283 175, 285 185 C 279 202, 277 210, 277 222 C 270 222, 268 198, 265 198 C 262 198, 260 222, 253 222 C 251 210, 251 202, 255 185 Z" fill="#ffffff"/>
-                            <!-- Tie -->
-                            <path d="M 268 177 L 272 177 L 275 196 L 270 202 L 265 196 Z" fill="#10b8e4" stroke-width="2.5"/>
-                        </g>
-                    </svg>
 
-                </div>
+        <!-- =====================================================
+             SPEECH BUBBLE 2
+        ====================================================== -->
+
+        <g class="speech-bubble bubble-right">
+
+            <path
+                d="
+                    M 180 115
+                    C 180 70, 255 60, 275 60
+                    C 320 60, 350 88, 350 125
+                    C 350 160, 315 182, 270 182
+                    C 255 182, 245 187, 235 197
+                    C 240 186, 242 180, 238 178
+                    C 190 173, 180 142, 180 115 Z
+                "
+                fill="#ffffff"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+
+            <!-- Talking dots -->
+            <g class="talking-dots">
+                <circle
+                    class="talking-dot"
+                    cx="270"
+                    cy="120"
+                    r="4"
+                    fill="#10c796"
+                />
+
+                <circle
+                    class="talking-dot"
+                    cx="285"
+                    cy="120"
+                    r="4"
+                    fill="#10b8e4"
+                />
+
+                <circle
+                    class="talking-dot"
+                    cx="300"
+                    cy="120"
+                    r="4"
+                    fill="#10c796"
+                />
+            </g>
+
+        </g>
+
+
+        <!-- =====================================================
+             SPEECH BUBBLE 1
+        ====================================================== -->
+
+        <g class="speech-bubble bubble-left">
+
+            <path
+                d="
+                    M 120 30
+                    C 185 30, 215 58, 215 95
+                    C 215 132, 180 160, 130 160
+                    C 115 160, 105 165, 95 175
+                    C 100 164, 102 158, 98 156
+                    C 60 151, 50 120, 50 95
+                    C 50 58, 80 30, 120 30 Z
+                "
+                fill="#ffffff"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+
+            <!-- Talking dots -->
+            <g class="talking-dots">
+                <circle
+                    class="talking-dot"
+                    cx="105"
+                    cy="90"
+                    r="4"
+                    fill="#10c796"
+                />
+
+                <circle
+                    class="talking-dot"
+                    cx="120"
+                    cy="90"
+                    r="4"
+                    fill="#10b8e4"
+                />
+
+                <circle
+                    class="talking-dot"
+                    cx="135"
+                    cy="90"
+                    r="4"
+                    fill="#10c796"
+                />
+            </g>
+
+        </g>
+
+
+        <!-- =====================================================
+             LEFT PERSON
+        ====================================================== -->
+
+        <g
+            class="talking-person person-left"
+            tabindex="0"
+            role="button"
+            aria-label="Person speaking"
+        >
+
+            <!-- Head -->
+            <ellipse
+                cx="120"
+                cy="148"
+                rx="20"
+                ry="22"
+                fill="#ffffff"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+            />
+
+            <!-- Eyes -->
+            <line
+                x1="114"
+                y1="144"
+                x2="114"
+                y2="150"
+                stroke="#2c3e50"
+                stroke-width="3.5"
+                stroke-linecap="round"
+            />
+
+            <line
+                x1="126"
+                y1="144"
+                x2="126"
+                y2="150"
+                stroke="#2c3e50"
+                stroke-width="3.5"
+                stroke-linecap="round"
+            />
+
+            <!-- Left Arm -->
+            <path
+                d="M 105 182
+                   C 93 184, 91 197, 102 201"
+                fill="none"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+                stroke-linecap="round"
+            />
+
+            <!-- Body -->
+            <path
+                d="
+                    M 105 180
+                    C 107 170, 133 170, 135 180
+                    C 129 198, 127 210, 127 222
+                    C 120 222, 118 198, 115 198
+                    C 112 198, 110 222, 103 222
+                    C 101 210, 101 198, 105 180 Z
+                "
+                fill="#ffffff"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+
+            <!-- Raised Talking Arm -->
+            <g class="arm-gesture">
+
+                <path
+                    d="
+                        M 135 180
+                        C 147 176, 156 158, 151 149
+                        C 147 147, 140 162, 133 185
+                    "
+                    fill="none"
+                    stroke="#2c3e50"
+                    stroke-width="4.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+            </g>
+
+            <!-- Tie -->
+            <path
+                d="
+                    M 118 172
+                    L 122 172
+                    L 125 191
+                    L 120 197
+                    L 115 191 Z
+                "
+                fill="#10c796"
+                stroke="#2c3e50"
+                stroke-width="2.5"
+            />
+
+        </g>
+
+
+        <!-- =====================================================
+             RIGHT PERSON
+        ====================================================== -->
+
+        <g
+            class="talking-person person-right"
+            tabindex="0"
+            role="button"
+            aria-label="Person listening"
+        >
+
+            <!-- Head -->
+            <ellipse
+                cx="270"
+                cy="153"
+                rx="20"
+                ry="22"
+                fill="#ffffff"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+            />
+
+            <!-- Eyes -->
+            <line
+                x1="264"
+                y1="149"
+                x2="264"
+                y2="155"
+                stroke="#2c3e50"
+                stroke-width="3.5"
+                stroke-linecap="round"
+            />
+
+            <line
+                x1="276"
+                y1="149"
+                x2="276"
+                y2="155"
+                stroke="#2c3e50"
+                stroke-width="3.5"
+                stroke-linecap="round"
+            />
+
+            <!-- Left Arm -->
+            <path
+                d="
+                    M 255 187
+                    C 243 189, 241 202, 252 206
+                "
+                fill="none"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+                stroke-linecap="round"
+            />
+
+            <!-- Right Arm -->
+            <path
+                d="
+                    M 285 187
+                    C 297 189, 299 202, 288 206
+                "
+                fill="none"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+                stroke-linecap="round"
+            />
+
+            <!-- Body -->
+            <path
+                d="
+                    M 255 185
+                    C 257 175, 283 175, 285 185
+                    C 279 202, 277 210, 277 222
+                    C 270 222, 268 198, 265 198
+                    C 262 198, 260 222, 253 222
+                    C 251 210, 251 202, 255 185 Z
+                "
+                fill="#ffffff"
+                stroke="#2c3e50"
+                stroke-width="4.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+
+            <!-- Tie -->
+            <path
+                d="
+                    M 268 177
+                    L 272 177
+                    L 275 196
+                    L 270 202
+                    L 265 196 Z
+                "
+                fill="#10b8e4"
+                stroke="#2c3e50"
+                stroke-width="2.5"
+            />
+
+        </g>
+
+    </svg>
+
+</div>
 
             </section>
 
@@ -2334,6 +2735,51 @@
 
         updateWavePosition();
     });
+
+
+
+        /* =========================================================
+        INTERACTIVE TALKING PEOPLE
+        ========================================================= */
+
+        const talkingPeople = document.querySelectorAll(".talking-person");
+
+        talkingPeople.forEach(person => {
+
+            function activateTalking() {
+
+                // Remove active state from both people
+                talkingPeople.forEach(p => {
+                    p.classList.remove("active");
+                });
+
+                // Activate selected person
+                person.classList.add("active");
+
+                // Remove animation class after it finishes
+                setTimeout(() => {
+                    person.classList.remove("active");
+                }, 800);
+            }
+
+            // Mouse click
+            person.addEventListener("click", activateTalking);
+
+            // Keyboard accessibility
+            person.addEventListener("keydown", event => {
+
+                if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                ) {
+                    event.preventDefault();
+                    activateTalking();
+                }
+
+            });
+
+        });
+
 
 </script>
 
