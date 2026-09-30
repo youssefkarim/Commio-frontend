@@ -47,6 +47,7 @@
         background: #f5fafc;
         color: #102d3d;
         min-height: 100vh;
+        overflow-x: hidden;
     }
 
     button,
@@ -86,7 +87,7 @@
             ),
             #f5fafc;
 
-        overflow: hidden;
+        overflow: visible;
     }
 
 
@@ -97,17 +98,20 @@
     .background-waves {
         position: fixed;
 
-        left: 0;
-        right: 0;
-        bottom: 0;
+        left: -12vw;
+        right: -12vw;
+        bottom: -26px;
 
-        height: clamp(170px, 28vh, 290px);
+        height: clamp(220px, 36vh, 360px);
 
         z-index: 0;
 
         overflow: hidden;
 
         pointer-events: none;
+        transform: translate3d(0, var(--wave-shift, 0px), 0);
+        transition: transform 0.2s ease-out;
+        will-change: transform;
     }
 
     .background-waves svg {
@@ -116,8 +120,11 @@
         left: 0;
         bottom: 0;
 
-        width: 200%;
+        width: 140vw;
+        min-width: 1500px;
         height: 100%;
+        display: block;
+        animation: wave-breathe 8s ease-in-out infinite;
     }
 
     .wave-track {
@@ -155,6 +162,16 @@
 
         to {
             transform: translateX(-50%);
+        }
+    }
+
+    @keyframes wave-breathe {
+        0%, 100% {
+            transform: translateY(0) scaleY(1);
+        }
+
+        50% {
+            transform: translateY(-12px) scaleY(1.04);
         }
     }
 
@@ -1738,9 +1755,9 @@
 
 
             <a
-                href="#"
+                href="excercise.html"
                 class="nav-item"
-                onclick="setActiveNav(this); return false;"
+                onclick="setActiveNav(this);"
             >
                 <i data-lucide="book-open"></i>
 
@@ -2830,6 +2847,24 @@
        RESPONSIVE SIDEBAR RESET
     ========================================================= */
 
+    const waveLayer = document.querySelector(".background-waves");
+
+    function updateWavePosition() {
+        if (!waveLayer) return;
+
+        const scrollY = window.scrollY || window.pageYOffset;
+        const offset = Math.min(Math.max(-scrollY * 0.18, -80), 30);
+        const bob = Math.sin(scrollY * 0.012) * 14;
+
+        waveLayer.style.setProperty(
+            "--wave-shift",
+            `${offset + bob}px`
+        );
+    }
+
+    updateWavePosition();
+    window.addEventListener("scroll", updateWavePosition, { passive: true });
+
     window.addEventListener(
         "resize",
         function () {
@@ -2855,6 +2890,7 @@
 
             }
 
+            updateWavePosition();
         }
     );
 

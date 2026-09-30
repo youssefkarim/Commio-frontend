@@ -41,6 +41,7 @@
             background: #f4f9fc;
             color: #102d3d;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         button,
@@ -78,25 +79,39 @@
                 ),
                 #f5fafc;
 
-            overflow: hidden;
+            overflow: visible;
         }
 
         .background-waves {
-            position: absolute;
-            inset: auto 0 0;
-            height: clamp(190px, 32vh, 320px);
+            position: fixed;
+
+            left: -12vw;
+            right: -12vw;
+            bottom: -26px;
+
+            height: clamp(220px, 36vh, 360px);
+
             z-index: 0;
+
             overflow: hidden;
+
             pointer-events: none;
+            transform: translate3d(0, var(--wave-shift, 0px), 0);
+            transition: transform 0.2s ease-out;
+            will-change: transform;
         }
 
         .background-waves svg {
             position: absolute;
+
             left: 0;
             bottom: 0;
-            width: 200%;
+
+            width: 140vw;
+            min-width: 1500px;
             height: 100%;
-            overflow: visible;
+            display: block;
+            animation: wave-breathe 8s ease-in-out infinite;
         }
 
         .corner-waves {
@@ -139,7 +154,9 @@
 
         .wave-track {
             transform-box: fill-box;
-            animation: wave-drift 26s linear infinite;
+
+            animation:
+                wave-drift 26s linear infinite;
         }
 
         .wave-track.wave-mid {
@@ -164,8 +181,23 @@
         }
 
         @keyframes wave-drift {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes wave-breathe {
+            0%, 100% {
+                transform: translateY(0) scaleY(1);
+            }
+
+            50% {
+                transform: translateY(-12px) scaleY(1.04);
+            }
         }
 
         @keyframes corner-wave-drift {
@@ -498,7 +530,8 @@
 
 
         /* =========================================================
-           MAIN
+           SOFT PASTEL BACKGROUND
+           Only changes the page background
         ========================================================= */
 
         .main {
@@ -515,29 +548,99 @@
 
             transition:
                 padding 0.28s ease;
+
+            background:
+                radial-gradient(
+                    circle at 85% 22%,
+                    rgba(178, 231, 239, 0.32),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 18% 72%,
+                    rgba(190, 235, 207, 0.30),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 72% 5%,
+                    rgba(255, 239, 176, 0.22),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f5fbf6 0%,
+                    #f1faf8 35%,
+                    #f0f9fc 68%,
+                    #fffdf4 100%
+                );
         }
+
+        /* =========================================================
+           SOFT FLOATING COLOR GLOW
+        ========================================================= */
 
         .main::before {
             content: "";
 
             position: absolute;
 
-            width: 480px;
-            height: 480px;
+            width: 520px;
+            height: 520px;
+
+            right: -120px;
+            top: 70px;
 
             border-radius: 50%;
-
-            right: 0;
-            top: 80px;
 
             background:
                 radial-gradient(
                     circle,
-                    rgba(64,203,236,0.08),
-                    transparent 65%
+                    rgba(170, 225, 237, 0.22) 0%,
+                    rgba(170, 225, 237, 0.10) 35%,
+                    transparent 68%
                 );
 
             pointer-events: none;
+
+            z-index: 0;
+        }
+
+        /* =========================================================
+           PASTEL WAVES
+        ========================================================= */
+
+        .main::after {
+            content: "";
+
+            position: absolute;
+
+            left: -5%;
+            bottom: -85px;
+
+            width: 110%;
+            height: 190px;
+
+            background:
+                radial-gradient(
+                    ellipse at 25% 0%,
+                    rgba(188, 232, 210, 0.45) 0%,
+                    rgba(188, 232, 210, 0.45) 35%,
+                    transparent 36%
+                ),
+                linear-gradient(
+                    175deg,
+                    rgba(190, 235, 218, 0.42) 0%,
+                    rgba(190, 235, 218, 0.42) 45%,
+                    rgba(176, 226, 236, 0.30) 46%,
+                    rgba(176, 226, 236, 0.30) 72%,
+                    rgba(255, 238, 181, 0.22) 73%,
+                    rgba(255, 238, 181, 0.22) 100%
+                );
+
+            border-radius: 50% 50% 0 0 / 35% 35% 0 0;
+
+            pointer-events: none;
+
+            z-index: 0;
         }
 
         .content {
@@ -558,9 +661,13 @@
         .header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-
+            justify-content: center;
             margin-bottom: 30px;
+        }
+
+        .header > div {
+            width: 100%;
+            text-align: center;
         }
 
         .header h1 {
@@ -1645,7 +1752,7 @@
             }
 
             /*
-               On mobile the sidebar becomes a slide-out drawer.
+                On mobile the sidebar becomes a slide-out drawer.
             */
 
             .app.sidebar-open .sidebar {
@@ -1755,15 +1862,14 @@
         <svg viewBox="0 0 2880 320" preserveAspectRatio="none">
             <g class="wave-track wave-back">
                 <path d="M0 164 C240 112 480 214 720 164 S1200 112 1440 164 L1440 320 L0 320 Z"></path>
-                <use href="#wave-back-shape" x="1440"></use>
+                <path d="M1440 164 C1680 112 1920 214 2160 164 S2640 112 2880 164 L2880 320 L1440 320 Z"></path>
             </g>
-            <defs>
-                <path id="wave-back-shape" d="M0 164 C240 112 480 214 720 164 S1200 112 1440 164 L1440 320 L0 320 Z"></path>
-            </defs>
+
             <g class="wave-track wave-mid">
                 <path d="M0 208 C240 152 480 254 720 208 S1200 152 1440 208 L1440 320 L0 320 Z"></path>
                 <path d="M1440 208 C1680 152 1920 254 2160 208 S2640 152 2880 208 L2880 320 L1440 320 Z"></path>
             </g>
+
             <g class="wave-track wave-front">
                 <path d="M0 250 C240 194 480 288 720 250 S1200 194 1440 250 L1440 320 L0 320 Z"></path>
                 <path d="M1440 250 C1680 194 1920 288 2160 250 S2640 194 2880 250 L2880 320 L1440 320 Z"></path>
@@ -1813,9 +1919,9 @@
 
 
                 <a
-                    href="#"
+                    href="excercise.html"
                     class="nav-item"
-                    onclick="setActiveNav(this); return false;"
+                    onclick="setActiveNav(this);"
                 >
                     <i data-lucide="book-open"></i>
                     <span>Exercises</span>
@@ -1908,7 +2014,7 @@
                 <div>
 
                     <h1>
-                        Good morning, Reem
+                        Welcome back, Reem
                     </h1>
 
                     <p>
@@ -3073,6 +3179,24 @@
        remove mobile-only state so the sidebar doesn't get stuck.
     ========================================================= */
 
+    const waveLayer = document.querySelector(".background-waves");
+
+    function updateWavePosition() {
+        if (!waveLayer) return;
+
+        const scrollY = window.scrollY || window.pageYOffset;
+        const offset = Math.min(Math.max(-scrollY * 0.18, -80), 30);
+        const bob = Math.sin(scrollY * 0.012) * 14;
+
+        waveLayer.style.setProperty(
+            "--wave-shift",
+            `${offset + bob}px`
+        );
+    }
+
+    updateWavePosition();
+    window.addEventListener("scroll", updateWavePosition, { passive: true });
+
     window.addEventListener(
         "resize",
         function () {
@@ -3096,6 +3220,8 @@
 
                 toggle.classList.remove("is-open");
             }
+
+            updateWavePosition();
         }
     );
 
