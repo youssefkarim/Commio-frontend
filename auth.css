@@ -6,9 +6,9 @@
     --ink: #102d3d;
     --muted: #5b7280;
     --line: #d9e5eb;
-    --brand: #08b4d4;
+    --brand: #ace4e3;
     --teal: #1fbf9f;
-    --tab: #72a9a3;
+    --tab: #ace4e3;
     --danger: #d92d20;
 }
 
@@ -19,30 +19,22 @@ body {
     color: var(--ink);
     min-height: 100vh;
     overflow-x: hidden;
-    background:
-        radial-gradient(circle at 0% 0%, rgba(60, 214, 190, 0.5), transparent 26%),
-        radial-gradient(circle at 100% 6%, rgba(120, 214, 246, 0.45), transparent 24%),
-        radial-gradient(circle at 100% 100%, rgba(110, 200, 250, 0.5), transparent 30%),
-        radial-gradient(ellipse at 20% 100%, rgba(150, 224, 235, 0.55), transparent 40%),
-        linear-gradient(135deg, #f2fbfc, #e6f7fa);
-    background-attachment: fixed;
+    background: #eaf8fb; /* fallback while the artwork loads */
 }
 
-/* Decorative rings */
-body::before,
-body::after {
+/* Background artwork (auth-bg.svg), fixed behind everything */
+body::before {
     content: "";
     position: fixed;
-    border-radius: 50%;
-    border: 1px solid rgba(70, 201, 238, 0.3);
+    inset: 0;
+    z-index: -1;
+    background: url("auth-bg.svg") center / cover no-repeat;
     pointer-events: none;
-    z-index: 0;
 }
-body::before { width: 620px; height: 620px; right: -240px; top: -120px; }
-body::after  { width: 700px; height: 700px; left: -300px; bottom: -420px; }
 
 a { color: inherit; text-decoration: none; }
 button, input, select { font: inherit; }
+button { border: 0; background: none; color: inherit; }
 
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
@@ -116,6 +108,8 @@ button, input, select { font: inherit; }
     line-height: 1.5;
     margin-bottom: 24px;
 }
+
+.personal-card { --w: 540px; }
 
 
 /* =========================================================
@@ -231,6 +225,27 @@ select {
 
 .error { display: none; margin-top: 6px; font-size: 12px; color: var(--danger); }
 .field.invalid .error { display: block; }
+
+.password-status { margin-top: 6px; font-size: 12px; color: var(--muted); }
+.password-status.verified { color: #008f7d; }
+.field.password-valid input { border-color: #08a997; padding-right: 42px; }
+.field.password-valid .input-wrap::after {
+    content: "✓";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #08a997;
+    border-radius: 50%;
+    color: #08a997;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 12px;
+    text-align: center;
+    pointer-events: none;
+}
 
 .toggle-pw {
     position: absolute;

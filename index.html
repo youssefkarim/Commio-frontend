@@ -4,435 +4,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Commio — Communication Intelligence</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="page">
+<div class="page">
 
-        <!-- =====================================================
-             NAVIGATION
-        ====================================================== -->
+    <!-- ===================== NAVIGATION ===================== -->
 
-        <header class="navbar">
+    <header class="navbar">
 
-            <a href="index.html" class="logo">
-                <img src="logo.png" alt="Commio" class="site-logo">
-            </a>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Commio" class="site-logo">
+        </a>
+
+        <nav class="nav-center">
+            <a href="#how-it-works">How it works</a>
+            <a href="#signals">Signals</a>
+            <a href="#privacy">Privacy</a>
+            <a href="pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+            <a href="signin.html" class="signin">Sign in</a>
+            <a href="signin.html" class="btn nav-cta"><span>Try Commio →</span></a>
+
+            <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
+                <span></span>
+            </button>
+        </div>
+
+    </header>
 
 
-            <nav class="nav-center">
+    <!-- ========================= HERO ========================= -->
 
-                <a href="#how-it-works">
-                    How it works
+    <main>
+
+    <section class="hero">
+
+        <!-- LEFT SIDE -->
+
+        <section class="hero-content">
+
+            <div class="eyebrow">COMMUNICATION INTELLIGENCE, MADE HUMAN</div>
+
+            <h1 class="hero-title">
+                Understand how<br>
+                you
+                <span class="highlight">communicate.</span>
+            </h1>
+
+            <p class="hero-description">
+                Commio observes the signals in your speech,
+                voice, visual presence, and content — then
+                turns real evidence into a calmer next attempt.
+            </p>
+
+            <div class="hero-actions">
+
+                <!-- Live waveform button -->
+                <a href="#start" class="btn btn-primary start-btn wave-btn">
+                    <span class="wave" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span class="wave-label">Start a practice</span>
                 </a>
 
-                <a href="#signals">
-                    Signals
-                </a>
-
-                <a href="#privacy">
-                    Privacy
-                </a>
-
-                <a href="pricing.html">
-                    Pricing
-                </a>
-
-            </nav>
-
-
-            <div class="nav-right">
-
-                <a href="signin.html" class="signin">
-                    Sign in
-                </a>
-
-                <a href="signin.html" class="btn btn-primary nav-cta">
-                    Try Commio →
-                </a>
-
-                <button
-                    class="mobile-menu"
-                    id="mobileMenu"
-                    aria-label="Open menu"
-                >
-                    <span></span>
+                <!-- Watch button with progress ring -->
+                <button class="btn watch-btn" id="watchButton">
+                    <span class="play-ring" aria-hidden="true">
+                        <svg viewBox="0 0 44 44">
+                            <circle class="ring-track" cx="22" cy="22" r="19"></circle>
+                            <circle class="ring-progress" cx="22" cy="22" r="19"></circle>
+                        </svg>
+                        <svg class="play-triangle" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 6.5v11a1 1 0 001.5.86l8.5-5.5a1 1 0 000-1.72l-8.5-5.5A1 1 0 009 6.5z"></path>
+                        </svg>
+                    </span>
+                    Watch how it works
                 </button>
 
             </div>
 
-        </header>
+            <div class="privacy-note">
+                <span class="lock-icon"></span>
+                <span>Your recordings stay yours. You choose what to revisit.</span>
+            </div>
 
+        </section>
 
 
-        <!-- =====================================================
-             HERO
-        ====================================================== -->
+        <!-- RIGHT SIDE: INTERACTIVE BIRD -->
 
-        <main class="hero">
+        <section class="hero-visual">
 
+            <div class="orbit-system">
 
-            <!-- =================================================
-                 LEFT SIDE
-            ================================================== -->
+                <!-- Orbit lines -->
+                <div class="orbit orbit-1"></div>
+                <div class="orbit orbit-2"></div>
+                <div class="orbit orbit-3"></div>
+                <div class="orbit orbit-4"></div>
+                <div class="orbit orbit-5"></div>
 
-            <section class="hero-content">
+                <!-- Orbit dots -->
+                <div class="dot dot-green"></div>
+                <div class="dot dot-blue"></div>
+                <div class="dot dot-small"></div>
+                <div class="dot dot-gray"></div>
 
-                <div class="eyebrow">
-                    COMMUNICATION INTELLIGENCE, MADE HUMAN
-                </div>
+                <!-- Bird -->
+                <div class="bird-character" id="birdCharacter">
 
+                    <div class="bird-glow"></div>
 
-                <h1 class="hero-title">
+                    <!-- Main bird -->
+                    <img src="commio-bird.png" class="bird-base" alt="Commio bird">
 
-                    Understand how<br>
+                    <!-- Extra copies used for the wing animation -->
+                    <img src="commio-bird.png" class="bird-wing bird-wing-back" alt="" aria-hidden="true">
+                    <img src="commio-bird.png" class="bird-wing bird-wing-front" alt="" aria-hidden="true">
 
-                    you
-                    <span class="highlight">
-                        communicate.
-                    </span>
-
-                </h1>
-
-
-                <p class="hero-description">
-
-                    Commio observes the signals in your speech,
-                    voice, visual presence, and content — then
-                    turns real evidence into a calmer next attempt.
-
-                </p>
-
-
-                <div class="hero-actions">
-
-                    <!-- Live waveform button -->
-                    <a
-                        href="#start"
-                        class="btn btn-primary start-btn wave-btn"
-                    >
-
-                        <span class="wave" aria-hidden="true">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </span>
-
-                        <span class="wave-label">
-                            Start a practice
-                        </span>
-
-                    </a>
-
-
-                    <!-- Watch button with progress ring -->
-                    <button
-                        class="btn watch-btn"
-                        id="watchButton"
-                    >
-
-                        <span class="play-ring" aria-hidden="true">
-
-                            <svg viewBox="0 0 44 44">
-                                <circle
-                                    class="ring-track"
-                                    cx="22"
-                                    cy="22"
-                                    r="19"
-                                ></circle>
-                                <circle
-                                    class="ring-progress"
-                                    cx="22"
-                                    cy="22"
-                                    r="19"
-                                ></circle>
-                            </svg>
-
-                            <svg
-                                class="play-triangle"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                            >
-                                <path d="M9 6.5v11a1 1 0 001.5.86l8.5-5.5a1 1 0 000-1.72l-8.5-5.5A1 1 0 009 6.5z"></path>
-                            </svg>
-
-                        </span>
-
-                        Watch how it works
-
-                    </button>
-
-                </div>
-
-
-                <div class="privacy-note">
-
-                    <span class="lock-icon"></span>
-
-                    <span>
-                        Your recordings stay yours.
-                        You choose what to revisit.
-                    </span>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 RIGHT SIDE — INTERACTIVE BIRD
-            ================================================== -->
-
-            <section class="hero-visual">
-
-                <div class="orbit-system">
-
-
-                    <!-- =========================================
-                         ORBIT LINES
-                    ========================================== -->
-
-                    <div class="orbit orbit-1"></div>
-
-                    <div class="orbit orbit-2"></div>
-
-                    <div class="orbit orbit-3"></div>
-
-                    <div class="orbit orbit-4"></div>
-
-                    <div class="orbit orbit-5"></div>
-
-
-
-                    <!-- =========================================
-                         ORBIT DOTS
-                    ========================================== -->
-
-                    <div class="dot dot-green"></div>
-
-                    <div class="dot dot-blue"></div>
-
-                    <div class="dot dot-small"></div>
-
-                    <div class="dot dot-gray"></div>
-
-
-
-                    <!-- =========================================
-                         BIRD
-                    ========================================== -->
-
-                    <div
-                        class="bird-character"
-                        id="birdCharacter"
-                    >
-
-                        <div class="bird-glow"></div>
-
-
-                        <!-- Main bird -->
-
-                        <img
-                            src="commio-bird.png"
-                            class="bird-base"
-                            alt="Commio bird"
-                        >
-
-
-                        <!-- Extra copies used to create
-                             the wing animation -->
-
-                        <img
-                            src="commio-bird.png"
-                            class="bird-wing bird-wing-back"
-                            alt=""
-                            aria-hidden="true"
-                        >
-
-                        <img
-                            src="commio-bird.png"
-                            class="bird-wing bird-wing-front"
-                            alt=""
-                            aria-hidden="true"
-                        >
-
-                    </div>
-
-
-
-                    <!-- =========================================
-                         FLOATING LABEL — OBSERVED SIGNAL
-                    ========================================== -->
-
-                    <div class="floating-label label-signal">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-
-                            <path
-                                d="M11 5L6 9H3v6h3l5 4V5z"
-                            ></path>
-
-                            <path
-                                d="M15.5 8.5a5 5 0 010 7"
-                            ></path>
-
-                            <path
-                                d="M18.5 5.5a9 9 0 010 13"
-                            ></path>
-
-                        </svg>
-
-                        <span>
-                            observed signal
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- =========================================
-                         FLOATING LABEL — USEFUL CONTEXT
-                    ========================================== -->
-
-                    <div class="floating-label label-context">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-
-                            <path
-                                d="M21 11.5a8.38 8.38 0 01-9
-                                8.5 9.9 9.9 0 01-4-.8L3 21l1.8-4.2A8.5
-                                8.5 0 1112 20"
-                            ></path>
-
-                            <path d="M8 11h.01"></path>
-
-                            <path d="M12 11h.01"></path>
-
-                            <path d="M16 11h.01"></path>
-
-                        </svg>
-
-                        <span>
-                            useful context
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- =========================================
-                         FLOATING LABEL — TRY AGAIN
-                    ========================================== -->
-
-                    <div class="floating-label label-again">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-
-                            <path d="M12 3v4"></path>
-
-                            <path d="M12 17v4"></path>
-
-                            <path d="M3 12h4"></path>
-
-                            <path d="M17 12h4"></path>
-
-                            <path
-                                d="M5.6 5.6l2.8 2.8"
-                            ></path>
-
-                            <path
-                                d="M15.6 15.6l2.8 2.8"
-                            ></path>
-
-                            <path
-                                d="M18.4 5.6l-2.8 2.8"
-                            ></path>
-
-                            <path
-                                d="M8.4 15.6l-2.8 2.8"
-                            ></path>
-
-                        </svg>
-
-                        <span>
-                            try again
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- =========================================
-                         FLOATING LABEL — HUMAN INSIGHT
-                    ========================================== -->
-
-                    <div class="floating-label label-insight">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="9"
-                            ></circle>
-
-                            <path
-                                d="M3 12h18"
-                            ></path>
-
-                            <path
-                                d="M12 3a14 14 0 010 18"
-                            ></path>
-
-                        </svg>
-
-                        <span>
-                            human insight
-                        </span>
-
+                    <!-- Blink overlay -->
+                    <div class="bird-blink-layer" aria-hidden="true">
+                        <div class="bird-lid"></div>
                     </div>
 
                 </div>
 
-            </section>
+                <!-- Floating labels -->
 
-        </main>
+                <div class="floating-label label-signal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 5L6 9H3v6h3l5 4V5z"></path>
+                        <path d="M15.5 8.5a5 5 0 010 7"></path>
+                        <path d="M18.5 5.5a9 9 0 010 13"></path>
+                    </svg>
+                    <span>observed signal</span>
+                </div>
 
-    </div>
+                <div class="floating-label label-context">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 01-9 8.5 9.9 9.9 0 01-4-.8L3 21l1.8-4.2A8.5 8.5 0 1112 20"></path>
+                        <path d="M8 11h.01"></path>
+                        <path d="M12 11h.01"></path>
+                        <path d="M16 11h.01"></path>
+                    </svg>
+                    <span>useful context</span>
+                </div>
 
+                <div class="floating-label label-again">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 3v4"></path>
+                        <path d="M12 17v4"></path>
+                        <path d="M3 12h4"></path>
+                        <path d="M17 12h4"></path>
+                        <path d="M5.6 5.6l2.8 2.8"></path>
+                        <path d="M15.6 15.6l2.8 2.8"></path>
+                        <path d="M18.4 5.6l-2.8 2.8"></path>
+                        <path d="M8.4 15.6l-2.8 2.8"></path>
+                    </svg>
+                    <span>try again</span>
+                </div>
 
-    <!-- JavaScript -->
+                <div class="floating-label label-insight">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M3 12h18"></path>
+                        <path d="M12 3a14 14 0 010 18"></path>
+                    </svg>
+                    <span>human insight</span>
+                </div>
 
-    <script src="script.js"></script>
+            </div>
+
+        </section>
+
+    </section>
+
+    <section class="signal-section" id="signals" aria-labelledby="signal-title">
+        <div class="signal-shell">
+            <header class="signal-heading">
+                <div>
+                    <p class="signal-eyebrow">The signal layer</p>
+                    <h2 id="signal-title">Communication leaves <span>signals.</span></h2>
+                </div>
+                <div class="signal-intro">
+                    <p>Commio looks beyond the transcript. It combines speech, voice, visual presence and content to understand what happened during a conversation.</p>
+                    <div class="signal-rule" aria-hidden="true"><span></span><span></span><span></span></div>
+                </div>
+            </header>
+
+            <div class="signal-layout">
+                <div class="signal-metrics" aria-label="Communication signal scores">
+                    <article class="metric-card metric-speech">
+                        <div class="metric-kicker"><span>01</span><span>Audio</span></div>
+                        <div class="speech-wave" aria-hidden="true">
+                            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                        </div>
+                        <div class="metric-summary">
+                            <div><h3>Speech</h3><p>Pacing &amp; pauses</p></div>
+                            <strong>84</strong>
+                        </div>
+                    </article>
+
+                    <article class="metric-card metric-voice">
+                        <div class="metric-kicker"><span>02</span><span>Voice</span></div>
+                        <div class="voice-wave" aria-hidden="true">
+                            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                        </div>
+                        <div class="metric-summary">
+                            <div><h3>Voice</h3><p>Tone variation</p></div>
+                            <strong>72</strong>
+                        </div>
+                    </article>
+
+                    <article class="metric-card metric-presence">
+                        <div class="metric-kicker"><span>03</span><span>Vision</span></div>
+                        <div class="presence-icon" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="metric-summary">
+                            <div><h3>Presence</h3><p>Visual attention</p></div>
+                            <strong>81</strong>
+                        </div>
+                    </article>
+
+                    <article class="metric-card metric-content">
+                        <div class="metric-kicker"><span>04</span><span>Language</span></div>
+                        <div class="content-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="metric-summary">
+                            <div><h3>Content</h3><p>Structure &amp; clarity</p></div>
+                            <strong>76</strong>
+                        </div>
+                    </article>
+                </div>
+
+                <article class="session-card" aria-label="Interview practice session analysis">
+                    <header class="session-heading">
+                        <div><p>Session analysis</p><h3>Interview practice</h3></div>
+                        <span class="analysis-status"><i></i> Analyzed</span>
+                    </header>
+
+                    <div class="session-preview" role="img" aria-label="A visual attention preview from the analyzed session">
+                        <div class="preview-grid" aria-hidden="true"></div>
+                        <div class="preview-person" aria-hidden="true"><i></i><span></span></div>
+                        <span class="preview-time">01:42 / 02:18</span>
+                    </div>
+
+                    <div class="timeline" aria-label="Session timeline">
+                        <div class="timeline-track"><i></i><i></i><i></i></div>
+                        <div class="timeline-labels"><span>00:32</span><span>01:08</span><span>01:42</span></div>
+                    </div>
+
+                    <div class="observed-signal">
+                        <span class="signal-icon" aria-hidden="true">↗</span>
+                        <div><p>Observed signal</p><h4>Pace increased during your key point.</h4><span>Delivery became noticeably faster than the surrounding response.</span></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="action-section" id="how-it-works" aria-labelledby="action-title">
+        <div class="action-shell">
+            <p class="action-eyebrow">From data to action</p>
+            <h2 id="action-title">The useful part happens <span>after the analysis.</span></h2>
+
+            <ol class="action-steps">
+                <li class="action-step">
+                    <span class="step-number">01</span>
+                    <span class="step-icon" aria-hidden="true">◉</span>
+                    <span class="step-copy"><strong>Observe</strong><span>Record a real interaction.</span></span>
+                </li>
+                <li class="action-arrow" aria-hidden="true">→</li>
+                <li class="action-step">
+                    <span class="step-number">02</span>
+                    <span class="step-icon" aria-hidden="true">◇</span>
+                    <span class="step-copy"><strong>Understand</strong><span>See where the signals changed.</span></span>
+                </li>
+                <li class="action-arrow" aria-hidden="true">→</li>
+                <li class="action-step">
+                    <span class="step-number">03</span>
+                    <span class="step-icon" aria-hidden="true">↗</span>
+                    <span class="step-copy"><strong>Practice</strong><span>Get a focused next attempt.</span></span>
+                </li>
+                <li class="action-return">
+                    <svg viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                        <path d="M850 0v20c0 12-8 20-20 20H170c-12 0-20-8-20-20V0M144 8 150 0l6 8"></path>
+                    </svg>
+                    <span>Record again and compare</span>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="audience-section" id="audiences" aria-labelledby="audience-title">
+        <div class="audience-shell">
+            <header class="audience-heading">
+                <div>
+                    <p class="audience-eyebrow">One platform</p>
+                    <h2 id="audience-title">Different people.<br><span>Different goals.</span></h2>
+                </div>
+                <p>Commio adapts the depth of analysis to the way communication is being used.</p>
+            </header>
+
+            <div class="audience-grid">
+                <article class="audience-card audience-individual">
+                    <div class="audience-meta"><span>01</span><span>Individual</span></div>
+                    <div class="audience-visual individual-visual">
+                        <div class="individual-score"><span>Communication</span><strong>78</strong></div>
+                        <div class="mini-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                    </div>
+                    <div class="audience-copy">
+                        <h3>Build confidence.</h3>
+                        <p>Practice interviews, presentations and everyday communication.</p>
+                    </div>
+                </article>
+
+                <article class="audience-card">
+                    <div class="audience-meta"><span>02</span><span>Education</span></div>
+                    <div class="audience-visual engagement-visual" aria-hidden="true">
+                        <div class="engagement-arc"></div>
+                        <div class="engagement-dots"><i></i><i></i><i></i></div>
+                    </div>
+                    <div class="audience-copy">
+                        <h3>Understand engagement.</h3>
+                        <p>Track delivery, movement and vocal variation across full lectures.</p>
+                    </div>
+                </article>
+
+                <article class="audience-card">
+                    <div class="audience-meta"><span>03</span><span>Business</span></div>
+                    <div class="audience-visual criteria-visual" aria-hidden="true">
+                        <div><i></i><span></span></div>
+                        <div><i></i><span></span></div>
+                        <div><i></i><span></span></div>
+                    </div>
+                    <div class="audience-copy">
+                        <h3>Make evaluation consistent.</h3>
+                        <p>Create scenarios, scoring criteria and organization-wide reporting.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust-section" id="privacy" aria-labelledby="trust-title">
+        <div class="trust-shell">
+            <div class="trust-copy">
+                <p class="trust-eyebrow">Built with context</p>
+                <h2 id="trust-title">More evidence. <span>Less guesswork.</span></h2>
+                <p>Commio is designed around explainable signals, anonymized reporting and configurable evaluation criteria, so feedback can be inspected rather than treated as a black box.</p>
+            </div>
+
+            <ol class="trust-points">
+                <li>
+                    <span class="trust-number">01</span>
+                    <div><h3>Explainable scoring</h3><p>Understand what contributed to an evaluation.</p></div>
+                </li>
+                <li>
+                    <span class="trust-number">02</span>
+                    <div><h3>Bias-aware evaluation</h3><p>Evaluation criteria can be reviewed and audited.</p></div>
+                </li>
+                <li>
+                    <span class="trust-number">03</span>
+                    <div><h3>Your recordings</h3><p>Choose what you revisit and retain.</p></div>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="final-cta-section" id="start" aria-labelledby="final-cta-title">
+        <div class="final-cta-content">
+            <p class="final-cta-eyebrow">Communication, made visible</p>
+            <h2 id="final-cta-title">See what your signals are <span>saying.</span></h2>
+            <p class="final-cta-description">Turn your next conversation into something you can actually learn from.</p>
+            <a class="final-cta-button" href="signin.html">Start a practice <span aria-hidden="true">→</span></a>
+        </div>
+    </section>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>

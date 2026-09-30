@@ -106,6 +106,47 @@ function tick(now) {
 
 
 /* =========================================================
+   BIRD BLINK
+========================================================= */
+
+const lid = document.querySelector(".bird-lid");
+let blinkTimer = null;
+
+function blink(double = false) {
+    if (!lid) return;
+
+    lid.classList.remove("blink");
+    void lid.offsetWidth; // forces a reflow so the animation restarts
+    lid.classList.add("blink");
+
+    if (double) setTimeout(() => blink(false), 650);
+}
+
+function scheduleBlink() {
+    clearTimeout(blinkTimer);
+    blinkTimer = setTimeout(() => {
+        blink(Math.random() < 0.2); // roughly 1 in 5 blinks is a double
+        scheduleBlink();
+    }, 2500 + Math.random() * 3500); // every 2.5 to 6 seconds
+}
+
+if (lid) {
+    bird.addEventListener("pointerenter", () => blink());
+    bird.addEventListener("click", () => blink(true));
+}
+
+if (lid && !reduceMotion) {
+    scheduleBlink();
+
+    // stop the timer while the tab is hidden
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) clearTimeout(blinkTimer);
+        else scheduleBlink();
+    });
+}
+
+
+/* =========================================================
    WATCH BUTTON
 ========================================================= */
 

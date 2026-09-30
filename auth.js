@@ -83,7 +83,7 @@ if (signinForm) {
             label: "Authorized Email Address",
             foot: "New to Commio?",
             link: "Create account",
-            href: "register.html"
+            href: "personal-register.html"
         },
         org: {
             label: "Organization Email Address",
@@ -167,6 +167,19 @@ if (registerForm) {
     const pw = document.getElementById("pw");
     const pw2 = document.getElementById("pw2");
     const consent = document.getElementById("consent");
+    const personalRegistration = registerForm.dataset.accountType === "personal";
+    const passwordStatus = document.getElementById("passwordStatus");
+
+    if (passwordStatus) {
+        pw.addEventListener("input", () => {
+            const verified = pw.value.length >= 8;
+            passwordStatus.textContent = verified
+                ? "Password meets minimum requirements"
+                : "Use at least 8 characters";
+            passwordStatus.classList.toggle("verified", verified);
+            pw.closest(".field").classList.toggle("password-valid", verified);
+        });
+    }
 
     function validateField(field) {
         const input = field.querySelector("input");
@@ -211,18 +224,24 @@ if (registerForm) {
         if (firstBad) return firstBad.focus();
 
         if (!consent.checked) {
-            showNotice("Please confirm you have administrative rights to continue.");
+            showNotice(personalRegistration
+                ? "Please accept the terms to create your account."
+                : "Please confirm you have administrative rights to continue.");
             return consent.focus();
         }
 
         simulateRequest(
-            "Creating Portal...",
-            "Create Organization Portal",
-            "Demo only: connect this form to your registration backend."
+            personalRegistration ? "Creating Account..." : "Creating Portal...",
+            personalRegistration ? "Create Personal Account" : "Create Organization Portal",
+            personalRegistration
+                ? "Demo only: connect this form to your account service."
+                : "Demo only: connect this form to your registration backend."
         );
     });
 
     document.getElementById("ssoBtn").addEventListener("click", () => {
-        showNotice("Google SSO isn't connected yet.");
+        showNotice(personalRegistration
+            ? "Google sign-up isn't connected yet."
+            : "Google SSO isn't connected yet.");
     });
 }

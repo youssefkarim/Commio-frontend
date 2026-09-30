@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Personal Account — Commio</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+    <header class="auth-header">
+        <a href="index.html" class="auth-logo" aria-label="Commio home">
+            <img src="logo.png" alt="Commio" class="site-logo">
+        </a>
+    </header>
+
+    <main class="auth-wrap">
+        <section class="card personal-card">
+            <h1>Create Personal Account</h1>
+            <p class="sub">Unlock instant acoustic modeling, recording studio sessions, and performance trend channels.</p>
+
+            <form id="registerForm" data-account-type="personal" novalidate>
+                <div class="grid">
+                    <div class="field" data-rule="required">
+                        <label for="firstName">First Name</label>
+                        <div class="input-wrap"><input type="text" id="firstName" autocomplete="given-name"></div>
+                        <p class="error">Please enter your first name</p>
+                    </div>
+
+                    <div class="field" data-rule="required">
+                        <label for="lastName">Last Name</label>
+                        <div class="input-wrap"><input type="text" id="lastName" autocomplete="family-name"></div>
+                        <p class="error">Please enter your last name</p>
+                    </div>
+
+                    <div class="field full" data-rule="email">
+                        <label for="emailAddress">Email Address</label>
+                        <div class="input-wrap"><input type="email" id="emailAddress" autocomplete="email"></div>
+                        <p class="error">Please enter a valid email address</p>
+                    </div>
+
+                    <div class="field full" data-rule="password">
+                        <label for="pw">Choose Password</label>
+                        <div class="input-wrap"><input type="password" id="pw" autocomplete="new-password"></div>
+                        <p class="error">Use at least 8 characters</p>
+                        <p class="password-status" id="passwordStatus">Use at least 8 characters</p>
+                    </div>
+
+                    <div class="field full" data-rule="match">
+                        <label for="pw2">Confirm Password</label>
+                        <div class="input-wrap"><input type="password" id="pw2" autocomplete="new-password"></div>
+                        <p class="error">Passwords don't match</p>
+                    </div>
+                </div>
+
+                <div class="field check">
+                    <input type="checkbox" id="consent">
+                    <label for="consent">I agree to the transient acoustic processing terms and Commio privacy guidelines.</label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span class="spinner"></span>
+                    <span id="submitText">Create Personal Account</span>
+                </button>
+            </form>
+
+            <div class="divider">OR</div>
+
+            <button type="button" class="btn-ghost" id="ssoBtn">Continue with Google</button>
+
+            <p class="foot" style="margin-top: 22px">
+                Already registered?
+                <a href="signin.html">Sign In</a>
+            </p>
+
+            <p class="notice" id="notice" role="status"></p>
+        </section>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>
