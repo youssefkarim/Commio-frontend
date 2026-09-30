@@ -111,21 +111,58 @@
 
                 <div class="hero-actions">
 
+                    <!-- Live waveform button -->
                     <a
                         href="#start"
-                        class="btn btn-primary start-btn"
+                        class="btn btn-primary start-btn wave-btn"
                     >
-                        Start a practice →
+
+                        <span class="wave" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+
+                        <span class="wave-label">
+                            Start a practice
+                        </span>
+
                     </a>
 
 
+                    <!-- Watch button with progress ring -->
                     <button
                         class="btn watch-btn"
                         id="watchButton"
                     >
 
-                        <span class="play-icon">
-                            ▶
+                        <span class="play-ring" aria-hidden="true">
+
+                            <svg viewBox="0 0 44 44">
+                                <circle
+                                    class="ring-track"
+                                    cx="22"
+                                    cy="22"
+                                    r="19"
+                                ></circle>
+                                <circle
+                                    class="ring-progress"
+                                    cx="22"
+                                    cy="22"
+                                    r="19"
+                                ></circle>
+                            </svg>
+
+                            <svg
+                                class="play-triangle"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path d="M9 6.5v11a1 1 0 001.5.86l8.5-5.5a1 1 0 000-1.72l-8.5-5.5A1 1 0 009 6.5z"></path>
+                            </svg>
+
                         </span>
 
                         Watch how it works
