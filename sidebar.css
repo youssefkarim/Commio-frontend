@@ -16,18 +16,22 @@
     top: 0;
     z-index: 100;
     overflow: visible;
-    background: rgba(255, 255, 255, 0.88);
-    border-right: 1px solid #dce9ee;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background:
+        linear-gradient(180deg, rgba(224, 248, 243, 0.65) 0%, rgba(240, 252, 255, 0.55) 50%, rgba(230, 248, 245, 0.6) 100%),
+        rgba(255, 255, 255, 0.82);
+    border-right: 1px solid rgba(180, 225, 220, 0.7);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
                 flex-basis 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
                 padding 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body.dark-mode #sidebar.sidebar {
-    background: rgba(15, 27, 34, 0.92);
-    border-color: #1e333f;
+    background:
+        linear-gradient(180deg, rgba(10, 40, 38, 0.7) 0%, rgba(8, 30, 45, 0.65) 100%),
+        rgba(15, 27, 34, 0.88);
+    border-color: rgba(45, 180, 160, 0.25);
 }
 
 #sidebar .sidebar-inner {
@@ -240,9 +244,9 @@ body.dark-mode #sidebar .profile:hover {
     flex: 0 0 34px;
     display: grid;
     place-items: center;
-    color: #bf7046;
-    background: linear-gradient(135deg, #fff2e8, #ffe8d8);
-    border: 1px solid #f2d8c5;
+    color: #0a8f88;
+    background: linear-gradient(135deg, #e0f8f4, #cff3ed);
+    border: 1px solid #a8ddd7;
     border-radius: 50%;
 }
 
